@@ -28,13 +28,13 @@ git push origin new-branch-name
 
 9. Someone should review your code and either merge or request revisions.
 
-10a. If no revisions are necessary, merge pull request on GitHub.
+10a. If no revisions are necessary, merge pull request on GitHub. Select delete branch when merge completes.
 10b. If revisions are necessary, return to step 5.
 
-11. After merging, checkout local master branch and delete the branch. Also, delete the branch on GitHub org master.
+11. After merging, checkout local master branch, update from upstream, and delete the branch.
 git checkout master
+git pull upstream master
 git branch -d new-branch-name
 
-12. Update local master and origin master.
-git pull upstream master
+12. Update origin master.
 git push origin master
