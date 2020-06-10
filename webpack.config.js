@@ -1,4 +1,5 @@
 const path = require('path');
+
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
 const IS_PROD = process.env.NODE_ENV === 'production';
@@ -14,8 +15,18 @@ module.exports = {
       {
         test: /\.jsx$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-react',
+              ],
+            },
+          },
+        ],
       },
     ],
   },
-}
+};
