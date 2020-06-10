@@ -16,6 +16,11 @@ git status
 6. Check for updates to org master and merge into your new branch.
 git pull upstream master
 
+6b. If merging changes in Nano, save default commit message.
+ctrl + o
+enter
+ctrl + x
+
 7. After incorporating new changes
 git push origin new-branch-name
 
