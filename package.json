@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/index.js",
     "start:client": "webpack --mode development --watch",
-    "build:client": "NODE_ENV=production webpack --mode production"
+    "build:client": "NODE_ENV=production webpack --mode production",
+    "lint": "eslint . --ext .js,.jsx"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "@babel/preset-env": "^7.10.2",
     "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
