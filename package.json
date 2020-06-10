@@ -4,28 +4,34 @@
   "description": "Op-Spark Greenfield Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/index.js",
+    "start:client": "webpack --mode development --watch",
+    "build:client": "NODE_ENV=production webpack --mode production"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/masonkristopher/organizepower.git"
   },
-  "author": "",
+  "author": "Will Preble, Neisha Rose, Kris Mason, Clayton Christenson",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/masonkristopher/organizepower/issues"
   },
   "homepage": "https://github.com/masonkristopher/organizepower#readme",
   "dependencies": {
+    "@babel/preset-env": "^7.10.2",
     "axios": "^0.19.2",
+    "babel-loader": "^8.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "sequelize": "^5.21.12"
+    "sequelize": "^5.21.12",
+    "webpack": "^4.43.0"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.10.1",
     "@babel/core": "^7.10.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
