@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import MovementList from '../shared/MovementList.jsx';
 import getMovements from '../services/movements';
-import fakeData from '../shared/fakeData';
+import fakeData from '../services/fakeData';
+import MovementList from '../shared/MovementList.jsx';
 
 const Explore = () => {
   const [movements, setMovements] = useState(fakeData);
