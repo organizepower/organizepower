@@ -18,7 +18,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 // test the connection
 sequelize.authenticate()
   .then(() => {
-    console.log(`Connection has been established with ${database} database successfully.`);
+    console.log(`Connection has been established with ${DB_NAME} database successfully.`);
   })
   .catch(error => {
     console.error('Unable to connect to the database:', error);

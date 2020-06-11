@@ -1,0 +1,4 @@
+sequelize:
+
+belongsToMany:
+- https://gist.github.com/elliette/20ddc4e827efd9d62bc98752e7a62610
