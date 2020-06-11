@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const path = require('path');
 
 const SRC_DIR = path.join(__dirname, '/client/src');
@@ -22,6 +23,24 @@ module.exports = {
               presets: [
                 '@babel/preset-env',
                 '@babel/preset-react',
+              ],
+            },
+          },
+
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              indent: 'postcss',
+              plugins: [
+                require('tailwindcss'),
+                require('autoprefixer'),
               ],
             },
           },
