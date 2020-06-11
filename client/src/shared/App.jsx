@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 // import axios from 'axios';
 
-const App = () => {
-  const [count, setCount] = useState(0);
+import Navbar from './Navbar.jsx';
+import Explore from '../explore/Explore.jsx';
 
+const App = () => {
   return (
     <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>Click Me</button>
+      <Navbar />
+      <Explore />
     </div>
   );
 };
