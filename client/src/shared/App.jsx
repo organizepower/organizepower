@@ -3,11 +3,11 @@ import React from 'react';
 
 import Navbar from './Navbar.jsx';
 import Explore from '../explore/Explore.jsx';
+import MovementList from './MovementList.jsx';
 
 const App = () => {
   return (
     <div>
-      <h1>OrganizePower</h1>
       <Navbar />
       <Explore />
     </div>
