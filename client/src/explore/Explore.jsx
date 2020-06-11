@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import MovementList from '../shared/MovementList.jsx';
+//import MovementList from '../shared/MovementList.jsx';
+import { render } from 'react-dom';
 
 const Explore = () => {
   return (
     <div>
-      <h1>Discover Movements</h1>
-      <MovementList />
+      {/* <MovementList /> */}
     </div>
   );
 };
