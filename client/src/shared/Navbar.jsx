@@ -3,8 +3,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
-} from "react-router-dom";
+  Link,
+} from 'react-router-dom';
 
 import MovementList from './MovementList.jsx';
 import Profile from '../profile/Profile.jsx';
@@ -14,6 +14,7 @@ import Login from '../login/Login.jsx';
 const Navbar = () => {
   return (
     <Router>
+      <strong>OrganizePower</strong>
       <div>
         <nav>
           <ul>
