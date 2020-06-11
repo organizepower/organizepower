@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
-const MovementList = () => {
+import MovementListItem from './MovementListItem.jsx';
+
+const MovementList = ({ movements }) => {
   return (
     <div>
-      <h1>Im MovementList</h1>
+      {movements.map(movement => <MovementListItem movement={movement} key={movement.id} />)}
     </div>
   );
 };
