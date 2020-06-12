@@ -7,9 +7,10 @@ const db = require('./index');
 
 
 // ADD NEW USER
-const addUser = async function(userObj) {
+const addUser = async(userObj) => {
   await db.User.create(userObj);
 };
+
 
 addUser({
   username: 'bobby',
@@ -29,11 +30,11 @@ const getUser = async function(username) {
 getUser('bobby');
 
 
-// ORGANIZER ADDS NEW MOVEMENTS
+// ORGANIZER ADDS NEW MOVEMENT
 // one to many relationship
 // username is the organizer's username
 const addMovement = async function(campaignObj, username) {
-  // get the organizer's document
+  // get the organizer's record
   const user = await db.User.findOne({ where: { username } });
   // create the movement
   const movement = await db.Movement.create(campaignObj);
@@ -50,7 +51,29 @@ addMovement({
 
 
 // ADD NEW POLITICIAN
+const addPolitician = async function(politicianObj) {
+  await db.Politician.create(politicianObj);
+};
 
+addPolitician({
+  first_name: 'Latoya',
+  last_name: 'Cantrell',
+  location: 'New Orleans',
+  email: 'mayor@nola.gov',
+  mailing_address: 'xyz',
+  organization: 'City Goverment',
+  position_type: 'mayor',
+});
+
+// LINK POLITICIAN TO MOVEMENT
+// pass in politician and movement ids
+const linkPoliticianMovement = async function(politicianId, movementId) {
+  const politician = await db.Politician.findOne({ where: { id: politicianId } });
+  const movement = await db.Movement.findOne({ where: { id: movementId } });
+  politician.addMovement(movement);
+};
+
+linkPoliticianMovement(1, 1);
 
 // USER JOINS MOVEMENT
 
