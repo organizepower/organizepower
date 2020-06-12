@@ -54,8 +54,8 @@ router.get('/', (req, res, next) => {
   } else {
     res.json({ user: null });
   }
-
 });
+
 router.post('/logout', (req, res) => {
   if (req.user) {
     req.logout();
