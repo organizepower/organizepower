@@ -6,8 +6,8 @@ const { User } = require('../db/index');
 const router = express.Router();
 
 router.get('/login', (req, res) => {
-console.log(req);
-  // res.render('login');
+ console.log(req);
+  res.send('login');
 });
 
 // router.post('/login', passport.authenticate('local'),
