@@ -89,9 +89,10 @@ const MovementPolitician = sequelize.define('movementPolitician', {}, { undersco
 const UserMovement = sequelize.define('userMovement', {}, { underscored: true });
 
 
-// sync to create tables in db before adding associations
-// force: true will overwrite the tables, even if they exist - usefull for dev mode
-sequelize.sync({ force: true });
+// sync sequelize to create tables in db before adding associations
+// force: true will overwrite the tables, good for dev:
+// sequelize.sync({ force: true });
+sequelize.sync(); // will not drop tables everytime
 
 
 // add user id foreign key to all movements
