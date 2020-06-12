@@ -109,9 +109,11 @@ Comment.belongsTo(User, { foreignKey: 'id_user' });
 
 // makes a join table between politicians and movements
 Politician.belongsToMany(Movement, { through: MovementPolitician });
+Movement.belongsToMany(Politician, { through: MovementPolitician });
 
 // makes a join table between the users and movements
 User.belongsToMany(Movement, { through: UserMovement });
+Movement.belongsToMany(User, { through: UserMovement });
 
 
 // hasOne & belongsTo methods:
