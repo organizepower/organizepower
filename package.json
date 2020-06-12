@@ -4,7 +4,7 @@
   "description": "Op-Spark Greenfield Project",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "NODE_ENV=production webpack --mode production && node server/index.js",
     "start:client": "webpack --mode development --watch",
     "build:client": "NODE_ENV=production webpack --mode production",
     "lint": "eslint . --ext .js,.jsx"
@@ -49,7 +49,7 @@
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^2.5.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
     "postcss-loader": "^3.0.0",
     "style-loader": "^1.2.1",
     "stylelint-config-recommended": "^3.0.0",

@@ -6,6 +6,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const { User } = require('./db/index');
 // const { apiRouter } = require('./api');
+const { router } = require('./routes/login');
+
 
 const app = express();
 
@@ -34,23 +36,24 @@ passport.use(new LocalStrategy((username, password, done) => {
 }));
 
 // these two methods will keep user session alive
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+// passport.serializeUser((user, done) => {
+//   done(null, user.id);
+// });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
-});
+// passport.deserializeUser((id, done) => {
+//   User.findById(id, (err, user) => {
+//     done(err, user);
+//   });
+// });
 
-app.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-  }));
+// app.post('/login',
+//   passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
+//   }));
 
-// app.use('/api', apiRouter);
+// app.use('/', apiRouter);
+app.use('/', router);
 
 module.exports = {
   app,

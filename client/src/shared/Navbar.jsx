@@ -27,8 +27,6 @@ const Navbar = () => {
       </Switch>
     </div>
   );
-
-
 };
 
 // these commented out functions makes it so that the nav bar items are on every page
