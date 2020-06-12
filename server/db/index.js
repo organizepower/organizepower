@@ -1,5 +1,6 @@
 // start mysql server in directory: sudo service mysql start
 // open mysql shell: mysql -u root
+// create database locally: create database op;
 
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
@@ -11,8 +12,9 @@ const DB_NAME = process.env.DB_NAME || 'op';
 
 // create connection btwn sequelize & mysql database
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-  DB_HOST,
+  host: DB_HOST,
   dialect: 'mysql',
+  // logging: false, // toggle logging SQL in console
 });
 
 // test the connection
@@ -25,31 +27,36 @@ sequelize.authenticate()
   });
 
 
-// models
-// note: sequelize defaults a primary key 'id' for every model/table
+/*
+  MODELS
 
+  notes:
+  sequelize defaults a primary key 'id' for every model/table
 
-const User = sequelize.define('User', {
+*/
+
+const User = sequelize.define('user', {
   username: { type: DataTypes.STRING, allowNull: false },
   first_name: { type: DataTypes.STRING, allowNull: false },
   last_name: { type: DataTypes.STRING, allowNull: false },
   location: { type: DataTypes.STRING, allowNull: false },
   email: { type: DataTypes.STRING, allowNull: false },
   phone_number: { type: DataTypes.STRING },
+  image_url: { type: DataTypes.STRING },
 }, { underscored: true });
 
 
-const Campaign = sequelize.define('Campaign', {
+const Movement = sequelize.define('movement', {
   name: { type: DataTypes.STRING, allowNull: false },
   location: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.STRING, allowNull: false },
+  followers: { type: DataTypes.INTEGER },
+  email_count: { type: DataTypes.INTEGER },
+  image_url: { type: DataTypes.STRING },
 }, { underscored: true });
 
-// add user id foreign key to all campaigns
-Campaign.belongsTo(User, { foreignKey: 'id_organizer' });
 
-
-const Politician = sequelize.define('Politician', {
+const Politician = sequelize.define('politician', {
   first_name: { type: DataTypes.STRING, allowNull: false },
   last_name: { type: DataTypes.STRING, allowNull: false },
   location: { type: DataTypes.STRING, allowNull: false },
@@ -58,59 +65,86 @@ const Politician = sequelize.define('Politician', {
   mailing_address: { type: DataTypes.STRING, allowNull: false },
   organization: { type: DataTypes.STRING, allowNull: false },
   position_type: { type: DataTypes.STRING, allowNull: false },
+  image_url: { type: DataTypes.STRING },
 }, { underscored: true });
 
 
-// prompts added for campaigns by politician
-const Prompt = sequelize.define('Prompt', {
+// prompts added for movements by politician
+const Prompt = sequelize.define('prompt', {
   prompt_text: { type: DataTypes.STRING, allowNull: false },
 }, { underscored: true });
 
-// politician and campaign id foreign keys
-Prompt.belongsTo(Campaign, { foreignKey: 'id_campaign' });
-Prompt.hasOne(Politician, { foreignKey: 'id_politician' });
 
-
-// comments added to a campaign page by user
-const Comment = sequelize.define('Comment', {
+// comments added to a movement page by user
+const Comment = sequelize.define('comment', {
   comment_text: { type: DataTypes.STRING, allowNull: false },
 }, { underscored: true });
 
-// campaign and user foreign keys
-Comment.belongsTo(Campaign, { foreignKey: 'id_politician' });
-Comment.hasOne(User, { foreignKey: 'id_user' });
+
+// track which movements and politician have associations
+const MovementPolitician = sequelize.define('movementPolitician', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+}, { underscored: true });
 
 
-// track which campaigns and politician have associations
-const CampaignPolitician = sequelize.define('CampaignPolitician', {}, { underscored: true });
+// track which movements a user 'joins'
+const UserMovement = sequelize.define('userMovement', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+}, { underscored: true });
 
-// makes a join table between politicians and campaigns
-Politician.belongsToMany(Campaign, { through: CampaignPolitician });
+
+// sync sequelize to create tables in db before adding associations
+// force: true will overwrite the tables, good for dev:
+// sequelize.sync({ force: true });
+sequelize.sync(); // will not drop tables everytime
 
 
-// track which campaigns a user 'joins'
-const UserCampaign = sequelize.define('UserCampaign', {}, { underscored: true });
+// add user id foreign key to all movements
+Movement.belongsTo(User, { foreignKey: 'id_organizer' });
+User.hasMany(Movement, { foreignKey: 'id_organizer' });
 
-// makes a join table between the users and campaigns
-User.belongsToMany(Campaign, { through: UserCampaign });
+// politician and movement id foreign keys
+Prompt.belongsTo(Movement, { foreignKey: 'id_movement' });
+Prompt.belongsTo(Politician, { foreignKey: 'id_politician' });
+
+// movement and user foreign keys
+Comment.belongsTo(Movement, { foreignKey: 'id_politician' });
+Comment.belongsTo(User, { foreignKey: 'id_user' });
+
+// makes a join table between politicians and movements
+Politician.belongsToMany(Movement, { through: MovementPolitician, foreignKey: 'id_politician' });
+Movement.belongsToMany(Politician, { through: MovementPolitician, foreignKey: 'id_movement' });
+
+// makes a join table between the users and movements
+User.belongsToMany(Movement, { through: UserMovement, foreignKey: 'id_user' });
+Movement.belongsToMany(User, { through: UserMovement, foreignKey: 'id_movement' });
 
 
 // hasOne & belongsTo methods:
 // .get() & .set()
-// example: comment.getUser() or comment.setCampaign()
+// example: comment.getUser() or comment.setMovement()
 
 
 // belongsToMany methods:
 // .get(), .set(), .add()
-// example: politician.setCampaign(associatedCampaign)
+// example: politician.setMovement(associatedMovement)
 
 
 module.exports = {
+  sequelize,
   User,
-  Campaign,
+  Movement,
   Politician,
   Prompt,
   Comment,
-  CampaignPolitician,
-  UserCampaign,
+  MovementPolitician,
+  UserMovement,
 };
