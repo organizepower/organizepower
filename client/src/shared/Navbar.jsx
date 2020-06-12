@@ -19,16 +19,16 @@ const Navbar = () => {
         <nav>
           <ul>
             <li>
-              <Link to="/MovementList">MovementList</Link>
+              <Link to="/MovementList">MovementList </Link>
             </li>
             <li>
-              <Link to="/Profile">Profile</Link>
+              <Link to="/Profile">Profile </Link>
             </li>
             <li>
-              <Link to="/Explore">Explore</Link>
+              <Link to="/Explore">Explore </Link>
             </li>
             <li>
-              <Link to="/login/signup">Login/signUp</Link>
+              <Link to="/login/signup">Login/signUp </Link>
             </li>
           </ul>
         </nav>
@@ -53,5 +53,39 @@ const Navbar = () => {
     </Router>
   );
 };
+
+// these commented out functions makes it so that the nav bar items are on every page
+
+// function MovementList() {
+//   return (
+//     <div>
+//       <h2>MovementList</h2>
+//     </div>
+//   );
+// }
+
+// function Profile() {
+//   return (
+//     <div>
+//       <h2>Profile</h2>
+//     </div>
+//   );
+// }
+
+// function Explore() {
+//   return (
+//     <div>
+//       <h2>Explore</h2>
+//     </div>
+//   );
+// }
+
+// function Login() {
+//   return (
+//     <div>
+//       <h2>Login</h2>
+//     </div>
+//   );
+// }
 
 export default Navbar;
