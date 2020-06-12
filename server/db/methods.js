@@ -1,12 +1,15 @@
 const db = require('./index');
 
-// model method documentation
+// MODEL METHODS
+// note: organizer is term for users that create movements
+// only one table for all users - organizers & participants
+// all users are participants, some users are organizers
 
 
-// async/await add user
-async function addUser(userObj) {
+// ADD NEW USER
+const addUser = async function(userObj) {
   await db.User.create(userObj);
-}
+};
 
 addUser({
   username: 'bobby',
@@ -17,69 +20,45 @@ addUser({
   phone_number: '504-123-4567',
 });
 
-
-// promises add user
-const meg = db.User.create({
-  username: 'meg',
-  first_name: 'Meg',
-  last_name: 'Boop',
-  location: '70119',
-  email: 'meg@gmail.com',
-  phone_number: '504-123-4567',
-})
-  .then(user => user)
-  .catch(err => console.log(err));
-
-
-// get user by username
-const bob = db.User.findOne({ where: { username: 'bobby' } })
-  .then(user => {
-    console.log(user.first_name);
-    return user;
-  }) // logs the user obj returned by sequelize
-  .catch(err => console.log(err));
-
-
-// organizer adds movement
-// need to pass in user/organizer obj to movement.setUser()
-
-// with promises
-db.User.findOne({ where: { username: 'bobby' } })
-  .then(user => {
-    db.Movement.create({
-      name: 'Justice for George Floyd',
-      location: 'Minneapolis',
-      description: 'Lorem ipsum...',
-      // add other columns
-    })
-      .then(movement => {
-        movement.setUser(user);
-      })
-      .catch(err => console.log(err));
-  })
-  .catch(err => console.log(err));
-
-// async/await
-async function addMovement(campaignObj, username) {
+// GET USER BY USERNAME
+const getUser = async function(username) {
   const user = await db.User.findOne({ where: { username } });
+  return user;
+};
+
+getUser('bobby');
+
+
+// ORGANIZER ADDS NEW MOVEMENTS
+// one to many relationship
+// username is the organizer's username
+const addMovement = async function(campaignObj, username) {
+  // get the organizer's document
+  const user = await db.User.findOne({ where: { username } });
+  // create the movement
   const movement = await db.Movement.create(campaignObj);
+  // set the user (organizer) foreign key
   movement.setUser(user);
-}
+};
 
 addMovement({
   name: 'Justice for Breonna Taylor',
   location: 'Louisville',
   description: 'Lorem ipsum...',
   // add other columns
-}, 'meg');
+}, 'bobby');
 
-// adds politician
 
-// user joins campaign
+// ADD NEW POLITICIAN
 
-// user comments on campaign
 
-// organizer adds prompt
+// USER JOINS MOVEMENT
+
+
+// USER COMMENTS ON MOVEMENT
+
+
+// ORGANIZER ADDS PROMPT
 
 
 // hasOne & belongsTo methods:
