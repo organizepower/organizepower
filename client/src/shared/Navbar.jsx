@@ -13,45 +13,22 @@ import Login from '../login/Login.jsx';
 
 const Navbar = () => {
   return (
-    <Router>
-      <strong>OrganizePower</strong>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/MovementList">MovementList </Link>
-            </li>
-            <li>
-              <Link to="/Profile">Profile </Link>
-            </li>
-            <li>
-              <Link to="/Explore">Explore </Link>
-            </li>
-            <li>
-              <Link to="/login/signup">Login/signUp </Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/MovementList">
-            <MovementList />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/Explore">
-            <Explore />
-          </Route>
-          <Route path="/login/signup">
-            <Login />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <div>
+      <ul>
+        <li><Link to="/explore">Explore Page</Link></li>
+        <li><Link to="/profile">Profile Page</Link></li>
+        <li><Link to="/login">Login User</Link></li>
+        <li><Link to="/">Go Home</Link></li>
+      </ul>
+      <Switch>
+        <Route path="/explore" component={Explore} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/login" component={Login} />
+      </Switch>
+    </div>
   );
+
+
 };
 
 // these commented out functions makes it so that the nav bar items are on every page
@@ -87,5 +64,44 @@ const Navbar = () => {
 //     </div>
 //   );
 // }
+
+{/* <Router>
+<strong>OrganizePower</strong>
+<div>
+  <nav>
+    <ul>
+      <li>
+        <Link to="/MovementList">MovementList </Link>
+      </li>
+      <li>
+        <Link to="/Profile">Profile </Link>
+      </li>
+      <li>
+        <Link to="/Explore">Explore </Link>
+      </li>
+      <li>
+        <Link to="/Login">Login/signUp </Link>
+      </li>
+    </ul>
+  </nav>
+
+  {/* A <Switch> looks through its children <Route>s and
+      renders the first one that matches the current URL. */}
+//   <Switch>
+//     <Route path="/MovementList">
+//       <MovementList />
+//     </Route>
+//     <Route path="/profile">
+//       <Profile />
+//     </Route>
+//     <Route path="/Explore">
+//       <Explore />
+//     </Route>
+//     <Route path="/login/signup">
+//       <Login />
+//     </Route>
+//   </Switch>
+// </div>
+// </Router> */}
 
 export default Navbar;
