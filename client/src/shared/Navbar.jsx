@@ -54,4 +54,38 @@ const Navbar = () => {
   );
 };
 
+// these commented out functions makes it so that the nav bar items are on every page
+
+// function MovementList() {
+//   return (
+//     <div>
+//       <h2>MovementList</h2>
+//     </div>
+//   );
+// }
+
+// function Profile() {
+//   return (
+//     <div>
+//       <h2>Profile</h2>
+//     </div>
+//   );
+// }
+
+// function Explore() {
+//   return (
+//     <div>
+//       <h2>Explore</h2>
+//     </div>
+//   );
+// }
+
+// function Login() {
+//   return (
+//     <div>
+//       <h2>Login</h2>
+//     </div>
+//   );
+// }
+
 export default Navbar;
