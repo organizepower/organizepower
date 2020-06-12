@@ -8,7 +8,11 @@ const db = require('./index');
 
 // ADD NEW USER
 const addUser = async(userObj) => {
-  await db.User.create(userObj);
+  try {
+    await db.User.create(userObj);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // addUser({
@@ -23,16 +27,24 @@ const addUser = async(userObj) => {
 
 // GET USER BY USERNAME
 const getUserByUsername = async(username) => {
-  const user = await db.User.findOne({ where: { username } });
-  return user;
+  try {
+    const user = await db.User.findOne({ where: { username } });
+    return user;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // getUserByUsername('bobby');
 
 // GET USER BY ID
 const getUserById = async(userId) => {
-  const user = await db.User.findOne({ where: { id: userId } });
-  return user;
+  try {
+    const user = await db.User.findOne({ where: { id: userId } });
+    return user;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // getUserById(1);
@@ -40,8 +52,12 @@ const getUserById = async(userId) => {
 
 // EDIT USER BY FIELD
 const editUserField = async(userId, prop, newValue) => {
-  await db.User.update({ [prop]: newValue },
-    { returning: true, where: { id: userId } });
+  try {
+    await db.User.update({ [prop]: newValue },
+      { returning: true, where: { id: userId } });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // editUserField(1, 'username', 'bobbymcgee');
@@ -49,8 +65,12 @@ const editUserField = async(userId, prop, newValue) => {
 
 // UPDATE ENTIRE USER'S RECORD
 const editUser = async(userObj) => {
-  await db.User.update(userObj,
-    { returning: true, where: { id: userObj.id } });
+  try {
+    await db.User.update(userObj,
+      { returning: true, where: { id: userObj.id } });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // editUser({
@@ -68,11 +88,15 @@ const editUser = async(userObj) => {
 // one to many relationship
 const addMovement = async(campaignObj, userId) => {
   // get the organizer's record
-  const user = await db.User.findOne({ where: { id: userId } });
-  // create the movement
-  const movement = await db.Movement.create(campaignObj);
-  // set the user (organizer) foreign key
-  movement.setUser(user);
+  try {
+    const user = await db.User.findOne({ where: { id: userId } });
+    // create the movement
+    const movement = await db.Movement.create(campaignObj);
+    // set the user (organizer) foreign key
+    movement.setUser(user);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // addMovement({
@@ -84,21 +108,33 @@ const addMovement = async(campaignObj, userId) => {
 
 // EDIT MOVEMENT BY FIELD
 const editMovementField = async(movementId, prop, newValue) => {
-  await db.Movement.update({ [prop]: newValue },
-    { returning: true, where: { id: movementId } });
+  try {
+    await db.Movement.update({ [prop]: newValue },
+      { returning: true, where: { id: movementId } });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 
 // UPDATE ENTIRE MOVEMENT'S RECORD
 const editMovement = async(movementObj) => {
-  await db.Movement.update(movementObj,
-    { returning: true, where: { id: movementObj.id } });
+  try {
+    await db.Movement.update(movementObj,
+      { returning: true, where: { id: movementObj.id } });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 
 // ADD NEW POLITICIAN
 const addPolitician = async(politicianObj) => {
-  await db.Politician.create(politicianObj);
+  try {
+    await db.Politician.create(politicianObj);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // addPolitician({
@@ -113,23 +149,35 @@ const addPolitician = async(politicianObj) => {
 
 // EDIT POLITICIAN BY FIELD
 const editPoliticianField = async(politicianId, prop, newValue) => {
-  await db.Politician.update({ [prop]: newValue },
-    { returning: true, where: { id: politicianId } });
+  try {
+    await db.Politician.update({ [prop]: newValue },
+      { returning: true, where: { id: politicianId } });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 
 // UPDATE ENTIRE POLITICIAN'S RECORD
 const editPolitician = async(politicianObj) => {
-  await db.Politician.update(politicianObj,
-    { returning: true, where: { id: politicianObj.id } });
+  try {
+    await db.Politician.update(politicianObj,
+      { returning: true, where: { id: politicianObj.id } });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // LINK POLITICIAN TO MOVEMENT
 // pass in politician and movement ids
 const linkPoliticianMovement = async(politicianId, movementId) => {
-  const politician = await db.Politician.findOne({ where: { id: politicianId } });
-  const movement = await db.Movement.findOne({ where: { id: movementId } });
-  politician.addMovement(movement);
+  try {
+    const politician = await db.Politician.findOne({ where: { id: politicianId } });
+    const movement = await db.Movement.findOne({ where: { id: movementId } });
+    politician.addMovement(movement);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // linkPoliticianMovement(1, 1);
@@ -143,7 +191,7 @@ const linkUserMovement = async(userId, movementId) => {
     const movement = await db.Movement.findOne({ where: { id: movementId } });
     movement.addUser(user);
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
@@ -152,11 +200,15 @@ const linkUserMovement = async(userId, movementId) => {
 
 // USER COMMENTS ON MOVEMENT
 const addComment = async(userId, movementId, message) => {
-  const comment = await db.Comment.create({ comment_text: message });
-  const user = await db.User.findOne({ where: { id: userId } });
-  const movement = await db.Movement.findOne({ where: { id: movementId } });
-  comment.setUser(user);
-  comment.setMovement(movement);
+  try {
+    const comment = await db.Comment.create({ comment_text: message });
+    const user = await db.User.findOne({ where: { id: userId } });
+    const movement = await db.Movement.findOne({ where: { id: movementId } });
+    comment.setUser(user);
+    comment.setMovement(movement);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // addComment(1, 1, 'Test comment');
@@ -164,11 +216,33 @@ const addComment = async(userId, movementId, message) => {
 
 // ORGANIZER ADDS PROMPT
 const addPrompt = async(politicianId, movementId, message) => {
-  const prompt = await db.Prompt.create({ prompt_text: message });
-  const politician = await db.Politician.findOne({ where: { id: politicianId } });
-  const movement = await db.Movement.findOne({ where: { id: movementId } });
-  prompt.setPolitician(politician);
-  prompt.setMovement(movement);
+  try {
+    const prompt = await db.Prompt.create({ prompt_text: message });
+    const politician = await db.Politician.findOne({ where: { id: politicianId } });
+    const movement = await db.Movement.findOne({ where: { id: movementId } });
+    prompt.setPolitician(politician);
+    prompt.setMovement(movement);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-addPrompt(1, 1, 'Test prompt');
+// addPrompt(1, 1, 'Test prompt');
+
+module.exports = {
+  addComment,
+  addPrompt,
+  addMovement,
+  addPolitician,
+  addUser,
+  linkPoliticianMovement,
+  linkUserMovement,
+  editMovement,
+  editMovementField,
+  editPolitician,
+  editPoliticianField,
+  editUser,
+  editUserField,
+  getUserById,
+  getUserByUsername,
+};
