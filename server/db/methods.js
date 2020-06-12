@@ -11,7 +11,6 @@ const addUser = async(userObj) => {
   await db.User.create(userObj);
 };
 
-
 addUser({
   username: 'bobby',
   first_name: 'Bob',
@@ -21,8 +20,9 @@ addUser({
   phone_number: '504-123-4567',
 });
 
+
 // GET USER BY USERNAME
-const getUser = async function(username) {
+const getUser = async(username) => {
   const user = await db.User.findOne({ where: { username } });
   return user;
 };
@@ -33,7 +33,7 @@ getUser('bobby');
 // ORGANIZER ADDS NEW MOVEMENT
 // one to many relationship
 // username is the organizer's username
-const addMovement = async function(campaignObj, username) {
+const addMovement = async(campaignObj, username) => {
   // get the organizer's record
   const user = await db.User.findOne({ where: { username } });
   // create the movement
@@ -51,7 +51,7 @@ addMovement({
 
 
 // ADD NEW POLITICIAN
-const addPolitician = async function(politicianObj) {
+const addPolitician = async(politicianObj) => {
   await db.Politician.create(politicianObj);
 };
 
@@ -65,9 +65,10 @@ addPolitician({
   position_type: 'mayor',
 });
 
+
 // LINK POLITICIAN TO MOVEMENT
 // pass in politician and movement ids
-const linkPoliticianMovement = async function(politicianId, movementId) {
+const linkPoliticianMovement = async(politicianId, movementId) => {
   const politician = await db.Politician.findOne({ where: { id: politicianId } });
   const movement = await db.Movement.findOne({ where: { id: movementId } });
   politician.addMovement(movement);
@@ -75,8 +76,16 @@ const linkPoliticianMovement = async function(politicianId, movementId) {
 
 linkPoliticianMovement(1, 1);
 
-// USER JOINS MOVEMENT
 
+// USER JOINS MOVEMENT
+// pass in user and movemenet ids
+const linkUserMovement = async(userId, movementId) => {
+  const user = await db.User.findOne({ where: { id: userId } });
+  const movement = await db.Movement.findOne({ where: { id: movementId } });
+  user.addMovement(movement);
+};
+
+linkUserMovement(1, 1);
 
 // USER COMMENTS ON MOVEMENT
 
