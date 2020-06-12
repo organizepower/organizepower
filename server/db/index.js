@@ -82,11 +82,23 @@ const Comment = sequelize.define('comment', {
 
 
 // track which movements and politician have associations
-const MovementPolitician = sequelize.define('movementPolitician', {}, { underscored: true });
+const MovementPolitician = sequelize.define('movementPolitician', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+}, { underscored: true });
 
 
 // track which movements a user 'joins'
-const UserMovement = sequelize.define('userMovement', {}, { underscored: true });
+const UserMovement = sequelize.define('userMovement', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+}, { underscored: true });
 
 
 // sync sequelize to create tables in db before adding associations
@@ -108,12 +120,12 @@ Comment.belongsTo(Movement, { foreignKey: 'id_politician' });
 Comment.belongsTo(User, { foreignKey: 'id_user' });
 
 // makes a join table between politicians and movements
-Politician.belongsToMany(Movement, { through: MovementPolitician });
-Movement.belongsToMany(Politician, { through: MovementPolitician });
+Politician.belongsToMany(Movement, { through: MovementPolitician, foreignKey: 'id_politician' });
+Movement.belongsToMany(Politician, { through: MovementPolitician, foreignKey: 'id_movement' });
 
 // makes a join table between the users and movements
-User.belongsToMany(Movement, { through: UserMovement });
-Movement.belongsToMany(User, { through: UserMovement });
+User.belongsToMany(Movement, { through: UserMovement, foreignKey: 'id_user' });
+Movement.belongsToMany(User, { through: UserMovement, foreignKey: 'id_movement' });
 
 
 // hasOne & belongsTo methods:

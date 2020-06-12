@@ -80,7 +80,20 @@ const addMovement = async(campaignObj, userId) => {
 //   location: 'Louisville',
 //   description: 'Lorem ipsum...',
 //   // add other columns
-// }, 'bobby');
+// }, 1);
+
+// EDIT MOVEMENT BY FIELD
+const editMovementField = async(movementId, prop, newValue) => {
+  await db.Movement.update({ [prop]: newValue },
+    { returning: true, where: { id: movementId } });
+};
+
+
+// UPDATE ENTIRE MOVEMENT'S RECORD
+const editMovement = async(movementObj) => {
+  await db.Movement.update(movementObj,
+    { returning: true, where: { id: movementObj.id } });
+};
 
 
 // ADD NEW POLITICIAN
@@ -98,6 +111,18 @@ const addPolitician = async(politicianObj) => {
 //   position_type: 'mayor',
 // });
 
+// EDIT POLITICIAN BY FIELD
+const editPoliticianField = async(politicianId, prop, newValue) => {
+  await db.Politician.update({ [prop]: newValue },
+    { returning: true, where: { id: politicianId } });
+};
+
+
+// UPDATE ENTIRE POLITICIAN'S RECORD
+const editPolitician = async(politicianObj) => {
+  await db.Politician.update(politicianObj,
+    { returning: true, where: { id: politicianObj.id } });
+};
 
 // LINK POLITICIAN TO MOVEMENT
 // pass in politician and movement ids
@@ -113,9 +138,13 @@ const linkPoliticianMovement = async(politicianId, movementId) => {
 // USER JOINS MOVEMENT
 // pass in user and movemenet ids
 const linkUserMovement = async(userId, movementId) => {
-  const user = await db.User.findOne({ where: { id: userId } });
-  const movement = await db.Movement.findOne({ where: { id: movementId } });
-  user.addMovement(movement);
+  try {
+    const user = await db.User.findOne({ where: { id: userId } });
+    const movement = await db.Movement.findOne({ where: { id: movementId } });
+    movement.addUser(user);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // linkUserMovement(1, 1);
@@ -132,6 +161,7 @@ const addComment = async(userId, movementId, message) => {
 
 // addComment(1, 1, 'Test comment');
 
+
 // ORGANIZER ADDS PROMPT
 const addPrompt = async(politicianId, movementId, message) => {
   const prompt = await db.Prompt.create({ prompt_text: message });
@@ -141,4 +171,4 @@ const addPrompt = async(politicianId, movementId, message) => {
   prompt.setMovement(movement);
 };
 
-// addPrompt(1, 1, 'Test prompt');
+addPrompt(1, 1, 'Test prompt');
