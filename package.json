@@ -4,7 +4,7 @@
   "description": "Op-Spark Greenfield Project",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "NODE_ENV=production webpack --mode production && node server/index.js",
     "start:client": "webpack --mode development --watch",
     "build:client": "NODE_ENV=production webpack --mode production",
     "lint": "eslint . --ext .js,.jsx"
