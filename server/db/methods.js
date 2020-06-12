@@ -11,14 +11,14 @@ const addUser = async(userObj) => {
   await db.User.create(userObj);
 };
 
-addUser({
-  username: 'bobby',
-  first_name: 'Bob',
-  last_name: 'Mip',
-  location: '70119',
-  email: 'bobby@gmail.com',
-  phone_number: '504-123-4567',
-});
+// addUser({
+//   username: 'bobby',
+//   first_name: 'Bob',
+//   last_name: 'Mip',
+//   location: '70119',
+//   email: 'bobby@gmail.com',
+//   phone_number: '504-123-4567',
+// });
 
 
 // GET USER BY USERNAME
@@ -27,7 +27,7 @@ const getUser = async(username) => {
   return user;
 };
 
-getUser('bobby');
+// getUser('bobby');
 
 
 // ORGANIZER ADDS NEW MOVEMENT
@@ -42,12 +42,12 @@ const addMovement = async(campaignObj, username) => {
   movement.setUser(user);
 };
 
-addMovement({
-  name: 'Justice for Breonna Taylor',
-  location: 'Louisville',
-  description: 'Lorem ipsum...',
-  // add other columns
-}, 'bobby');
+// addMovement({
+//   name: 'Justice for Breonna Taylor',
+//   location: 'Louisville',
+//   description: 'Lorem ipsum...',
+//   // add other columns
+// }, 'bobby');
 
 
 // ADD NEW POLITICIAN
@@ -55,15 +55,15 @@ const addPolitician = async(politicianObj) => {
   await db.Politician.create(politicianObj);
 };
 
-addPolitician({
-  first_name: 'Latoya',
-  last_name: 'Cantrell',
-  location: 'New Orleans',
-  email: 'mayor@nola.gov',
-  mailing_address: 'xyz',
-  organization: 'City Goverment',
-  position_type: 'mayor',
-});
+// addPolitician({
+//   first_name: 'Latoya',
+//   last_name: 'Cantrell',
+//   location: 'New Orleans',
+//   email: 'mayor@nola.gov',
+//   mailing_address: 'xyz',
+//   organization: 'City Goverment',
+//   position_type: 'mayor',
+// });
 
 
 // LINK POLITICIAN TO MOVEMENT
@@ -74,7 +74,7 @@ const linkPoliticianMovement = async(politicianId, movementId) => {
   politician.addMovement(movement);
 };
 
-linkPoliticianMovement(1, 1);
+// linkPoliticianMovement(1, 1);
 
 
 // USER JOINS MOVEMENT
@@ -85,19 +85,18 @@ const linkUserMovement = async(userId, movementId) => {
   user.addMovement(movement);
 };
 
-linkUserMovement(1, 1);
+// linkUserMovement(1, 1);
+
 
 // USER COMMENTS ON MOVEMENT
+const addComment = async(userId, movementId, message) => {
+  const comment = await db.Comment.create({ comment_text: message });
+  const user = await db.User.findOne({ where: { id: userId } });
+  const movement = await db.Movement.findOne({ where: { id: movementId } });
+  comment.setUser(user);
+  comment.setMovement(movement);
+};
 
+addComment(1, 1, 'Test comment');
 
 // ORGANIZER ADDS PROMPT
-
-
-// hasOne & belongsTo methods:
-// .get() & .set()
-// example: comment.getUser() or comment.setMovement()
-
-
-// belongsToMany methods:
-// .get(), .set(), .add()
-// example: politician.setMovement(associatedMovement)
