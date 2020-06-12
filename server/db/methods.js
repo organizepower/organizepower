@@ -22,20 +22,53 @@ const addUser = async(userObj) => {
 
 
 // GET USER BY USERNAME
-const getUser = async(username) => {
+const getUserByUsername = async(username) => {
   const user = await db.User.findOne({ where: { username } });
   return user;
 };
 
-// getUser('bobby');
+// getUserByUsername('bobby');
+
+// GET USER BY ID
+const getUserById = async(userId) => {
+  const user = await db.User.findOne({ where: { id: userId } });
+  return user;
+};
+
+// getUserById(1);
+
+
+// EDIT USER BY FIELD
+const editUserField = async(userId, prop, newValue) => {
+  await db.User.update({ [prop]: newValue },
+    { returning: true, where: { id: userId } });
+};
+
+// editUserField(1, 'username', 'bobbymcgee');
+
+
+// UPDATE ENTIRE USER'S RECORD
+const editUser = async(userObj) => {
+  await db.User.update(userObj,
+    { returning: true, where: { id: userObj.id } });
+};
+
+// editUser({
+//   id: 1,
+//   username: 'bumblebee',
+//   first_name: 'Bobby',
+//   last_name: 'Mip',
+//   location: '70119',
+//   email: 'bobby@gmail.com',
+//   phone_number: '504-123-4567',
+// });
 
 
 // ORGANIZER ADDS NEW MOVEMENT
 // one to many relationship
-// username is the organizer's username
-const addMovement = async(campaignObj, username) => {
+const addMovement = async(campaignObj, userId) => {
   // get the organizer's record
-  const user = await db.User.findOne({ where: { username } });
+  const user = await db.User.findOne({ where: { id: userId } });
   // create the movement
   const movement = await db.Movement.create(campaignObj);
   // set the user (organizer) foreign key
@@ -97,6 +130,15 @@ const addComment = async(userId, movementId, message) => {
   comment.setMovement(movement);
 };
 
-addComment(1, 1, 'Test comment');
+// addComment(1, 1, 'Test comment');
 
 // ORGANIZER ADDS PROMPT
+const addPrompt = async(politicianId, movementId, message) => {
+  const prompt = await db.Prompt.create({ prompt_text: message });
+  const politician = await db.Politician.findOne({ where: { id: politicianId } });
+  const movement = await db.Movement.findOne({ where: { id: movementId } });
+  prompt.setPolitician(politician);
+  prompt.setMovement(movement);
+};
+
+// addPrompt(1, 1, 'Test prompt');
