@@ -40,8 +40,38 @@ const bob = db.User.findOne({ where: { username: 'bobby' } })
   .catch(err => console.log(err));
 
 
-// organizer adds campaign
-// need to pass in user/organizer's primary key id
+// organizer adds movement
+// need to pass in user/organizer obj to movement.setUser()
+
+// with promises
+db.User.findOne({ where: { username: 'bobby' } })
+  .then(user => {
+    db.Movement.create({
+      name: 'Justice for George Floyd',
+      location: 'Minneapolis',
+      description: 'Lorem ipsum...',
+      // add other columns
+    })
+      .then(movement => {
+        movement.setUser(user);
+      })
+      .catch(err => console.log(err));
+  })
+  .catch(err => console.log(err));
+
+// async/await
+async function addMovement(campaignObj, username) {
+  const user = await db.User.findOne({ where: { username } });
+  const movement = await db.Movement.create(campaignObj);
+  movement.setUser(user);
+}
+
+addMovement({
+  name: 'Justice for Breonna Taylor',
+  location: 'Louisville',
+  description: 'Lorem ipsum...',
+  // add other columns
+}, 'meg');
 
 // adds politician
 
