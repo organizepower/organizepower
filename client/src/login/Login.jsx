@@ -4,12 +4,14 @@ import axios from 'axios';
 const Login = () => {
   const [value, setValue] = useState('');
   const handleClick = () => {
-  //   // axios.post('/login')
-  //   //   .then(data => {
-  //   //     debugger
-  //   //     console.log(data);
-  //   //   })
-  //   //   .catch(err => console.log(err));
+    axios.post('/login', {
+      username: value
+    })
+      .then(data => {
+        debugger
+        console.log(data);
+      })
+      .catch(err => console.log(err));
   };
 
   return (
