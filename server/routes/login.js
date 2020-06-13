@@ -6,16 +6,15 @@ const { User } = require('../db/index');
 const router = express.Router();
 
 router.get('/login', (req, res) => {
- console.log(req);
+  console.log(req);
   res.send('login');
 });
 
-// router.post('/login', passport.authenticate('local'),
-//   (req, res) => {
-//     console.log('logged in', req.user);
-//     const userInfo = {
-//       username: req.user.username,
-//     };
-//     res.send(userInfo);
-//   });
+router.post('/login', (req, res) => {
+  console.log('logged in', req.body);
+  // const userInfo = {
+  //   username: req.user.username,
+  // };
+  res.send(req.body);
+});
 module.exports.router = router;
