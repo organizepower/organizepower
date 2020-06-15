@@ -15,8 +15,8 @@ const fakeCampaigns = [
 
       Please help us get justice for George and his family!
     `,
-    followers: 101312,
-    emailsSent: 9000,
+    followers: 10000,
+    emailsSent: 10,
   },
   {
     id: 2,
@@ -30,8 +30,21 @@ const fakeCampaigns = [
 
       Not only were the police at the WRONG HOUSE, but the man they were looking for had already been arrested earlier that day.
     `,
-    followers: 10999,
-    emailsSent: 65,
+    followers: 1000,
+    emailsSent: 100,
+  },
+  {
+    id: 3,
+    imageUrl: 'https://assets.change.org/photos/0/be/bh/PxBebHLEVjesKqr-800x450-noPad.jpg?1585108503',
+    name: 'Hazard pay for all USPS EMPLOYEES!!',
+    location: 'Washington D.C.',
+    description: `
+      As we get deeper and deeper into this Coronavirus epidemic postal employees are being forced to work and do overtime upwards of 12 hours a day. As of this present time there have been Upwards of more than 40 confirmed cases of coronavirus with-in the United States Postal Service. From dealing with the day-to-day struggles of rain, sleet snow, hail or no AC in postal vehicles limited heating in postal vehicles no innovations in carriers delivery methods no innovations in protection clothing or any other areas of the post office.
+
+      Megan Brennan USPS CEO hasn’t sent any supplies such as had sanitizer or mask for employees protection, she made a very vague statement which basically read her employees should follow CDC guidelines. Blood, sweat, and tears postal employees carrier this company on their backs day in and day out at the expense of time with our families, wear and tear on our bodies, mental and emotional abuse from USPS management.
+    `,
+    followers: 100,
+    emailsSent: 1000,
   },
 ];
 
