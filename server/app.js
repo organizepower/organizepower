@@ -21,23 +21,33 @@ app.use(passport.session());
 // allow express to use sessions, not sure if the secret is necessary or helpful
 app.use(session({ secret: "cats" }));
 
-// basic "strategy" for user authentication
+
 passport.use(new LocalStrategy((username, password, done) => {
-  User.findOne({ username }, (err, user) => {
-    if (err) { return done(err); }
-    if (!user) {
-      return done(null, false, { message: 'Incorrect username.' });
-    }
-    if (!user.validPassword(password)) {
-      return done(null, false, { message: 'Incorrect password.' });
-    }
-    return done(null, user);
+  return User.findOrCreate({ where: { username, password } }).then((user) => {
+    console.log(user);
+    return user;
   });
 }));
 
+
+// basic "strategy" for user authentication
+// passport.use(new LocalStrategy((username, password, done) => {
+  //   User.findOne({ username }, (err, user) => {
+    //     if (err) { return done(err); }
+//     if (!user) {
+//       return done(null, false, { message: 'Incorrect username.' });
+//     }
+//     if (!user.validPassword(password)) {
+//       return done(null, false, { message: 'Incorrect password.' });
+//     }
+//     return done(null, user);
+//   })
+//     .catch(err => console.error(err));
+// }));
+
 // these two methods will keep user session alive
 // passport.serializeUser((user, done) => {
-//   done(null, user.id);
+  //   done(null, user.id);
 // });
 
 // passport.deserializeUser((id, done) => {
