@@ -1,4 +1,4 @@
-import ReactDOMServer from 'react-dom/server';
+// import ReactDOMServer from 'react-dom/server';
 
 const passport = require('passport');
 const express = require('express');
@@ -15,10 +15,17 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login',
+  passport.authenticate('local',
+    {
+      successRedirect: '/',
+      failureRedirect: '/login',
+    }),
   (req, res) => {
     console.log('logged in', req.user);
+    const { username, password } = req.body;
     const userInfo = {
-      username: req.user.username,
+      username,
+      password,
     };
     res.send(userInfo);
   });
