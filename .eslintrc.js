@@ -22,5 +22,31 @@ module.exports = {
     'react',
   ],
   rules: {
-  },
+    "import/extensions": [
+      "error",
+      {
+        "jsx": "always",
+        "json": "always"
+      }
+    ],
+    "react/jsx-one-expression-per-line": 0,
+    "space-before-function-paren": [
+      "error",
+      "never"
+    ],
+    "react/button-has-type": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "no-console": 0,
+    "no-debugger": 1,
+    "no-useless-constructor": 0,
+    "class-methods-use-this": 0,
+    "react/prefer-stateless-function": 0,
+    "arrow-parens": 0,
+    "arrow-body-style": 0,
+    "no-underscore-dangle": 0,
+    "no-unused-vars": 1,
+    "consistent-return": 0,
+    "react/prop-types": 0,
+    "react/no-unused-state": 1  },
 };
