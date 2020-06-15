@@ -9,17 +9,13 @@ const { User } = require('../db/index');
 const router = express.Router();
 
 router.get('/login', (req, res) => {
-  console.log(req);
+  console.log('this is from router.get in server/routes/login');
   // go to db and find user data
   // send data back the client side
 });
 
 router.post('/login',
-  passport.authenticate('local',
-    {
-      successRedirect: '/',
-      failureRedirect: '/login',
-    }),
+  passport.authenticate('local'),
   (req, res) => {
     console.log('logged in', req.user);
     const { username, password } = req.body;
@@ -29,4 +25,5 @@ router.post('/login',
     };
     res.send(userInfo);
   });
+
 module.exports.router = router;

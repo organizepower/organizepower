@@ -25,15 +25,15 @@ app.use(session({ secret: "cats" }));
 passport.use(new LocalStrategy((username, password, done) => {
   return User.findOrCreate({ where: { username, password } }).then((user) => {
     console.log(user);
-    return user;
+    return done(null, user);
   });
 }));
 
 
 // basic "strategy" for user authentication
 // passport.use(new LocalStrategy((username, password, done) => {
-  //   User.findOne({ username }, (err, user) => {
-    //     if (err) { return done(err); }
+//   User.findOne({ username }, (err, user) => {
+//     if (err) { return done(err); }
 //     if (!user) {
 //       return done(null, false, { message: 'Incorrect username.' });
 //     }
@@ -46,15 +46,13 @@ passport.use(new LocalStrategy((username, password, done) => {
 // }));
 
 // these two methods will keep user session alive
-// passport.serializeUser((user, done) => {
-  //   done(null, user.id);
-// });
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
 
-// passport.deserializeUser((id, done) => {
-//   User.findById(id, (err, user) => {
-//     done(err, user);
-//   });
-// });
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 
 // app.post('/login',
 //   passport.authenticate('local', {
