@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
 const Profile = () => {
+  const [user, setUser] = useState('');
+
   return (
     <div>
-      <strong>Profile Page</strong>
+      <div className="font-bold text-xl">Profile Page</div>
     </div>
   );
 };

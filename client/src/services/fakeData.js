@@ -1,4 +1,4 @@
-const fakeCampaigns = [
+const fakeMovements = [
   {
     id: 1,
     imageUrl: 'https://assets.change.org/photos/0/la/lt/mylaLTYqhScqWHI-800x450-noPad.jpg?1590516227',
@@ -48,4 +48,54 @@ const fakeCampaigns = [
   },
 ];
 
-export default fakeCampaigns;
+const fakeUsers = [
+  {
+    id: 1,
+    username: 'krazyKris',
+    password: 'hehe',
+    first_name: 'Kris',
+    last_name: 'Mason',
+    location: 'New Orleans, LA',
+    email: 'kris@gmail.com',
+    phone_number: '111-123-4567',
+    image_url: 'https://miro.medium.com/max/3150/0*DvXPY79aqDQoMRvu.jpg',
+  },
+  {
+    id: 2,
+    username: 'craftyClayton',
+    password: 'hoho',
+    first_name: 'Clayton',
+    last_name: 'Christenson',
+    location: 'Dallas, TX',
+    email: 'clayton@gmail.com',
+    phone_number: '222-123-4567',
+    image_url: 'https://sloanreview.mit.edu/wp-content/uploads/2020/02/MAG-Christensen-1290x860.jpg',
+  },
+  {
+    id: 3,
+    username: 'niftyNeisha',
+    password: 'haha',
+    first_name: 'Neisha',
+    last_name: 'Rose',
+    location: 'New York, NY',
+    email: 'neisha@gmail.com',
+    phone_number: '333-123-4567',
+    image_url: 'https://secure.img1-fg.wfcdn.com/im/00553075/compr-r85/7108/71085402/roses-floral-arrangement-in-vase.jpg',
+  },
+  {
+    id: 4,
+    username: 'wilyWill',
+    password: 'hihi',
+    first_name: 'Will',
+    last_name: 'Preble',
+    location: 'Los Angeles, TX',
+    email: 'will@gmail.com',
+    phone_number: '444-123-4567',
+    image_url: 'https://athletics.bethel.edu/images/2015/11/12/i_ZB4v5RL_X3.jpg?width=300',
+  },
+];
+
+export {
+  fakeMovements,
+  fakeUsers,
+};
