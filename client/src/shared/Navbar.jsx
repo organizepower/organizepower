@@ -1,31 +1,34 @@
 import React, { useState } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Link,
+  Redirect,
 } from 'react-router-dom';
 
-import MovementList from './MovementList.jsx';
+// import MovementList from './MovementList';
 import Profile from '../profile/Profile.jsx';
 import Explore from '../explore/Explore.jsx';
 import Login from '../login/Login.jsx';
 
 const Navbar = () => {
   return (
-    <div>
-      <ul>
-        <li><Link to="/explore">Explore Page</Link></li>
-        <li><Link to="/profile">Profile Page</Link></li>
-        <li><Link to="/login">Login User</Link></li>
-        <li><Link to="/">Go Home</Link></li>
-      </ul>
-      <Switch>
-        <Route path="/explore" component={Explore} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/login" component={Login} />
-      </Switch>
-    </div>
+    <Router>
+      <div>
+        <ul>
+          <li><Link to="/explore">Explore Page</Link></li>
+          <li><Link to="/profile">Profile Page</Link></li>
+          <li><Link to="/login">Login User</Link></li>
+          <li><Link to="/">Go Home</Link></li>
+        </ul>
+        <Switch>
+          <Route exact path="/explore" render={() => (<Explore />)} />
+          <Route exact path="/profile" render={() => (<Profile />)} />
+          <Route exact path="/login" render={() => (<Login />)} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 
