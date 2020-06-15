@@ -37,10 +37,11 @@ sequelize.authenticate()
 
 const User = sequelize.define('user', {
   username: { type: DataTypes.STRING, allowNull: false },
-  first_name: { type: DataTypes.STRING, allowNull: false },
-  last_name: { type: DataTypes.STRING, allowNull: false },
-  location: { type: DataTypes.STRING, allowNull: false },
-  email: { type: DataTypes.STRING, allowNull: false },
+  password: { type: DataTypes.STRING, allowNull: false },
+  first_name: { type: DataTypes.STRING, allowNull: true },
+  last_name: { type: DataTypes.STRING, allowNull: true },
+  location: { type: DataTypes.STRING, allowNull: true },
+  email: { type: DataTypes.STRING, allowNull: true },
   phone_number: { type: DataTypes.STRING },
   image_url: { type: DataTypes.STRING },
 }, { underscored: true });
