@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get('/login', (req, res) => {
   console.log(req);
-  // go to db and find user data 
-  // send data back the client side 
+  // go to db and find user data
+  // send data back the client side
 });
 
 router.post('/login',
