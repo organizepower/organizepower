@@ -8,7 +8,7 @@ const { User } = require('../db/index');
 
 const router = express.Router();
 
-router.get('/login', (req, res) => {
+router.get('/*', (req, res) => {
   console.log('this is from router.get in server/routes/login');
   // go to db and find user data
   // send data back the client side
