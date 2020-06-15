@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import auth from '../services/auth';
 
 const Login = () => {
   const [value, setValue] = useState('');
   const handleClick = () => {
-  //   // axios.post('/login')
-  //   //   .then(data => {
-  //   //     debugger
-  //   //     console.log(data);
-  //   //   })
-  //   //   .catch(err => console.log(err));
+    // send axios post to verify login
+    //   // axios.post('/login')
+                // this should be a message from passport saying the user is verified and may proceed
+    //   //     .then(data => {
+                  //if login was successful, use auth.login to update user auth status to true
+      //   //     //if not successful, leave auth status as false
+    //   //     console.log(data);
+    //   //   })
+    //   //   .catch(err => console.log(err));
+    // recieve go ahead from server that user is verified
+    // tell react to re-render the explore page? or some other authenticated page
+    // also update user auth status to true, or thumbs up or whatever
   };
 
   return (
     <form>
       <div>
         <p>Username:</p>
-        <input type="text" name="username" onChange={e => setValue(e.target.value)} />
+        <input type="text" name="username" onChange={(e) => setValue(e.target.value)} />
       </div>
       <div>
         <p>Password:</p>
