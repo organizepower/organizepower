@@ -1,13 +1,8 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import {
-  HashRouter as Router,
-  Switch,
-  Route,
   Link,
-  Redirect,
 } from 'react-router-dom';
-import Movement from '../movement/Movement.jsx';
 
 const MovementListItem = ({ movement }) => {
   const {
@@ -19,34 +14,19 @@ const MovementListItem = ({ movement }) => {
     emailsSent,
   } = movement;
 
-  const [showComponents, setShowComponents] = useState(false);
-
   // const cardImageStyle = {
   //   backgroundImage: `url(${imageUrl})`,
   // };
-
-  const handleClick = () => {
-    console.log('been clicked');
-    setShowComponents(true);
-  };
-
   return (
     <div className="bg-gray-400 h-50 pb-5 mb-10">
       <div>
         <img className="object-contain h-full w-48" src={imageUrl} alt={name} />
       </div>
       <div>
-        <p onClick={handleClick}>
+        <Link to="/movement">
           Movement Title:
           {name}
-        </p>
-        {showComponents
-          ? (
-            <Router>
-              <Redirect to="/movement" render={() => (<Movement />)} />
-            </Router>
-          )
-          : null}
+        </Link>
         <p>
           Location:
           {location}
