@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import getMovements from '../services/movements';
 import fakeData from '../services/fakeData';
-import MovementList from '../shared/MovementList.jsx';
+import MovementList from '../shared/MovementList';
 
 const Explore = () => {
   const [movements, setMovements] = useState(fakeData);
@@ -11,7 +11,7 @@ const Explore = () => {
   // this is currently returning a 404 error
   useEffect(() => {
     getMovements()
-      .then(results => setMovements(results));
+      .then((results) => setMovements(results));
   });
 
   return (
