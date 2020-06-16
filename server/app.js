@@ -13,6 +13,7 @@ const CLIENT_PATH = path.join(__dirname, '../client/dist');
 
 app.use(express.static(CLIENT_PATH));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // allow express to use sessions, not sure if the secret is necessary or helpful
