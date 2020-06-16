@@ -2,9 +2,6 @@
 import React, { useState } from 'react';
 import {
   HashRouter as Router,
-  Switch,
-  Route,
-  Link,
   Redirect,
 } from 'react-router-dom';
 import Movement from '../movement/Movement.jsx';
@@ -36,14 +33,14 @@ const MovementListItem = ({ movement }) => {
         <img className="object-contain h-full w-48" src={imageUrl} alt={name} />
       </div>
       <div>
-        <p onClick={handleClick}>
+        <div onClick={handleClick}>
           Movement Title:
           {name}
-        </p>
+        </div>
         {showComponents
           ? (
             <Router>
-              <Redirect to="/movement" render={() => (<Movement />)} />
+              <Redirect to="/movement" render={() => (<Movement movement={movement} />)} />
             </Router>
           )
           : null}
