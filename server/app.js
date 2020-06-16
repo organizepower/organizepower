@@ -5,7 +5,8 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 // const { apiRouter } = require('./api');
-const { router } = require('./routes/login-signup');
+const { router } = require('./routes/login');
+const { routes } = require('./routes');
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(express.static(CLIENT_PATH));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use('/', routes);
+app.use('/', router);
 
 // allow express to use sessions, not sure if the secret is necessary or helpful
 
@@ -37,7 +40,6 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-app.use('/', router);
 
 // basic "strategy" for user authentication
 // passport.use(new LocalStrategy((username, password, done) => {
