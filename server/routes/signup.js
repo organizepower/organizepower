@@ -1,9 +1,9 @@
 const { Router } = require('express');
 
-const movementRouter = Router();
+const signupRouter = Router();
 
 
 
 module.exports = {
-  movementRouter,
+  signupRouter,
 };
