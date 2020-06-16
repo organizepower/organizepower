@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import MovementListItem from './MovementListItem.jsx';
 
-const MovementList = ({ movements }) => {
+const MovementList = ({ movements = [] }) => {
   return (
     <div>
       <strong>Movements</strong>
