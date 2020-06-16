@@ -1,17 +1,18 @@
+/* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 
 import getMovements from '../services/movements';
-import fakeData from '../services/fakeData';
+import { fakeMovements } from '../services/fakeData';
 import MovementList from '../shared/MovementList.jsx';
 
 const Explore = () => {
-  const [movements, setMovements] = useState(fakeData);
+  const [movements, setMovements] = useState(fakeMovements);
 
   // example of a function that could be used to update movements
   // this is currently returning a 404 error
   useEffect(() => {
     getMovements()
-      .then(results => setMovements(results));
+      .then((results) => setMovements(results));
   });
 
   return (
