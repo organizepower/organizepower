@@ -14,7 +14,7 @@ import Login from '../login/Login.jsx';
 import Movement from '../movement/Movement.jsx';
 import SignUp from '../components/SignUp.jsx';
 
-const Navbar = ({ user, setUserState }) => {
+const Navbar = ({ user, setUserState, movements }) => {
   return (
     <Router>
       <div>
@@ -29,7 +29,7 @@ const Navbar = ({ user, setUserState }) => {
           <Route exact path="/explore" render={() => (<Explore user={user} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} />)} />
           <Route exact path="/login" render={() => (<Login />)} />
-          <Route exact path="/movement" render={() => (<Movement />)} />
+          <Route exact path="/movement" render={() => (<Movement movement={movements} />)} />
           <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>
       </div>
