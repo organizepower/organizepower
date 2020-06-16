@@ -12,15 +12,17 @@ import Profile from '../profile/Profile.jsx';
 import Explore from '../explore/Explore.jsx';
 import Login from '../login/Login.jsx';
 import Movement from '../movement/Movement.jsx';
+import SignUp from '../components/SignUp.jsx';
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, setUserState }) => {
   return (
     <Router>
       <div>
         <ul>
           <li><Link to="/explore">Explore Page</Link></li>
           <li><Link to="/profile">Profile Page</Link></li>
-          <li><Link to="/login">Login User</Link></li>
+          <li><Link to="/login">Login Page</Link></li>
+          <li><Link to="/signup">SignUp Page</Link></li>
           <li><Link to="/">Go Home</Link></li>
         </ul>
         <Switch>
@@ -28,6 +30,7 @@ const Navbar = ({ user }) => {
           <Route exact path="/profile" render={() => (<Profile user={user} />)} />
           <Route exact path="/login" render={() => (<Login />)} />
           <Route exact path="/movement" render={() => (<Movement />)} />
+          <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>
       </div>
     </Router>

@@ -12,11 +12,15 @@ import Login from '../login/Login.jsx';
 import { fakeUsers } from '../services/fakeData';
 
 const App = () => {
-  const user = fakeUsers[0];
+  const [user, setUser] = useState(fakeUsers[0]);
+  // const user = fakeUsers[0];
+  const setUserState = (u) => {
+    setUser(u);
+  };
 
   return (
     <div>
-      <Navbar user={user} />
+      <Navbar user={user} setUserState={setUserState} />
       {/* <MovementList /> */}
 
     </div>
