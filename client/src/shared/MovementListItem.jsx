@@ -23,24 +23,10 @@ const MovementListItem = ({ movement }) => {
         <img className="object-contain h-full w-48" src={imageUrl} alt={name} />
       </div>
       <div>
-<<<<<<< HEAD
         <Link to="/movement">
           Movement Title:
           {name}
         </Link>
-=======
-        <div onClick={handleClick}>
-          Movement Title:
-          {name}
-        </div>
-        {showComponents
-          ? (
-            <Router>
-              <Redirect to="/movement" render={() => (<Movement movement={movement} />)} />
-            </Router>
-          )
-          : null}
->>>>>>> d299162557d84d3de46cc0aa984d46f90fae5717
         <p>
           Location:
           {location}
