@@ -37,6 +37,7 @@ module.exports = {
     "react/button-has-type": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/label-has-associated-control": 0,
     "no-console": 0,
     "no-debugger": 1,
     "no-useless-constructor": 0,

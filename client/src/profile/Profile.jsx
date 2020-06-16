@@ -1,38 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import MovementList from '../shared/MovementList.jsx';
+import StartMovement from '../components/StartMovement.jsx';
 
-import { fakeMovements, fakeUsers } from '../services/fakeData';
+import { getMovementsFollowing, getMovementsLeading } from '../services/services';
+import { fakeMovements } from '../services/fakeData';
 
-const Profile = () => {
-  const [user, setUser] = useState(fakeUsers[0]);
-  // track states of leader and follower lists
+const Profile = ({ user }) => {
+  const {
+    username,
+    firstName,
+    lastName,
+    imageUrl,
+    bio,
+  } = user;
+
+  const [movementsLeading, setMovementsLeading] = useState(fakeMovements);
+  const [movementsFollowing, setMovementsFollowing] = useState(fakeMovements);
+  const [startClicked, setStartClicked] = useState(false);
+
+  useEffect(() => {
+    getMovementsLeading()
+      .then(results => setMovementsLeading(results));
+    getMovementsFollowing()
+      .then(results => setMovementsFollowing(results));
+  });
 
   return (
     <div className="p-8">
       <div className="lg:flex bg-gray-200 justify-between">
-        <img className="flex-col object-contain h-full w-48" src={user.imageUrl} alt={user.username} />
+        <img className="flex-col object-contain h-full w-48" src={imageUrl} alt={username} />
         <div className="m-8">
-          <p className="text-gray-900 font-bold text-xl mb-2">{user.firstName} {user.lastName}</p>
+          <p className="text-gray-900 font-bold text-xl mb-2">{firstName} {lastName}</p>
           <p className="text-gray-900 font-bold text-lg mb-2">User bio:</p>
-          <p className="">{user.bio}</p>
+          <p className="">{bio}</p>
         </div>
       </div>
 
-      <div className="m-4">
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow m-4">Start a Movement</button>
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow m-4">Join a Movement</button>
+      <div className="mt-4 mb-4">
+        <button onClick={() => setStartClicked(!startClicked)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Start a Movement</button>
+        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Join a Movement</button>
       </div>
-
+      {startClicked && (
+        <div className="">
+          <StartMovement />
+        </div>
+      )}
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
         <p className="text-gray-900 font-bold text-xl mb-2">Leader of These Movements:</p>
-        <MovementList />
+        <MovementList movements={movementsLeading} />
       </div>
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
         <p className="text-gray-900 font-bold text-xl mb-2">Member of These Movements:</p>
-        <MovementList />
+        <MovementList movements={movementsFollowing} />
       </div>
-
     </div>
   );
 };
