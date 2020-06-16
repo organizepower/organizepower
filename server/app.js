@@ -3,9 +3,12 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const { sequelize } = require('./db/index');
 const passport = require('./auth/passport');
 // const { apiRouter } = require('./api');
 const { router } = require('./routes/login');
+require('dotenv').config();
 
 const app = express();
 
@@ -16,11 +19,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// allow express to use sessions, not sure if the secret is necessary or helpful
+const sessionStore = new SequelizeStore({
+  db: sequelize,
+});
 
+sessionStore.sync();
+
+// allow express to use sessions, not sure if the secret is necessary or helpful
 // express middleware used to retrieve user sessions from a datastore can find the session object because the session Id is stored in the cookie, which is provided to the server on every request
 // NOTE: cookie-parser middleware is no longer needed
-app.use(session({ secret: 'cats' }));
+app.use(session({
+  secret: process.env.SECRET || 'secretcat',
+  resave: false,
+  saveUninitialized: true,
+  store: sessionStore,
+  cookie: {
+    // secure: true // requires HTTPS connection
+  },
+}));
 
 // passport middleware must be used after express-session
 app.use(passport.initialize());
