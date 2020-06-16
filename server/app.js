@@ -2,12 +2,11 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-const { User } = require('./db/index');
+const passport = require('passport');
 // const { apiRouter } = require('./api');
 const { router } = require('./routes/login');
+const { routes } = require('./routes');
 
 const app = express();
 
@@ -15,13 +14,24 @@ const CLIENT_PATH = path.join(__dirname, '../client/dist');
 
 app.use(express.static(CLIENT_PATH));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use('/', routes);
+app.use('/', router);
 
 // allow express to use sessions, not sure if the secret is necessary or helpful
 
 // express middleware used to retrieve user sessions from a datastore can find the session object because the session Id is stored in the cookie, which is provided to the server on every request
 // NOTE: cookie-parser middleware is no longer needed
-app.use(session({ secret: 'cats' }));
+app.use(session({
+  // secret: process.env.SECRET,
+  secret: 'some secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
+  },
+}));
 
 // passport middleware must be used after express-session
 app.use(passport.initialize());
@@ -30,12 +40,6 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-passport.use(new LocalStrategy((username, password, done) => {
-  return User.findOrCreate({ where: { username, password } }).then((user) => {
-    console.log(user);
-    return done(null, user);
-  });
-}));
 
 // basic "strategy" for user authentication
 // passport.use(new LocalStrategy((username, password, done) => {
@@ -53,13 +57,7 @@ passport.use(new LocalStrategy((username, password, done) => {
 // }));
 
 // these two methods will keep user session alive
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
 
 // app.post('/login',
 //   passport.authenticate('local', {
@@ -68,7 +66,6 @@ passport.deserializeUser((user, done) => {
 //   }));
 
 // app.use('/', apiRouter);
-app.use('/', router);
 
 module.exports = {
   app,
