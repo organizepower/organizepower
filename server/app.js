@@ -3,10 +3,13 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
+const { sequelize } = require('./db/index');
 // const { apiRouter } = require('./api');
-const { router } = require('./routes/login');
+const { router } = require('./routes/login-signup');
 const { routes } = require('./routes');
+require('dotenv').config();
 
 const app = express();
 
@@ -19,17 +22,23 @@ app.use(cors());
 app.use('/', routes);
 app.use('/', router);
 
-// allow express to use sessions, not sure if the secret is necessary or helpful
+const sessionStore = new SequelizeStore({
+  db: sequelize,
+});
 
+sessionStore.sync();
+
+// allow express to use sessions, not sure if the secret is necessary or helpful
 // express middleware used to retrieve user sessions from a datastore can find the session object because the session Id is stored in the cookie, which is provided to the server on every request
 // NOTE: cookie-parser middleware is no longer needed
 app.use(session({
-  // secret: process.env.SECRET,
-  secret: 'some secret',
+  secret: process.env.SECRET || 'secretcat',
   resave: false,
   saveUninitialized: true,
+  store: sessionStore,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
+    // secure: true // requires HTTPS connection
+    // maxAge: 1000 * 60 * 60 * 24 // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
   },
 }));
 
