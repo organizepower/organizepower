@@ -5,10 +5,11 @@
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 
-const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_USER = process.env.DB_USER || 'root';
 const DB_PASS = process.env.DB_PASS || '';
 const DB_NAME = process.env.DB_NAME || 'op';
+const DB_INSTANCE = process.env.DB_INSTANCE || '';
+const DB_HOST = process.env.NODE_ENV === 'production' ? `/cloudsql/${process.env.DB_INSTANCE}` : 'localhost';
 
 // create connection btwn sequelize & mysql database
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
