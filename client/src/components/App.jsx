@@ -8,7 +8,7 @@ import { fakeUsers, fakeMovements } from '../services/fakeData';
 
 const App = () => {
   const [user, setUser] = useState(fakeUsers[0]);
-  const movements = fakeMovements;
+  const movements = fakeMovements[0];
   // const user = fakeUsers[0];
   const setUserState = (u) => {
     setUser(u);

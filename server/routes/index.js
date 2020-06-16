@@ -9,7 +9,7 @@ const { signupRouter } = require('./signup');
 
 const routes = Router();
 
-routes.use('/movements', movementRouter);
+routes.use('/movement', movementRouter);
 routes.use('/explore', exploreRouter);
 routes.use('/profile', profileRouter);
 routes.use('/signup', signupRouter);
