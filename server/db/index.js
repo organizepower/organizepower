@@ -115,8 +115,8 @@ const UserMovement = sequelize.define('userMovement', {
 
 // sync sequelize to create tables in db before adding associations
 // force: true will overwrite the tables, good for dev:
-// sequelize.sync({ force: true });
-sequelize.sync(); // will not drop tables everytime
+sequelize.sync({ force: true });
+// sequelize.sync(); // will not drop tables everytime
 
 
 // add user id foreign key to all movements
