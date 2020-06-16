@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import { getMovements } from '../services/services';
 import { fakeMovements } from '../services/fakeData';
-import MovementList from '../shared/MovementList.jsx';
+import MovementList from './MovementList.jsx';
 
 const Explore = ({ user }) => {
   const [movements, setMovements] = useState(fakeMovements);

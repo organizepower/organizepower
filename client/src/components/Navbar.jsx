@@ -8,11 +8,11 @@ import {
 } from 'react-router-dom';
 
 // import MovementList from './MovementList';
-import Profile from '../profile/Profile.jsx';
-import Explore from '../explore/Explore.jsx';
-import Login from '../login/Login.jsx';
-import Movement from '../movement/Movement.jsx';
-import SignUp from '../components/SignUp.jsx';
+import Profile from './Profile.jsx';
+import Explore from './Explore.jsx';
+import Login from './Login.jsx';
+import Movement from './Movement.jsx';
+import SignUp from './SignUp.jsx';
 
 const Navbar = ({ user, setUserState, movements }) => {
   return (

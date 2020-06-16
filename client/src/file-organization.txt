@@ -1,0 +1,25 @@
+From: https://dev.to/farazamiruddin/an-opinionated-guide-to-react-folder-structure-file-naming-1l7i
+
+/src
+  /assets
+  /components
+  /contexts
+  /lib
+  /pages
+  /services
+  /styles
+  AppRoutes.tsx
+  index.tsx
+
+Here's a quick overview of what are in these folders.
+
+/assets - images, logos.
+/components - components that are shared between multiple pages.
+/contexts - I keep all of the context components in a separate folder, to not confuse them with plain old react components. A common context I like to implement is UserAuthContext.tsx.
+/lib - When using a 3rd party library, let's say like Firebase for example, I like to put all of the initialization in a folder called lib. I'll then export the instance of that initialized library.
+/pages - Pages are also react components, but they represent a page or screen of an app. These map 1:1 with a route in the AppRoutes.tsx file.
+/services - All of my api methods are put in a folder called services. I like to do this so that I don't put the business logic of an API call directly into a component, and so that any component can easily reference a service that it needs.
+/styles - I very rarely write custom css, instead opting to use a framework like tailwindcss. This styles folder is where my generated styles and any custom css goes.
+
+AppRoutes - This file contains all the routes of my application. I've been using react-router for a while, and I like to have one file that contains all my routes so that I can see it all at a glance.
+index.tsx - This is your typical index file, where you render your React app to the document.
