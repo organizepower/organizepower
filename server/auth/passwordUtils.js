@@ -13,6 +13,7 @@ function validPassword(password, hash, salt) {
   const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
   return hash === hashVerify;
 }
+
 /**
 *
 * @param {*} password - The password string that the user inputs to the password field in the register form
