@@ -1,0 +1,1 @@
+maybe assets (images, logos, etc) should live here? maybe not. this file ensures that the folder is added to git.

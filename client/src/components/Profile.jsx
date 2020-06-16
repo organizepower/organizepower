@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import MovementList from '../shared/MovementList.jsx';
-import StartMovement from '../components/StartMovement.jsx';
+import MovementList from './MovementList.jsx';
+import StartMovement from './StartMovement.jsx';
 
 import { getMovementsFollowing, getMovementsLeading } from '../services/services';
 import { fakeMovements } from '../services/fakeData';
