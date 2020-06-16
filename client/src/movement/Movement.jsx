@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { fakeMovements } from '../services/fakeData';
 
-const Movement = () => {
-  const [movements, setMovements] = useState(fakeMovements[0]);
+
+const Movement = ({ movement }) => {
+  const {
+    id,
+    name,
+    imageUrl,
+    description,
+  } = movement;
+  // const [movements, setMovements] = useState(fakeMovements[0]);
   // create a function to store who follows a movement
   const followMovement = () => {
     // store user id who follows a movements in movements tables
@@ -19,11 +25,11 @@ const Movement = () => {
     <div>
       <div className="movement">
         <p className="text-gray-900 font-bold text-xl mb-2">Movement Title</p>
-        <p className="movement">{movements.name}</p>
+        <p className="movement">{name}</p>
         <p className="movement">Movement image</p>
-        <img className="flex-col object-contain h-full w-48" src={movements.imageUrl} alt={movements.id} />
+        <img className="flex-col object-contain h-full w-48" src={imageUrl} alt={id} />
         <p className="text-gray-900 font-bold text-xl mb-2">Movement Description</p>
-        <p className="movement">{movements.description}</p>
+        <p className="movement">{description}</p>
         <div>
           <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={followMovement}>Follow Movement</button>
         </div>
