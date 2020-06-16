@@ -7,7 +7,8 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const { sequelize } = require('./db/index');
 const passport = require('./auth/passport');
 // const { apiRouter } = require('./api');
-const { router } = require('./routes/login-signup');
+const { router } = require('./routes/login');
+const { routes } = require('./routes');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,8 @@ app.use(express.static(CLIENT_PATH));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use('/', routes);
+app.use('/', router);
 
 const sessionStore = new SequelizeStore({
   db: sequelize,
@@ -46,7 +49,6 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-app.use('/', router);
 
 // basic "strategy" for user authentication
 // passport.use(new LocalStrategy((username, password, done) => {
