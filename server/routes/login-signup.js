@@ -56,8 +56,7 @@ router.post('/signup', (req, res, next) => {
     bio,
   };
   addUser(newUser)
-    .then(user => console.log('========> from .then after addUser', user))
-    .catch(err => console.log(err));
+
   // res.redirect('/login');
 });
 
