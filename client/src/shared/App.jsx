@@ -9,10 +9,14 @@ import MovementList from './MovementList.jsx';
 import Profile from '../profile/Profile.jsx';
 import Login from '../login/Login.jsx';
 
+import { fakeUsers } from '../services/fakeData';
+
 const App = () => {
+  const user = fakeUsers[0];
+
   return (
     <div>
-      <Navbar />
+      <Navbar user={user} />
       {/* <MovementList /> */}
 
     </div>
