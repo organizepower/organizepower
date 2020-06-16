@@ -44,6 +44,7 @@ const User = sequelize.define('user', {
   email: { type: DataTypes.STRING, allowNull: true },
   phone_number: { type: DataTypes.STRING },
   image_url: { type: DataTypes.STRING },
+  bio: { type: DataTypes.STRING },
 }, { underscored: true });
 
 
