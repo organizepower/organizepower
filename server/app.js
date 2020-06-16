@@ -5,7 +5,7 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 // const { apiRouter } = require('./api');
-const { router } = require('./routes/login');
+const { router } = require('./routes/login-signup');
 const { routes } = require('./routes');
 
 const app = express();
