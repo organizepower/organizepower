@@ -7,7 +7,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const { sequelize } = require('./db/index');
 const passport = require('./auth/passport');
 // const { apiRouter } = require('./api');
-const { router } = require('./routes/login');
+const { router } = require('./routes/login-signup');
 require('dotenv').config();
 
 const app = express();
@@ -35,6 +35,7 @@ app.use(session({
   store: sessionStore,
   cookie: {
     // secure: true // requires HTTPS connection
+    maxAge: 1000 * 60 * 60 * 24 // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
   },
 }));
 
