@@ -13,7 +13,7 @@ import Explore from '../explore/Explore.jsx';
 import Login from '../login/Login.jsx';
 import Movement from '../movement/Movement.jsx';
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, movements }) => {
   return (
     <Router>
       <div>
@@ -27,7 +27,7 @@ const Navbar = ({ user }) => {
           <Route exact path="/explore" render={() => (<Explore user={user} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} />)} />
           <Route exact path="/login" render={() => (<Login />)} />
-          <Route exact path="/movement" render={() => (<Movement />)} />
+          <Route exact path="/movement" render={() => (<Movement movement={movements} />)} />
         </Switch>
       </div>
     </Router>
