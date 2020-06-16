@@ -15,7 +15,7 @@ const SignUp = ({ setUserState }) => {
   });
 
   const handleSubmit = () => {
-
+    console.log(user);
   };
 
   return (
@@ -26,7 +26,7 @@ const SignUp = ({ setUserState }) => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
               Username
             </label>
-            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Username" />
+            <input onChange={(e) => setUser()} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Username" />
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
