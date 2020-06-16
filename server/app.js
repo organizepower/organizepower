@@ -2,10 +2,8 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-const { User } = require('./db/index');
+const passport = require('./auth/passport');
 // const { apiRouter } = require('./api');
 const { router } = require('./routes/login');
 
@@ -30,12 +28,7 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-passport.use(new LocalStrategy((username, password, done) => {
-  return User.findOrCreate({ where: { username, password } }).then((user) => {
-    console.log(user);
-    return done(null, user);
-  });
-}));
+app.use('/', router);
 
 // basic "strategy" for user authentication
 // passport.use(new LocalStrategy((username, password, done) => {
@@ -53,13 +46,7 @@ passport.use(new LocalStrategy((username, password, done) => {
 // }));
 
 // these two methods will keep user session alive
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
 
 // app.post('/login',
 //   passport.authenticate('local', {
@@ -68,7 +55,6 @@ passport.deserializeUser((user, done) => {
 //   }));
 
 // app.use('/', apiRouter);
-app.use('/', router);
 
 module.exports = {
   app,
