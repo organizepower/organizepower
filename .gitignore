@@ -1,3 +1,5 @@
 node_modules
 .env
 client/dist/bundle.js*
+app.yaml
+serverless.yaml
