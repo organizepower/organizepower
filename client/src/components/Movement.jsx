@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 const Movement = ({ movement }) => {
+  console.log(movement);
   const {
     id,
     name,
@@ -21,6 +23,17 @@ const Movement = ({ movement }) => {
   const textMovement = () => {
     // axios request to twilio api
   };
+
+  useEffect(() => {
+    axios.get('/movement')
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
   return (
     <div>
       <div className="movement">
