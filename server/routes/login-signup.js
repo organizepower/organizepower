@@ -2,8 +2,10 @@
 
 const passport = require('passport');
 const express = require('express');
+const crypto = require('crypto');
 const { User } = require('../db/index');
 const { genPassword } = require('../auth/passwordUtils');
+const { addUser } = require('../db/methods');
 
 const router = express.Router();
 
@@ -26,6 +28,7 @@ router.post('/login',
   });
 
 router.post('/signup', (req, res, next) => {
+  console.log(req);
   const saltHash = genPassword(req.body.password);
 
   const { salt } = saltHash;
@@ -40,7 +43,7 @@ router.post('/signup', (req, res, next) => {
     image_url,
     bio,
   } = req.body;
-  const newUser = new User({
+  const newUser = {
     username,
     hash,
     salt,
@@ -51,12 +54,10 @@ router.post('/signup', (req, res, next) => {
     phone_number,
     image_url,
     bio,
-  });
-  newUser.create()
-    .then((user) => {
-      console.log(user);
-    });
-  res.redirect('/login');
+  };
+  addUser(newUser)
+
+  // res.redirect('/login');
 });
 
 module.exports.router = router;
