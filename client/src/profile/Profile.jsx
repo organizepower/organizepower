@@ -9,27 +9,30 @@ const Profile = () => {
   // track states of leader and follower lists
 
   return (
-    <div>
+    <div className="p-8">
       <div className="lg:flex bg-gray-200 justify-between">
         <img className="flex-col object-contain h-full w-48" src={user.imageUrl} alt={user.username} />
-        <div className="">
-          <p className="">User bio:</p>
+        <div className="m-8">
+          <p className="text-gray-900 font-bold text-xl mb-2">{user.firstName} {user.lastName}</p>
+          <p className="text-gray-900 font-bold text-lg mb-2">User bio:</p>
           <p className="">{user.bio}</p>
         </div>
       </div>
 
-      <div>
-        <button>Start a Movement</button>
-        <button>Join a Movement</button>
+      <div className="m-4">
+        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow m-4">Start a Movement</button>
+        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow m-4">Join a Movement</button>
       </div>
-      <div>
-        <h1>Leader of These Movements:</h1>
+
+      <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
+        <p className="text-gray-900 font-bold text-xl mb-2">Leader of These Movements:</p>
         <MovementList />
       </div>
-      <div>
-        <h1>Member of These Movements:</h1>
+      <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
+        <p className="text-gray-900 font-bold text-xl mb-2">Member of These Movements:</p>
         <MovementList />
       </div>
+
     </div>
   );
 };

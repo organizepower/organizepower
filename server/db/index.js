@@ -14,7 +14,7 @@ const DB_NAME = process.env.DB_NAME || 'op';
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   host: DB_HOST,
   dialect: 'mysql',
-  // logging: false, // toggle logging SQL in console
+  logging: false, // toggle logging SQL in console
 });
 
 // test the connection
