@@ -25,8 +25,9 @@ function validPassword(password, hash, salt) {
 * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
 */
 function genPassword(password) {
+  const pw = Buffer.from(password, 'hex');
   const salt = crypto.randomBytes(32).toString('hex');
-  const genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+  const genHash = crypto.pbkdf2Sync(pw, salt, 10000, 64, 'sha512').toString('hex');
 
   return {
     salt,
