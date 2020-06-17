@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   HashRouter as Router,
   Switch,
@@ -14,7 +15,20 @@ import Login from './Login.jsx';
 import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 
-const Navbar = ({ user, setUserState, movements }) => {
+const Navbar = ({ user, setUserState, currentMovement }) => {
+  const { id } = currentMovement;
+
+  function handleClick(id) {
+    axios.get(`/movement/:${id}`)
+      .then(res => {
+        // const [currentMovement, setCurrentMovement] = useState(res.data);
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   return (
     <Router>
       <div>
@@ -26,9 +40,9 @@ const Navbar = ({ user, setUserState, movements }) => {
           <li><Link to="/">Go Home</Link></li>
         </ul>
         <Switch>
-          <Route exact path={`/movement/${movements.id}`} render={() => (<Movement movement={movements} />)} />
-          <Route exact path="/explore" render={() => (<Explore user={user} />)} />
-          <Route exact path="/profile" render={() => (<Profile user={user} />)} />
+          <Route exact path={`/movement/${id}`} render={() => (<Movement currentMovement={currentMovement} />)} />
+          <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
+          <Route exact path="/profile" render={() => (<Profile user={user} handleClick={handleClick} />)} />
           <Route exact path="/login" render={() => (<Login />)} />
           <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>
@@ -71,7 +85,7 @@ const Navbar = ({ user, setUserState, movements }) => {
 //   );
 // }
 
-{/* <Router>
+{ /* <Router>
 <strong>OrganizePower</strong>
 <div>
   <nav>
@@ -92,7 +106,7 @@ const Navbar = ({ user, setUserState, movements }) => {
   </nav>
 
   {/* A <Switch> looks through its children <Route>s and
-      renders the first one that matches the current URL. */}
+      renders the first one that matches the current URL. */ }
 //   <Switch>
 //     <Route path="/MovementList">
 //       <MovementList />
