@@ -4,12 +4,9 @@ const { exploreRouter } = require('./explore');
 const { profileRouter } = require('./profile');
 const { signupRouter } = require('./signup');
 
-// const { movementRouter } = require('./movements');
-// const { movementRouter } = require('./movements');
-
 const routes = Router();
 
-routes.use('/movement', movementRouter);
+routes.use('/movement:id', movementRouter);
 routes.use('/explore', exploreRouter);
 routes.use('/profile', profileRouter);
 routes.use('/signup', signupRouter);

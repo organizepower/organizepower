@@ -26,10 +26,10 @@ const Navbar = ({ user, setUserState, movements }) => {
           <li><Link to="/">Go Home</Link></li>
         </ul>
         <Switch>
+          <Route exact path={`/movement:${movements.id}`} render={() => (<Movement movement={movements} />)} />
           <Route exact path="/explore" render={() => (<Explore user={user} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} />)} />
           <Route exact path="/login" render={() => (<Login />)} />
-          <Route exact path="/movement" render={() => (<Movement movement={movements} />)} />
           <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>
       </div>
