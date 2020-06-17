@@ -31,7 +31,6 @@ const SignUp = ({ setUserState }) => {
     axios.post('/signup', { user })
       .then((data) => {
         console.log(data)
-        debugger;
       })
       .catch((err) => console.error(err));
   };

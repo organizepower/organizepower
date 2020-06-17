@@ -8,7 +8,7 @@ const Login = () => {
     // send axios post to verify login
     console.log(value);
     debugger;
-    axios.post('/login', { username: value })
+    axios.post('/login', { value })
       // this should be a message from passport saying the user is verified and may proceed
       .then(data => {
         debugger;

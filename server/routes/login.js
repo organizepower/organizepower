@@ -2,13 +2,16 @@
 
 const passport = require('passport');
 const express = require('express');
+const { Router } = require('express');
 
-const loginRouter = express.Router();
+const loginRouter = Router();
 
-loginRouter.post('/login',
-  passport.authenticate('local', { failureRedirect: '/login' }),
+loginRouter.post('/',
+  // passport.authenticate('login', { failureRedirect: '/login' }, (user) => {
+  //   console.log('passport.authenticate did this', user);
+  // }),
   (req, res) => {
-    console.log('logged in', req.user);
+    console.log('logged in', req);
     const { username, password } = req.body;
     const userInfo = {
       username,

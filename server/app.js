@@ -5,7 +5,9 @@ const cors = require('cors');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
+const localStrat = require('./auth/passport');
 const { sequelize } = require('./db/index');
+const { User } = require('./db/index');
 // const { apiRouter } = require('./api');
 // const { router } = require('./routes/login');
 const { routes } = require('./routes');
@@ -20,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/', routes);
+passport.use('login', localStrat);
 // app.use('/', router);
 
 const sessionStore = new SequelizeStore({
@@ -49,6 +52,16 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
+passport.serializeUser((user, cb) => {
+  cb(null, user.id);
+});
+
+passport.deserializeUser((id, cb) => {
+  User.findById(id, (err, user) => {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
 
 // basic "strategy" for user authentication
 // passport.use(new LocalStrategy((username, password, done) => {
