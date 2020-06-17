@@ -7,7 +7,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
 const { sequelize } = require('./db/index');
 // const { apiRouter } = require('./api');
-const { router } = require('./routes/login-signup');
+// const { router } = require('./routes/login');
 const { routes } = require('./routes');
 require('dotenv').config();
 
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/', routes);
-app.use('/', router);
+// app.use('/', router);
 
 const sessionStore = new SequelizeStore({
   db: sequelize,
