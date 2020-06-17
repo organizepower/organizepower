@@ -10,13 +10,26 @@ const DB_PASS = process.env.DB_PASS || '';
 const DB_NAME = process.env.DB_NAME || 'op';
 const DB_INSTANCE = process.env.DB_INSTANCE || '';
 const DB_HOST = process.env.NODE_ENV === 'production' ? `/cloudsql/${process.env.DB_INSTANCE}` : 'localhost';
+let sequelize = null;
 
-// create connection btwn sequelize & mysql database
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-  host: DB_HOST,
-  dialect: 'mysql',
-  logging: false, // toggle logging SQL in console
-});
+// production (cloud sql) database connection
+if (DB_INSTANCE !== '') {
+  sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+    host: DB_HOST,
+    dialect: 'mysql',
+    logging: false, // toggle logging SQL in console
+    dialectOptions: {
+      socketPath: `/cloudsql/${DB_INSTANCE}`,
+    },
+  });
+// development (local) database connection
+} else {
+  sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+    host: DB_HOST,
+    dialect: 'mysql',
+    logging: false, // toggle logging SQL in console
+  });
+}
 
 // test the connection
 sequelize.authenticate()
