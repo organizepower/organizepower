@@ -5,7 +5,7 @@ import { getMovements } from '../services/services';
 import { fakeMovements } from '../services/fakeData';
 import MovementList from './MovementList.jsx';
 
-const Explore = ({ user }) => {
+const Explore = ({ user, handleClick }) => {
   const [movements, setMovements] = useState(fakeMovements);
 
   // example of a function that could be used to update movements
@@ -18,7 +18,7 @@ const Explore = ({ user }) => {
   return (
     <div>
       <button className="discover-movements" type="button">Fight the Power</button>
-      <MovementList movements={movements} />
+      <MovementList movements={movements} handleClick={handleClick} />
     </div>
   );
 };
