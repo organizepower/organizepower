@@ -3,12 +3,13 @@ import axios from 'axios';
 import auth from '../services/auth';
 
 const Login = () => {
-  const [value, setValue] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const handleClick = () => {
     // send axios post to verify login
-    console.log(value);
+    console.log(username);
     debugger;
-    axios.post('/login', { value })
+    axios.post('/login', { username, password })
       // this should be a message from passport saying the user is verified and may proceed
       .then(data => {
         debugger;
@@ -26,11 +27,11 @@ const Login = () => {
     <form>
       <div>
         <p>Username:</p>
-        <input type="text" name="username" onChange={(e) => setValue(e.target.value)} />
+        <input type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
       </div>
       <div>
         <p>Password:</p>
-        <input type="password" name="password" />
+        <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} />
       </div>
       <div>
         <input type="submit" value="Log In" onClick={handleClick} />
