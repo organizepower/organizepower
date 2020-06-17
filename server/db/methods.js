@@ -5,7 +5,6 @@ const db = require('./index');
 // only one table for all users - organizers & participants
 // all users are participants, some users are organizers
 
-
 // ADD NEW USER
 const addUser = async(userObj) => {
   try {
@@ -23,7 +22,6 @@ const addUser = async(userObj) => {
 //   email: 'bobby@gmail.com',
 //   phone_number: '504-123-4567',
 // });
-
 
 // GET USER BY USERNAME
 const getUserByUsername = async(username) => {
@@ -49,7 +47,6 @@ const getUserById = async(userId) => {
 
 // getUserById(1);
 
-
 // EDIT USER BY FIELD
 const editUserField = async(userId, prop, newValue) => {
   try {
@@ -61,7 +58,6 @@ const editUserField = async(userId, prop, newValue) => {
 };
 
 // editUserField(1, 'username', 'bobbymcgee');
-
 
 // UPDATE ENTIRE USER'S RECORD
 const editUser = async(userObj) => {
@@ -83,17 +79,17 @@ const editUser = async(userObj) => {
 //   phone_number: '504-123-4567',
 // });
 
-
 // ORGANIZER ADDS NEW MOVEMENT
 // one to many relationship
-const addMovement = async(campaignObj, userId) => {
+const addMovement = async(movementObj, userId) => {
   // get the organizer's record
   try {
     const user = await db.User.findOne({ where: { id: userId } });
     // create the movement
-    const movement = await db.Movement.create(campaignObj);
+    const movement = await db.Movement.create(movementObj);
     // set the user (organizer) foreign key
     movement.setUser(user);
+    return movement;
   } catch (err) {
     console.error(err);
   }
@@ -136,6 +132,7 @@ const getMovement = async(movementId) => {
   }
 };
 
+/*
 // ADD NEW POLITICIAN
 const addPolitician = async(politicianObj) => {
   try {
@@ -151,7 +148,7 @@ const addPolitician = async(politicianObj) => {
 //   location: 'New Orleans',
 //   email: 'mayor@nola.gov',
 //   mailing_address: 'xyz',
-//   organization: 'City Goverment',
+//   organization: 'City Government',
 //   position_type: 'mayor',
 // });
 
@@ -164,7 +161,6 @@ const editPoliticianField = async(politicianId, prop, newValue) => {
     console.error(err);
   }
 };
-
 
 // UPDATE ENTIRE POLITICIAN'S RECORD
 const editPolitician = async(politicianObj) => {
@@ -189,7 +185,7 @@ const linkPoliticianMovement = async(politicianId, movementId) => {
 };
 
 // linkPoliticianMovement(1, 1);
-
+*/
 
 // USER JOINS MOVEMENT
 // pass in user and movemenet ids
@@ -205,7 +201,7 @@ const linkUserMovement = async(userId, movementId) => {
 
 // linkUserMovement(1, 1);
 
-
+/*
 // USER COMMENTS ON MOVEMENT
 const addComment = async(userId, movementId, message) => {
   try {
@@ -221,7 +217,6 @@ const addComment = async(userId, movementId, message) => {
 
 // addComment(1, 1, 'Test comment');
 
-
 // ORGANIZER ADDS PROMPT
 const addPrompt = async(politicianId, movementId, message) => {
   try {
@@ -236,19 +231,19 @@ const addPrompt = async(politicianId, movementId, message) => {
 };
 
 // addPrompt(1, 1, 'Test prompt');
-
+*/
 module.exports = {
-  addComment,
-  addPrompt,
+  // addComment,
+  // addPrompt,
   addMovement,
-  addPolitician,
+  // addPolitician,
   addUser,
-  linkPoliticianMovement,
+  // linkPoliticianMovement,
   linkUserMovement,
   editMovement,
   editMovementField,
-  editPolitician,
-  editPoliticianField,
+  // editPolitician,
+  // editPoliticianField,
   editUser,
   editUserField,
   getUserById,
