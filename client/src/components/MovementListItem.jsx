@@ -4,8 +4,9 @@ import {
   Link,
 } from 'react-router-dom';
 
-const MovementListItem = ({ movement }) => {
+const MovementListItem = ({ movement, handleClick }) => {
   const {
+    id,
     imageUrl,
     name,
     location,
@@ -23,7 +24,7 @@ const MovementListItem = ({ movement }) => {
         <img className="object-contain h-full w-48" src={imageUrl} alt={name} />
       </div>
       <div>
-        <Link to="/movement">
+        <Link to={`/movement/${id}`} onClick={handleClick}>
           Movement Title:
           {name}
         </Link>
