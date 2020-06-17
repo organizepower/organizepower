@@ -14,14 +14,14 @@ movementRouter.get('/:id', (req, res) => {
   // this route will get the clicked on movement by the id
   console.log('movement routes been hit');
   // save to a variable
-  // getMovement(req.body.params)
-  //   .then(movement => {
-  //     console.log(movement);
-  //     res.send(movement);
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
+  getMovement(req.body.params)
+    .then(movement => {
+      console.log(movement);
+      res.send(movement);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 

@@ -14,15 +14,16 @@ const App = () => {
     setUser(u);
   };
 
-  // useEffect(() => {
-  //   axios.get(`/movement/:${currentMovement.id}`)
-  //     .then(res => {
-  //       console.log(res);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // });
+  useEffect(() => {
+    axios.get(`/movement/:${currentMovement.id}`)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
   return (
     <div>
       <Navbar user={user} setUserState={setUserState} currentMovement={currentMovement} />
