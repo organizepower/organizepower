@@ -22,6 +22,7 @@ const Movement = ({ currentMovement }) => {
   // create a function to send a request to twilio
   const textMovement = () => {
     // axios request to twilio api
+    // axios.post()
   };
 
   // useEffect(() => {
