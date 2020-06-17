@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 const Movement = ({ movement }) => {
   console.log(movement);
   const {
@@ -25,7 +24,7 @@ const Movement = ({ movement }) => {
   };
 
   useEffect(() => {
-    axios.get('/movement')
+    axios.get(`/movement:${id}`)
       .then(res => {
         console.log(res);
       })
