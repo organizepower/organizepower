@@ -24,7 +24,7 @@ const Movement = ({ movement }) => {
   };
 
   useEffect(() => {
-    axios.get(`/movement:${id}`)
+    axios.get(`/movement/:${id}`)
       .then(res => {
         console.log(res);
       })

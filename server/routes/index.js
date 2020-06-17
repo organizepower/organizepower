@@ -6,7 +6,7 @@ const { signupRouter } = require('./signup');
 
 const routes = Router();
 
-routes.use('/movement:id', movementRouter);
+routes.use('/movement', movementRouter);
 routes.use('/explore', exploreRouter);
 routes.use('/profile', profileRouter);
 routes.use('/signup', signupRouter);
