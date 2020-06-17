@@ -116,7 +116,6 @@ const editMovementField = async(movementId, prop, newValue) => {
   }
 };
 
-
 // UPDATE ENTIRE MOVEMENT'S RECORD
 const editMovement = async(movementObj) => {
   try {
@@ -127,6 +126,15 @@ const editMovement = async(movementObj) => {
   }
 };
 
+// Get Movement by ID
+const getMovement = async(movementId) => {
+  try {
+    const movement = await db.Movement.findOne({ where: { id: movementId } });
+    return movement;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // ADD NEW POLITICIAN
 const addPolitician = async(politicianObj) => {
@@ -245,4 +253,5 @@ module.exports = {
   editUserField,
   getUserById,
   getUserByUsername,
+  getMovement,
 };
