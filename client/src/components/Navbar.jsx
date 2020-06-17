@@ -18,7 +18,7 @@ import SignUp from './SignUp.jsx';
 const Navbar = ({ user, setUserState, currentMovement }) => {
   const { id } = currentMovement;
 
-  function handleClick(id) {
+  function handleClick() {
     axios.get(`/movement/:${id}`)
       .then(res => {
         // const [currentMovement, setCurrentMovement] = useState(res.data);
