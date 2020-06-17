@@ -4,6 +4,7 @@ const { exploreRouter } = require('./explore');
 const { profileRouter } = require('./profile');
 const { signupRouter } = require('./signup');
 const { loginRouter } = require('./login');
+const { twilioRouter } = require('./twilio');
 
 const routes = Router();
 
@@ -12,6 +13,7 @@ routes.use('/explore', exploreRouter);
 routes.use('/profile', profileRouter);
 routes.use('/signup', signupRouter);
 routes.use('/login', loginRouter);
+routes.use('/twilio', twilioRouter);
 
 module.exports = {
   routes,
