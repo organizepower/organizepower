@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Movement = ({ movement }) => {
-  console.log(movement);
+const Movement = ({ currentMovement }) => {
+  console.log(currentMovement);
   const {
     id,
     name,
     imageUrl,
     description,
-  } = movement;
+  } = currentMovement;
+
   // const [movements, setMovements] = useState(fakeMovements[0]);
   // create a function to store who follows a movement
   const followMovement = () => {
@@ -23,15 +24,15 @@ const Movement = ({ movement }) => {
     // axios request to twilio api
   };
 
-  useEffect(() => {
-    axios.get(`/movement:${id}`)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
+  // useEffect(() => {
+  //   axios.get(`/movement/:${id}`)
+  //     .then(res => {
+  //       console.log(res);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // });
 
   return (
     <div>
