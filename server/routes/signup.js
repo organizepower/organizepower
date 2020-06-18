@@ -10,12 +10,12 @@ signupRouter.post('/', (req, res, next) => {
   const {
     username,
     password,
-    first_name,
-    last_name,
+    firstName,
+    lastName,
     location,
     email,
-    phone_number,
-    image_url,
+    phoneNumber,
+    imageUrl,
     bio,
   } = req.body.user;
 
@@ -27,12 +27,12 @@ signupRouter.post('/', (req, res, next) => {
     username,
     hash,
     salt,
-    first_name,
-    last_name,
+    firstName,
+    lastName,
     location,
     email,
-    phone_number,
-    image_url,
+    phoneNumber,
+    imageUrl,
     bio,
   };
 
