@@ -28,15 +28,14 @@ movementRouter.get('/:id', (req, res) => {
 });
 
 movementRouter.post('/followers', (req, res) => {
-  console.log('saved movement');
   // use the linkUserMovement method to join the user to a particular movement
-  // const { user, movement } = req.body;
-  // const userId = parseFloat(user.slice(1));
-  // linkUserMovement(userId, movement)
-  //   .then(result => {
-  //     res.send(result);
-  //   })
-  //   .catch(err => console.log(err));
+  const { user, movement } = req.body;
+  linkUserMovement(user, movement)
+    .then(linked => {
+      console.log(linked);
+      res.send(linked).status(200);
+    })
+    .catch(err => console.log(err));
 });
 
 movementRouter.post('/', (req, res) => {

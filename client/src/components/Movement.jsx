@@ -15,7 +15,7 @@ const Movement = ({ currentMovement }) => {
   const followMovement = () => {
     // store user id who follows a movements in movements tables
     // when the movement is clicked add that movement to the users table
-    axios.post('movement/followers', { user: '1', movement: id })
+    axios.post('movement/followers', { user: 4, movement: id })
       .then(follow => {
         console.log(follow);
       })
