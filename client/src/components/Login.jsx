@@ -9,13 +9,13 @@ const Login = () => {
     // send axios post to verify login
     console.log(username);
     debugger;
-    axios.post('/login', { username, password })
+    axios.post('/login', null, { params: { username, password } })
       // this should be a message from passport saying the user is verified and may proceed
       .then(data => {
         debugger;
         // if login was successful, use auth.login to update user auth status to true
         // if not successful, leave auth status as false
-        console.log('this is from Login.jsx axios.post.then', data.query);
+        console.log('this is from Login.jsx axios.post.then', data);
       })
       .catch(err => console.log('this is from the Login.jsx handleclick.catch', err));
     // recieve go ahead from server that user is verified

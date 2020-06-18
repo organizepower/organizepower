@@ -24,7 +24,6 @@ app.use(express.static(CLIENT_PATH));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use('/', routes);
 
 // passport.use('login', localStrat);
 // app.use('/', router);
@@ -74,7 +73,7 @@ passport.use(new LocalStrategy(
          * so we use `null` for the error value, and `false` for the user value
          */
         if (!user) {
-          return cb(null, false, { message: 'line 25' });
+          return cb(null, false, { message: 'line 77' });
         }
 
         /**
@@ -103,11 +102,14 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser((id, cb) => {
-  User.findById(id, (err, user) => {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
+  User.findOne({ where: { id } })
+    .then((user) => {
+      if (!user) { return cb('error'); }
+      cb(null, user);
+    });
 });
+
+app.use('/', routes);
 
 // basic "strategy" for user authentication
 // passport.use(new LocalStrategy((username, password, done) => {

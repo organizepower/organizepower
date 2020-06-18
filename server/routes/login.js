@@ -6,12 +6,11 @@ const { Router } = require('express');
 
 const loginRouter = Router();
 
-loginRouter.post('/', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
-    res.json(user);
-  })(req, res, next);
+loginRouter.post('/', passport.authenticate('local'), (req, res, next) => {
+  console.log(req.user, res);
+  res.send(
+    req.user,
+  );
 });
 
 
