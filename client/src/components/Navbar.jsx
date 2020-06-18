@@ -15,14 +15,16 @@ import Login from './Login.jsx';
 import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 
-const Navbar = ({ user, setUserState, currentMovement }) => {
-  const { id } = currentMovement;
+const Navbar = ({ user, setUserState }) => {
+  // const { id } = currentMovement;
+  const [currentMovement, setCurrentMovement] = useState({});
 
-  function handleClick() {
-    axios.get(`/movement/:${id}`)
+  function handleClick(movemementId) {
+    console.log(movemementId);
+    // debugger;
+    axios.get(`/movement/:${movemementId}`)
       .then(res => {
-        // const [currentMovement, setCurrentMovement] = useState(res.data);
-        console.log(res);
+        setCurrentMovement(res.data);
       })
       .catch(err => {
         console.log(err);
@@ -40,7 +42,7 @@ const Navbar = ({ user, setUserState, currentMovement }) => {
           <li><Link to="/">Go Home</Link></li>
         </ul>
         <Switch>
-          <Route exact path={`/movement/${id}`} render={() => (<Movement currentMovement={currentMovement} />)} />
+          <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} />)} />
           <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} handleClick={handleClick} />)} />
           <Route exact path="/login" render={() => (<Login />)} />

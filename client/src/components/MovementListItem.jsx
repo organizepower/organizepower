@@ -24,7 +24,7 @@ const MovementListItem = ({ movement, handleClick }) => {
         <img className="object-contain h-full w-48" src={imageUrl} alt={name} />
       </div>
       <div>
-        <Link to={`/movement/${id}`} onClick={handleClick}>
+        <Link to={`/movement/${id}`} onClick={() => handleClick(id)}>
           Movement Title:
           {name}
         </Link>

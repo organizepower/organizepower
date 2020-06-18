@@ -3,6 +3,7 @@ import axios from 'axios';
 // import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 // import axios from 'axios';
 import Navbar from './Navbar.jsx';
+import Explore from './Explore.jsx';
 
 import { fakeUsers, fakeMovements } from '../services/fakeData';
 
@@ -14,19 +15,19 @@ const App = () => {
     setUser(u);
   };
 
-  // useEffect(() => {
-  //   axios.get(`/movement/:${currentMovement.id}`)
-  //     .then(res => {
-  //       console.log(res);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // });
+  useEffect(() => {
+    axios.get('/movement')
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
   return (
     <div>
       <Navbar user={user} setUserState={setUserState} currentMovement={currentMovement} />
-
+      {/* <Explore /> */}
     </div>
   );
 };
