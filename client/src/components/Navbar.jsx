@@ -14,12 +14,16 @@ import Explore from './Explore.jsx';
 import Login from './Login.jsx';
 import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
+import { getUserProfileById } from '../services/services';
 
 import { logout } from '../services/services';
 
 const Navbar = ({ user, setUserState }) => {
+
+const Navbar = () => {
   // const { id } = currentMovement;
   const [currentMovement, setCurrentMovement] = useState({});
+  const [user, setUser] = useState({});
 
   function handleClick(movemementId) {
     console.log(movemementId);
@@ -37,6 +41,21 @@ const Navbar = ({ user, setUserState }) => {
       .then(res => console.log(res))
       .catch(err => console.error(err));
   };
+
+  const setUserState = (u) => {
+    setUser(u);
+  };
+
+  useEffect(() => {
+    getUserProfileById(1)
+      .then(res => {
+        console.log(res);
+        setUser(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Router>
@@ -56,7 +75,7 @@ const Navbar = ({ user, setUserState }) => {
               <NavLink to="/explore" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 EXPLORE
               </NavLink>
-              <NavLink to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+              <NavLink to={`/profile/${user.id}`} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 PROFILE
               </NavLink>
               <NavLink to="/login" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
@@ -74,7 +93,7 @@ const Navbar = ({ user, setUserState }) => {
         <Switch>
           <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} />)} />
           <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
-          <Route exact path="/profile" render={() => (<Profile user={user} handleClick={handleClick} />)} />
+          <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} />
           <Route exact path="/login" render={() => (<Login />)} />
           <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>
