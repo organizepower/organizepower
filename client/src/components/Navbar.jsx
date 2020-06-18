@@ -40,7 +40,6 @@ const Navbar = () => {
   useEffect(() => {
     getUserProfileById(1)
       .then(res => {
-        debugger;
         console.log(res);
         setUser(res.data);
       })
@@ -67,7 +66,7 @@ const Navbar = () => {
               <NavLink to="/explore" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 EXPLORE
               </NavLink>
-              <NavLink to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+              <NavLink to={`/profile/${user.id}`} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 PROFILE
               </NavLink>
               <NavLink to="/login" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
