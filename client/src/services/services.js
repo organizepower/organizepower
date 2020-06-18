@@ -11,7 +11,7 @@ const getMovements = () => {
 
 // this is a user route
 const getMovementsLeading = () => {
-  return axios.get('/leading');
+  return axios.get('profile/leaders');
 };
 // this a user route: user following a movement
 const getMovementsFollowing = () => {
