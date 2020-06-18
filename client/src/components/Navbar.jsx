@@ -48,6 +48,7 @@ const Navbar = ({ user, setUserState }) => {
           <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>
       </div>
+      <Redirect to="/explore" />
     </Router>
   );
 };
