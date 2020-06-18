@@ -10,10 +10,10 @@ import {
 import Navbar from './Navbar.jsx';
 import Explore from './Explore.jsx';
 
-import { fakeUsers, fakeMovements } from '../services/fakeData';
+import { fakeMovements } from '../services/fakeData';
 
 const App = () => {
-  const [user, setUser] = useState(fakeUsers[0]);
+  // const [user, setUser] = useState();
   const currentMovement = fakeMovements[0];
 
   const setUserState = (u) => {
@@ -22,7 +22,8 @@ const App = () => {
 
   return (
     <div>
-      <Navbar user={user} setUserState={setUserState} currentMovement={currentMovement} />
+      <Navbar currentMovement={currentMovement} />
+      {/* <Explore /> */}
     </div>
   );
 };

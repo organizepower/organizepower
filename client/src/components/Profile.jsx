@@ -4,9 +4,8 @@ import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
 
 import { getMovementsFollowing, getMovementsLeading } from '../services/services';
-import { fakeMovements } from '../services/fakeData';
 
-const Profile = ({ user }) => {
+const Profile = ({ user, handleClick }) => {
   const {
     username,
     firstName,
@@ -15,16 +14,19 @@ const Profile = ({ user }) => {
     bio,
   } = user;
 
-  const [movementsLeading, setMovementsLeading] = useState(fakeMovements);
-  const [movementsFollowing, setMovementsFollowing] = useState(fakeMovements);
+  const [movementsLeading, setMovementsLeading] = useState([]);
+  const [movementsFollowing, setMovementsFollowing] = useState([]);
   const [startClicked, setStartClicked] = useState(false);
 
   useEffect(() => {
-    getMovementsLeading()
-      .then(results => setMovementsLeading(results));
-    getMovementsFollowing()
-      .then(results => setMovementsFollowing(results));
-  });
+    getMovementsLeading(user.id)
+      .then(results => {
+        console.log(results, results.data);
+        setMovementsLeading(results.data);
+      });
+    getMovementsFollowing(user.id)
+      .then(results => setMovementsFollowing(results.data));
+  }, []);
 
   return (
     <div className="p-8">
@@ -48,11 +50,11 @@ const Profile = ({ user }) => {
       )}
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
         <p className="text-gray-900 font-bold text-xl mb-2">Leader of These Movements:</p>
-        <MovementList movements={movementsLeading} />
+        <MovementList movements={movementsLeading} handleClick={handleClick} />
       </div>
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
         <p className="text-gray-900 font-bold text-xl mb-2">Member of These Movements:</p>
-        <MovementList movements={movementsFollowing} />
+        <MovementList movements={movementsFollowing} handleClick={handleClick} />
       </div>
     </div>
   );
