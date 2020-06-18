@@ -6,24 +6,24 @@ const SignUp = ({ setUserState }) => {
   const [username, setUsername] = useState('');
 
   const [password, setPassword] = useState('');
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [location, setLocation] = useState('');
   const [email, setEmail] = useState('');
-  const [phone_number, setPhoneNumber] = useState('');
-  const [image, setImage] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [imageUrl, setImage] = useState('');
   const [bio, setBio] = useState('');
 
   const handleSubmit = () => {
     const user = {
       username,
       password,
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       location,
       email,
-      phone_number,
-      image,
+      phoneNumber,
+      imageUrl,
       bio,
     };
     console.log(user);
