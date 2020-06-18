@@ -24,7 +24,6 @@ const App = () => {
         console.log(err);
       });
   });
-  
   return (
     <div>
       <Navbar user={user} setUserState={setUserState} currentMovement={currentMovement} />
