@@ -70,17 +70,11 @@ const seedMovements = [
     imageUrl: 'https://assets.change.org/photos/0/la/lt/mylaLTYqhScqWHI-800x450-noPad.jpg?1590516227',
     name: 'Justice for George Floyd',
     location: 'Minneapolis, MN',
-    description: `
-      George Floyd was murdered by a Minneapolis police officer.
-
-      George was handcuffed and restrained and being completely cooperative when this all went down. The officer put his knee on George’s neck choking him for minutes on minutes while George screamed that he could not breathe. Bystanders beg for the police officer to take his knee off George’s neck, but the officer didn’t listen and continued to choke him.
-
-      Not that it would matter at all, but George was not even wanted for a violent crime. A grocery store that he was signing a bad check. 
-
-      We are trying to reach the attention of Mayor Jacob Frey and DA Mike Freeman to beg to have the officers involved in this disgusting situation fired and for charges to be filed immediately.
-
-      Please help us get justice for George and his family!
-    `,
+    description: `George Floyd was murdered by a Minneapolis police officer.
+George was handcuffed and restrained and being completely cooperative when this all went down. The officer put his knee on George’s neck choking him for minutes on minutes while George screamed that he could not breathe. Bystanders beg for the police officer to take his knee off George’s neck, but the officer didn’t listen and continued to choke him.
+Not that it would matter at all, but George was not even wanted for a violent crime. A grocery store that he was signing a bad check. 
+We are trying to reach the attention of Mayor Jacob Frey and DA Mike Freeman to beg to have the officers involved in this disgusting situation fired and for charges to be filed immediately.
+Please help us get justice for George and his family!`,
     followers: Math.floor(Math.random() * 100000),
     emailCount: Math.floor(Math.random() * 100000),
     textCount: Math.floor(Math.random() * 100000),
@@ -226,13 +220,9 @@ const seedMovements = [
     imageUrl: 'https://assets.change.org/photos/5/le/ig/PKleiGAkPFKPIjM-800x450-noPad.jpg?1581279507',
     name: 'California: Insulin For All',
     location: 'California',
-    description: `
-      I started taking insulin in 1974 when I was diagnosed with type 1 diabetes at age 11.  I started using NPH and Regular insulin that worked well in the 1970's.  Over the years, better, more effective insulin came to market.  Unfortunately, they also cost more.  Last year, I lost my health insurance for a short time that covered my Humalog insulin that I used in my insulin pump.  I resorted back to using NPH and Regular for a while, but I could not use it in my insulin pump.  Humalog cost retail about $200.00 a bottle that I could not afford.  I used NPH and Regular for a while.
-
-      Using older NPH and Regular insulin from the seventies is like listening to music on a scratchy vinyl record album.  You can hear the music, but it is not as good as listening to music on your MP3 player.
-
-      Insulin isn’t just a drug. It’s the difference between life and death for millions of people with diabetes – and it’s something they will need every day for the rest of their lives.
-    `,
+    description: `I started taking insulin in 1974 when I was diagnosed with type 1 diabetes at age 11.  I started using NPH and Regular insulin that worked well in the 1970's.  Over the years, better, more effective insulin came to market.  Unfortunately, they also cost more.  Last year, I lost my health insurance for a short time that covered my Humalog insulin that I used in my insulin pump.  I resorted back to using NPH and Regular for a while, but I could not use it in my insulin pump.  Humalog cost retail about $200.00 a bottle that I could not afford.  I used NPH and Regular for a while.
+Using older NPH and Regular insulin from the seventies is like listening to music on a scratchy vinyl record album.  You can hear the music, but it is not as good as listening to music on your MP3 player.
+Insulin isn’t just a drug. It’s the difference between life and death for millions of people with diabetes – and it’s something they will need every day for the rest of their lives.`,
     followers: Math.floor(Math.random() * 100000),
     emailCount: Math.floor(Math.random() * 100000),
     textCount: Math.floor(Math.random() * 100000),
@@ -248,11 +238,8 @@ const seedMovements = [
     imageUrl: 'https://assets.change.org/photos/6/lg/xw/eilGxWIrWsDxQdD-800x450-noPad.jpg?1591393173',
     name: 'End Massachusetts Cash Bail',
     location: 'Massachusetts',
-    description: `
-      There are over 540,000 Americans, almost half of whom are black, who are currently in jail because they cannot afford bail. This is a legal punishment for poverty and is a practice that has been used to enact modern day legal racial discrimination. It has been repeatedly demonstrated that Black Americans are assigned higher bail amounts and are vastly over represented in the pretrial prison population. Not only does this practice have enormous negative effects on many of America’s most vulnerable communities, the system of cash bail is unconstitutional. The 5th and 14th amendment guarantees that no person shall be deprived of “life, liberty, or property, without due process of law,” and the 8th amendment states that “excessive bail shall not be required.” It is clear therefore that cash bail is unjust and unconstitutional. Not only that, but in Massachusetts, it has been found to be ineffective.
-
-      A commission to examine cash bail reform was established in Massachusetts in 2019 to examine the role and effectiveness of cash bail in the criminal justice system. According to the commission, the role of cash bail is “to ensure [the defendants] appearance at trial. In 2018, 12.3% of people who were released without bail failed to appear in court, and 14.3% of people released on bail failed to appear for their court date. So people who were released on cash bail, a system supposedly designed to ensure appearance in court, were actually less likely to appear in court. It is clear that cash bail is racist, unconstitutional, and ineffective and therefore should be eliminated entirely.
-    `,
+    description: `There are over 540,000 Americans, almost half of whom are black, who are currently in jail because they cannot afford bail. This is a legal punishment for poverty and is a practice that has been used to enact modern day legal racial discrimination. It has been repeatedly demonstrated that Black Americans are assigned higher bail amounts and are vastly over represented in the pretrial prison population. Not only does this practice have enormous negative effects on many of America’s most vulnerable communities, the system of cash bail is unconstitutional. The 5th and 14th amendment guarantees that no person shall be deprived of “life, liberty, or property, without due process of law,” and the 8th amendment states that “excessive bail shall not be required.” It is clear therefore that cash bail is unjust and unconstitutional. Not only that, but in Massachusetts, it has been found to be ineffective.
+A commission to examine cash bail reform was established in Massachusetts in 2019 to examine the role and effectiveness of cash bail in the criminal justice system. According to the commission, the role of cash bail is “to ensure [the defendants] appearance at trial. In 2018, 12.3% of people who were released without bail failed to appear in court, and 14.3% of people released on bail failed to appear for their court date. So people who were released on cash bail, a system supposedly designed to ensure appearance in court, were actually less likely to appear in court. It is clear that cash bail is racist, unconstitutional, and ineffective and therefore should be eliminated entirely.`,
     followers: Math.floor(Math.random() * 100000),
     emailCount: Math.floor(Math.random() * 100000),
     textCount: Math.floor(Math.random() * 100000),
