@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getMovement, addMovement } = require('../db/methods');
+const { getMovement, addMovement, linkUserMovement } = require('../db/methods');
 
 const movementRouter = Router();
 
@@ -27,7 +27,17 @@ movementRouter.get('/:id', (req, res) => {
     });
 });
 
-
+movementRouter.post('/followers', (req, res) => {
+  console.log('saved movement');
+  // use the linkUserMovement method to join the user to a particular movement
+  // const { user, movement } = req.body;
+  // const userId = parseFloat(user.slice(1));
+  // linkUserMovement(userId, movement)
+  //   .then(result => {
+  //     res.send(result);
+  //   })
+  //   .catch(err => console.log(err));
+});
 
 movementRouter.post('/', (req, res) => {
   // add a movement to db
