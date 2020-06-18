@@ -15,9 +15,9 @@ import Explore from './Explore.jsx';
 import Login from './Login.jsx';
 import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
+import PrivateRoute from './PrivateRoute.jsx';
 import { getUserProfileById } from '../services/services';
-
-import { logout } from '../services/services';
+import auth from '../services/auth';
 
 const Navbar = () => {
   // const { id } = currentMovement;
@@ -36,7 +36,7 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    logout()
+    auth.logout()
       .then(res => console.log(res))
       .catch(err => console.error(err));
   };
@@ -87,7 +87,8 @@ const Navbar = () => {
         <Switch>
           <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} user={user} />)} />
           <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
-          <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} />
+          {/* <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} /> */}
+          <PrivateRoute exact path={`/profile/${user.id}`} component={Profile} user={user} handleClick={handleClick} />
           <Route exact path="/login" render={() => (<Login />)} />
           <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>
