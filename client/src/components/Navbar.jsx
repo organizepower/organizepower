@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
   NavLink,
+  Link,
   Redirect,
 } from 'react-router-dom';
 
@@ -61,12 +62,7 @@ const Navbar = () => {
         <nav className="flex items-center justify-between flex-wrap bg-gray-700 p-6">
           <div className="flex items-center flex-shrink-0 text-white mr-6">
             <svg className="h-8 w-8 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path className="heroicon-ui" d="M13 16v5a1 1 0 0 1-1 1H9l-3-6a2 2 0 0 1-2-2 2 2 0 0 1-2-2v-2c0-1.1.9-2 2-2 0-1.1.9-2 2-2h7.59l4-4H20a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2.41l-4-4H13zm0-2h1.41l4 4H20V4h-1.59l-4 4H13v6zm-2 0V8H6v2H4v2h2v2h5zm0 2H8.24l2 4H11v-4z" /></svg>
-            <span className="font-semibold text-xl tracking-tight m-2">Organize Power</span>
-          </div>
-          <div className="block lg:hidden">
-            <button className="flex items-center px-3 py-2 border rounded text-gray-800 border-gray-400 hover:text-white hover:border-white">
-              <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
-            </button>
+            <Link to="/explore" className="font-semibold text-xl tracking-tight m-2 hover:text-gray-600">Organize Power</Link>
           </div>
           <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div className="text-sm lg:flex-grow">

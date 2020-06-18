@@ -1,3 +1,7 @@
+
+// this is just a dummy file for testing out tailwind stuff
+// will delete later
+
 const Tailwind = () => 
 return (
 <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
