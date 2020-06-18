@@ -25,15 +25,15 @@ const Movement = ({ currentMovement }) => {
     // axios.post()
   };
 
-  // useEffect(() => {
-  //   axios.get(`/movement/:${id}`)
-  //     .then(res => {
-  //       console.log(res);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // });
+  useEffect(() => {
+    axios.get(`/movement/:${id}`)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
 
   return (
     <div>
