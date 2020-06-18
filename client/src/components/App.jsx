@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from 'react-router-dom';
 // import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
 import Explore from './Explore.jsx';

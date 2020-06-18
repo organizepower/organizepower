@@ -18,8 +18,8 @@ const Explore = ({ user, handleClick }) => {
   }, []);
 
   return (
-    <div>
-      <button className="discover-movements" type="button">Fight the Power</button>
+    <div className="m-4">
+      <span className="font-semibold text-2xl text-gray-500 tracking-tight m-8">EXPLORE MOVEMENTS</span>
       <MovementList movements={movements} handleClick={handleClick} />
     </div>
   );
