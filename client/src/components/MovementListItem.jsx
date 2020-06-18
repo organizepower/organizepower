@@ -21,7 +21,7 @@ const MovementListItem = ({ movement, handleClick }) => {
   const shortDesc = description.slice(0, 250);
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-8 float-left">
+    <div className="max-w-sm h-full rounded overflow-hidden shadow-lg m-8 float-left">
       <Link to={`/movement/${id}`} onClick={() => handleClick(id)}>
         <img className="w-full" src={imageUrl} alt="Sunset in the mountains" />
       </Link>
