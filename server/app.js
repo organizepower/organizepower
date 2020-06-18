@@ -59,14 +59,17 @@ passport.use(new LocalStrategy(
     User.findOne({ where: { username } })
       .then((user) => {
         // The callback function expects two values: Err, User
+        // Case 1: user not found in database, should redirect to /signup
         if (!user) {
           return cb(null, false);
         }
         if (validPassword(password, user.hash, user.salt)) {
           // Since we have a valid user, we want to return no err and the user object
+          // Case 2: User exists and password is validated. should redirect to /profile?
           return cb(null, user);
         }
         // Since we have an invalid user, we want to return no err and no user
+        // Case 3: User exists but password is incorrect. should redirect to /login...
         return cb(null, false);
       })
       .catch((err) => {

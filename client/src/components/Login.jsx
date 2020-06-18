@@ -7,12 +7,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const handleClick = () => {
     // send axios post to verify login
-    console.log(username);
-    debugger;
-    axios.post('/login', null, { params: { username, password } })
+    axios.post('/login', null, { auth: { username, password } })
       // this should be a message from passport saying the user is verified and may proceed
       .then(data => {
-        debugger;
         // if login was successful, use auth.login to update user auth status to true
         // if not successful, leave auth status as false
         console.log('this is from Login.jsx axios.post.then', data);
