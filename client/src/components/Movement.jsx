@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Movement = ({ currentMovement }) => {
-  console.log(currentMovement);
+const Movement = ({ currentMovement, user }) => {
   const {
     id,
     name,
@@ -10,13 +9,16 @@ const Movement = ({ currentMovement }) => {
     description,
   } = currentMovement;
 
-  // const [movements, setMovements] = useState(fakeMovements[0]);
+  // const [followers, setFollowers] = useState([]);
+  const [buttonText, setButtonText] = useState('follow');
+
   // create a function to store who follows a movement
   const followMovement = () => {
     // store user id who follows a movements in movements tables
     // when the movement is clicked add that movement to the users table
-    axios.post('movement/followers', { user: 4, movement: id })
-      .then(follow => {
+    axios.post('movement/followers', { user: user.id, movement: id })
+    .then(follow => {
+      setButtonText('following');
         console.log(follow);
       })
       .catch(err => console.log(err));
@@ -51,7 +53,7 @@ const Movement = ({ currentMovement }) => {
         <p className="text-gray-900 font-bold text-xl mb-2">Movement Description</p>
         <p className="movement">{description}</p>
         <div>
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={followMovement}>Follow Movement</button>
+  <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={followMovement}>{buttonText}</button>
         </div>
       </div>
       <div>
