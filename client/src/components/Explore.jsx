@@ -19,7 +19,6 @@ const Explore = ({ user, handleClick }) => {
 
   return (
     <div>
-      <button className="discover-movements" type="button">Fight the Power</button>
       <MovementList movements={movements} handleClick={handleClick} />
     </div>
   );
