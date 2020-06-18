@@ -1,9 +1,5 @@
 const { Router } = require('express');
-<<<<<<< HEAD
-const { getMovement, addMovement, linkUserMovement } = require('../db/methods');
-=======
-const { getMovement, addMovement, getAllMovements } = require('../db/methods');
->>>>>>> dedda2cfb3239d3e21f7c487c1bcb7256c02eff4
+const { getMovement, addMovement, linkUserMovement, getAllMovements } = require('../db/methods');
 
 const movementRouter = Router();
 
