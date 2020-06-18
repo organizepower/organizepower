@@ -45,10 +45,18 @@ const Navbar = ({ user, setUserState }) => {
           </div>
           <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div className="text-sm lg:flex-grow">
-              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4"><NavLink to="/explore">EXPLORE</NavLink></a>
-              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4"><NavLink to="/profile">PROFILE</NavLink></a>
-              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4"><NavLink to="/login">LOGIN</NavLink></a>
-              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4"><NavLink to="/signup">SIGNUP</NavLink></a>
+              <NavLink to="/explore" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                EXPLORE
+              </NavLink>
+              <NavLink to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                PROFILE
+              </NavLink>
+              <NavLink to="/login" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                LOGIN
+              </NavLink>
+              <NavLink to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                SIGNUP
+              </NavLink>
             </div>
           </div>
         </nav>

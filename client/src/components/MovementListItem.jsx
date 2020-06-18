@@ -12,38 +12,41 @@ const MovementListItem = ({ movement, handleClick }) => {
     location,
     description,
     followers,
-    emailsSent,
+    emailCount,
   } = movement;
 
-  // const cardImageStyle = {
-  //   backgroundImage: `url(${imageUrl})`,
-  // };
+  // convert numbers to readable strings
+
+  // shorten the description
+  const shortDesc = description.slice(0, 250);
+
   return (
-    <div className="bg-gray-400 h-50 pb-5 mb-10">
-      <div>
-        <img className="object-contain h-full w-48" src={imageUrl} alt={name} />
-      </div>
-      <div>
-        <Link to={`/movement/${id}`} onClick={() => handleClick(id)}>
-          Movement Title:
-          {name}
-        </Link>
-        <p>
-          Location:
-          {location}
-        </p>
-        <p>
-          Description:
-          {description}
-        </p>
-        <p>
-          Followers:
-          {followers}
-        </p>
-        <p>
-          Emails Sent:
-          {emailsSent}
-        </p>
+    <div className="max-w-sm w-full lg:max-w-screen-lg lg:flex m-8">
+      <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover bg-center rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={{ backgroundImage: `url(${imageUrl})` }} title="" />
+      <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <div className="mb-8">
+          <span className="text-gray-900 font-bold text-xl mb-2 hover:text-gray-500 mr-4">
+            <Link to={`/movement/${id}`} onClick={() => handleClick(id)}>
+              {name}
+            </Link>
+          </span>
+          <p className="text-gray-700 text-base my-2">
+            Location: {location}
+          </p>
+          <p className="text-gray-700 text-base my-2">
+            {shortDesc}... 
+            <Link to={`/movement/${id}`} onClick={() => handleClick(id)} className="text-gray-900 font-bold mb-2 hover:text-gray-500 mr-4">
+              (continue reading).
+            </Link>
+          </p>
+          <div className="flex items-center mt-8">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 fill-current text-gray-600" viewBox="0 0 24 24"><path className="heroicon-ui" d="M20 22H4a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h4V8c0-1.1.9-2 2-2h4V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2zM14 8h-4v12h4V8zm-6 4H4v8h4v-8zm8-8v16h4V4h-4z"/></svg>
+            <div className="text-sm mx-4">
+              <p className="text-gray-600 leading-none">FOLLOWERS: {followers}</p>
+              <p className="text-gray-600">EMAILS SENT: {emailCount}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
