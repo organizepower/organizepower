@@ -14,6 +14,12 @@ const Movement = ({ currentMovement }) => {
   // create a function to store who follows a movement
   const followMovement = () => {
     // store user id who follows a movements in movements tables
+    // when the movement is clicked add that movement to the users table
+    axios.post('movement/followers', { user: 4, movement: id })
+      .then(follow => {
+        console.log(follow);
+      })
+      .catch(err => console.log(err));
   };
   // create a function to send an email
   const email = () => {
@@ -25,15 +31,15 @@ const Movement = ({ currentMovement }) => {
     // axios.post()
   };
 
-  // useEffect(() => {
-  //   axios.get(`/movement/:${id}`)
-  //     .then(res => {
-  //       console.log(res);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // });
+  useEffect(() => {
+    axios.get(`/movement/:${id}`)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
 
   return (
     <div>
