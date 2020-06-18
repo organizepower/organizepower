@@ -6,18 +6,26 @@ const { Router } = require('express');
 
 const loginRouter = Router();
 
-loginRouter.post('/',
-  // passport.authenticate('login', { failureRedirect: '/login' }, (user) => {
-  //   console.log('passport.authenticate did this', user);
-  // }),
-  (req, res) => {
-    console.log('logged in', req);
-    const { username, password } = req.body;
-    const userInfo = {
-      username,
-      password,
-    };
-    res.send(userInfo);
-  });
+loginRouter.post('/', passport.authenticate('local'), (req, res, next) => {
+  console.log(req.user, res);
+  res.send(
+    req.user,
+  );
+});
+
+
+// loginRouter.post('/',
+//   passport.authenticate('local', { failureRedirect: '/' },
+//     (req, res, next) => {
+//       console.log(req, res, next);
+//     }),
+//   (req, res) => {
+//     console.log('logged in', res);
+//     const { username } = res;
+//     const userInfo = {
+//       username,
+//     };
+//     res.send('this user is logged in', userInfo);
+//   });
 
 module.exports.loginRouter = loginRouter;
