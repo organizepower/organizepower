@@ -17,9 +17,14 @@ const getMovementsFollowing = () => {
   return axios.get('/following');
 };
 
+const logout = () => {
+  return axios.get('/logout');
+};
+
 export {
   getUser,
   getMovements,
   getMovementsLeading,
   getMovementsFollowing,
+  logout,
 };
