@@ -16,6 +16,9 @@ import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 import { getUserProfileById } from '../services/services';
 
+import { logout } from '../services/services';
+
+const Navbar = ({ user, setUserState }) => {
 
 const Navbar = () => {
   // const { id } = currentMovement;
@@ -32,6 +35,12 @@ const Navbar = () => {
         console.log(err);
       });
   }
+
+  const handleLogout = () => {
+    logout()
+      .then(res => console.log(res))
+      .catch(err => console.error(err));
+  };
 
   const setUserState = (u) => {
     setUser(u);
@@ -74,6 +83,9 @@ const Navbar = () => {
               </NavLink>
               <NavLink to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 SIGNUP
+              </NavLink>
+              <NavLink to="/login" onClick={handleLogout} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                LOGOUT
               </NavLink>
             </div>
           </div>
