@@ -21,8 +21,10 @@ const MovementListItem = ({ movement, handleClick }) => {
   const shortDesc = description.slice(0, 250);
 
   return (
-    <div className="max-w-sm w-full lg:max-w-screen-lg lg:flex m-8">
-      <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover bg-center rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={{ backgroundImage: `url(${imageUrl})` }} title="" />
+    <div className="max-w-sm h-full rounded overflow-hidden shadow-lg m-8 float-left">
+      <Link to={`/movement/${id}`} onClick={() => handleClick(id)}>
+        <img className="w-full" src={imageUrl} alt="Sunset in the mountains" />
+      </Link>
       <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div className="mb-8">
           <span className="text-gray-900 font-bold text-xl mb-2 hover:text-gray-500 mr-4">
@@ -31,12 +33,12 @@ const MovementListItem = ({ movement, handleClick }) => {
             </Link>
           </span>
           <p className="text-gray-700 text-base my-2">
-            Location: {location}
+            {location}
           </p>
           <p className="text-gray-700 text-base my-2">
-            {shortDesc}... 
-            <Link to={`/movement/${id}`} onClick={() => handleClick(id)} className="text-gray-900 font-bold mb-2 hover:text-gray-500 mr-4">
-              (continue reading).
+            {shortDesc} . . . &nbsp;
+            <Link to={`/movement/${id}`} onClick={() => handleClick(id)} className="text-gray-400 font-bold mb-2 hover:text-gray-500 mr-4">
+              <i>continue reading</i>.
             </Link>
           </p>
           <div className="flex items-center mt-8">
