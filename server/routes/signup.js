@@ -1,27 +1,15 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 const { Router } = require('express');
-const crypto = require('crypto');
-const { User } = require('../db/index');
 const { genPassword } = require('../auth/passwordUtils');
 const { addUser } = require('../db/methods');
 
 const signupRouter = Router();
 
-signupRouter.get('/', (req, res) => {
-  console.log('signup routes been hit');
-});
-
-// create user in db
 signupRouter.post('/', (req, res, next) => {
-  console.log(req.body);
-  const { password } = req.body.user;
-  // using user password, generate salted pw
-  const saltHash = genPassword(password);
-
-  const { salt } = saltHash;
-  const { hash } = saltHash;
-  // extract user data from request object
   const {
     username,
+    password,
     first_name,
     last_name,
     location,
@@ -30,7 +18,11 @@ signupRouter.post('/', (req, res, next) => {
     image_url,
     bio,
   } = req.body.user;
-  // define new user 
+
+  // using user password, generate salted pw
+  const saltHash = genPassword(password);
+  const { salt, hash } = saltHash;
+
   const newUser = {
     username,
     hash,
@@ -43,10 +35,9 @@ signupRouter.post('/', (req, res, next) => {
     image_url,
     bio,
   };
-  // use proprietary db method to store new user to db
-  addUser(newUser);
 
-  // res.redirect('/login');
+  // add user to database
+  addUser(newUser);
 });
 
 module.exports = {
