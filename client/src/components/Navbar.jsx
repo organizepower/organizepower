@@ -24,7 +24,6 @@ const Navbar = () => {
 
   function handleClick(movemementId) {
     console.log(movemementId);
-    // debugger;
     axios.get(`/movement/:${movemementId}`)
       .then(res => {
         setCurrentMovement(res.data);
