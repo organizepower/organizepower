@@ -5,8 +5,7 @@ const getUser = () => {
 };
 
 const getMovements = () => {
-  return axios.get('/movements')
-    .then(response => response.data);
+  return axios.get('/movement');
 };
 
 // this is a user route
