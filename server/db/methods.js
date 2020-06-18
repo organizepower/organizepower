@@ -91,7 +91,7 @@ const editMovement = async(movementObj) => {
   }
 };
 
-// Get Movement by ID
+// GET MOVEMENT BY ID
 const getMovement = async(movementId) => {
   try {
     const movement = await Movement.findOne({
@@ -99,6 +99,18 @@ const getMovement = async(movementId) => {
       raw: true,
     });
     return movement;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// GET ALL MOVEMENTS
+const getAllMovements = async() => {
+  try {
+    const movements = await Movement.findAll({
+      raw: true,
+    });
+    return movements;
   } catch (err) {
     console.error(err);
   }
@@ -166,6 +178,7 @@ module.exports = {
   getUserById,
   getUserByUsername,
   getMovement,
+  getAllMovements,
   getMovementsLedByUser,
   getMovementsFollowedByUser,
 };
