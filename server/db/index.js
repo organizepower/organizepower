@@ -5,27 +5,27 @@
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 
+const DB_NAME = process.env.DB_NAME || 'op';
 const DB_USER = process.env.DB_USER || 'root';
 const DB_PASS = process.env.DB_PASS || '';
-const DB_NAME = process.env.DB_NAME || 'op';
-const DB_INSTANCE = process.env.DB_INSTANCE || '';
-const DB_HOST = process.env.NODE_ENV === 'production' ? `/cloudsql/${process.env.DB_INSTANCE}` : 'localhost';
+const { DB_INSTANCE, NODE_ENV } = process.env;
+
 let sequelize = null;
 
-// production (cloud sql) database connection
-if (DB_INSTANCE !== '') {
+if (NODE_ENV === 'production') {
+  // production (cloud sql) database connection
   sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-    host: DB_HOST,
+    host: `/cloudsql/${process.env.DB_INSTANCE}`,
     dialect: 'mysql',
     logging: false, // toggle logging SQL in console
     dialectOptions: {
       socketPath: `/cloudsql/${DB_INSTANCE}`,
     },
   });
-// development (local) database connection
 } else {
+  // development (local) database connection
   sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-    host: DB_HOST,
+    host: 'localhost',
     dialect: 'mysql',
     logging: false, // toggle logging SQL in console
   });
@@ -69,6 +69,7 @@ const User = sequelize.define('user', {
 }, { underscored: true });
 
 const Movement = sequelize.define('movement', {
+  // movement info
   name: { type: DataTypes.STRING, allowNull: false },
   location: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.TEXT, allowNull: false },
@@ -84,6 +85,47 @@ const Movement = sequelize.define('movement', {
   polPhoneNumber: { type: DataTypes.STRING },
   polImageUrl: { type: DataTypes.STRING },
 }, { underscored: true });
+
+// track which movements a user 'joins'
+const UserMovement = sequelize.define('userMovement', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+}, { underscored: true });
+
+// sync sequelize to create tables in db before adding associations
+// force: true will overwrite the tables, good for dev:
+// sequelize.sync({ force: true });
+sequelize.sync(); // will not drop tables every time
+
+// add user id foreign key to all movements
+Movement.belongsTo(User, { foreignKey: 'id_organizer' });
+User.hasMany(Movement, { foreignKey: 'id_organizer' });
+
+// makes a join table between the users and movements
+User.belongsToMany(Movement, { through: UserMovement, foreignKey: 'id_user' });
+Movement.belongsToMany(User, { through: UserMovement, foreignKey: 'id_movement' });
+
+// hasOne & belongsTo methods:
+// .get() & .set()
+// example: comment.getUser() or comment.setMovement()
+
+// belongsToMany methods:
+// .get(), .set(), .add()
+// example: politician.setMovement(associatedMovement)
+
+module.exports = {
+  sequelize,
+  User,
+  Movement,
+  // Politician,
+  // Prompt,
+  // Comment,
+  // MovementPolitician,
+  UserMovement,
+};
 
 /*
 const Politician = sequelize.define('politician', {
@@ -118,24 +160,6 @@ const MovementPolitician = sequelize.define('movementPolitician', {
 }, { underscored: true });
 */
 
-// track which movements a user 'joins'
-const UserMovement = sequelize.define('userMovement', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-}, { underscored: true });
-
-// sync sequelize to create tables in db before adding associations
-// force: true will overwrite the tables, good for dev:
-// sequelize.sync({ force: true });
-sequelize.sync(); // will not drop tables every time
-
-// add user id foreign key to all movements
-Movement.belongsTo(User, { foreignKey: 'id_organizer' });
-User.hasMany(Movement, { foreignKey: 'id_organizer' });
-
 /*
 // politician and movement id foreign keys
 Prompt.belongsTo(Movement, { foreignKey: 'id_movement' });
@@ -149,26 +173,3 @@ Comment.belongsTo(User, { foreignKey: 'id_user' });
 Politician.belongsToMany(Movement, { through: MovementPolitician, foreignKey: 'id_politician' });
 Movement.belongsToMany(Politician, { through: MovementPolitician, foreignKey: 'id_movement' });
 */
-
-// makes a join table between the users and movements
-User.belongsToMany(Movement, { through: UserMovement, foreignKey: 'id_user' });
-Movement.belongsToMany(User, { through: UserMovement, foreignKey: 'id_movement' });
-
-// hasOne & belongsTo methods:
-// .get() & .set()
-// example: comment.getUser() or comment.setMovement()
-
-// belongsToMany methods:
-// .get(), .set(), .add()
-// example: politician.setMovement(associatedMovement)
-
-module.exports = {
-  sequelize,
-  User,
-  Movement,
-  // Politician,
-  // Prompt,
-  // Comment,
-  // MovementPolitician,
-  UserMovement,
-};
