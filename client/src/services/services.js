@@ -18,8 +18,12 @@ const getMovementsFollowing = () => {
   return axios.get('/following');
 };
 
+const getUserProfileById = (id) => {
+  return axios.get(`/profile/:${id}`);
+};
+
 export {
-  getUser,
+  getUserProfileById,
   getMovements,
   getMovementsLeading,
   getMovementsFollowing,

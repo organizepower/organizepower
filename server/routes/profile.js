@@ -8,10 +8,20 @@ const {
 
 const profileRouter = Router();
 
-profileRouter.get('/id', (req, res) => {
+profileRouter.get('/:id', (req, res) => {
+  console.log('get user by id route by id been hit');
+  const { id } = req.params || {};
+  const userId = parseFloat(id.slice(1))
   // get user information by ID form db
-  // getUserById();
-  console.log('profile routes been hit');
+  getUserById(userId)
+    .then((user) => {
+      console.log(user);
+      res.send(user);
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    });
 });
 
 // a route to get the movements a user created by userID

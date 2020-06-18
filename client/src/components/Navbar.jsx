@@ -14,10 +14,13 @@ import Explore from './Explore.jsx';
 import Login from './Login.jsx';
 import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
+import { getUserProfileById } from '../services/services';
 
-const Navbar = ({ user, setUserState }) => {
+
+const Navbar = () => {
   // const { id } = currentMovement;
   const [currentMovement, setCurrentMovement] = useState({});
+  const [user, setUser] = useState({});
 
   function handleClick(movemementId) {
     console.log(movemementId);
@@ -31,12 +34,28 @@ const Navbar = ({ user, setUserState }) => {
       });
   }
 
+  const setUserState = (u) => {
+    setUser(u);
+  };
+
+  useEffect(() => {
+    getUserProfileById(1)
+      .then(res => {
+        debugger;
+        console.log(res);
+        setUser(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <Router>
       <div>
         <ul>
           <li><Link to="/explore">Explore Page</Link></li>
-          <li><Link to="/profile">Profile Page</Link></li>
+          <li><Link to={`/profile/${user.id}`}>Profile Page</Link></li>
           <li><Link to="/login">Login Page</Link></li>
           <li><Link to="/signup">SignUp Page</Link></li>
           <li><Link to="/">Go Home</Link></li>
@@ -44,7 +63,7 @@ const Navbar = ({ user, setUserState }) => {
         <Switch>
           <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} />)} />
           <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
-          <Route exact path="/profile" render={() => (<Profile user={user} handleClick={handleClick} />)} />
+          <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} />
           <Route exact path="/login" render={() => (<Login />)} />
           <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>

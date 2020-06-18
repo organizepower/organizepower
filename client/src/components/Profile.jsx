@@ -15,8 +15,8 @@ const Profile = ({ user }) => {
     bio,
   } = user;
 
-  const [movementsLeading, setMovementsLeading] = useState(fakeMovements);
-  const [movementsFollowing, setMovementsFollowing] = useState(fakeMovements);
+  const [movementsLeading, setMovementsLeading] = useState([]);
+  const [movementsFollowing, setMovementsFollowing] = useState([]);
   const [startClicked, setStartClicked] = useState(false);
 
   useEffect(() => {

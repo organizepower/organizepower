@@ -5,29 +5,27 @@ import axios from 'axios';
 import Navbar from './Navbar.jsx';
 import Explore from './Explore.jsx';
 
-import { fakeUsers, fakeMovements } from '../services/fakeData';
+import { fakeMovements } from '../services/fakeData';
 
 const App = () => {
-  const [user, setUser] = useState(fakeUsers[0]);
+  // const [user, setUser] = useState();
   const currentMovement = fakeMovements[0];
-  
-  const setUserState = (u) => {
-    setUser(u);
-  };
 
-  useEffect(() => {
-    axios.get('/movement')
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
-  
+  // useEffect(() => {
+  //   getUserById(1)
+  //     .then(res => {
+  //       debugger;
+  //       console.log(res);
+  //       setUser(res.data);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // });
+
   return (
     <div>
-      <Navbar user={user} setUserState={setUserState} currentMovement={currentMovement} />
+      <Navbar currentMovement={currentMovement} />
       {/* <Explore /> */}
     </div>
   );
