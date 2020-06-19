@@ -19,7 +19,9 @@ const SendMessage = ({ currentMovement, setText }) => {
   const [body, setBody] = useState('');
   const [messageButton, setmessageButton] = useState('Send Movement');
   const [status, setStatus] = useState('pending');
+ 
   // got to make it to where a link to the movement can be sent
+  // link to the specific movement to text to friends
   const urlLink = `https://op-version-3.uc.r.appspot.com/movement/${currentMovement.id}`;
   const defaultMessage = `Please Join me in supporting ${name} ${imageUrl} please click this link to checkout the movement ${urlLink}`;
 
