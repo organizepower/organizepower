@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import auth from '../services/auth';
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authStatus, setAuthStatus] = useState('');
   const [userId, setUserId] = useState('');
+  // sending post request to login with username and password
+  // then receive a response with a status message and user object if login is successful
+  // set the userId and authStatus states on Login.jsx
+  // set the user state on Navbar.jsx
+  // the authStatus will determine which page the user is redirected to
 
-  const handleClick = () => {
-    // debugger;
-    axios.post('/login', { username, password })
+  const handleClick = (event) => {
+    event.preventDefault();
+    return axios.post('/login', { username, password })
       .then(({ data }) => {
         const { message } = data;
         if (message === 'success') {
           const { user } = data;
           setUserId(user.id);
           setUser(user);
+          setIsAuthenticated(true);
         }
         setAuthStatus(message);
       })

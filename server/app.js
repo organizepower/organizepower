@@ -36,12 +36,12 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   store: sessionStore,
-  cookie: {
-    sameSite: 'None',
-    secure: true, // requires HTTPS connection
-    maxAge: 1000 * 60 * 60 * 24, // one day
-    // maxAge: 1000 * 60, // one minute
-  },
+  // cookie: {
+  //   sameSite: 'None',
+  //   secure: true, // requires HTTPS connection
+  //   maxAge: 1000 * 60 * 60 * 24, // one day
+  //   // maxAge: 1000 * 60, // one minute
+  // },
 }));
 
 // passport middleware must be used after express-session
@@ -52,28 +52,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(
-  // Here is the function that is supplied with the username and password field
-  // from the login POST request
   (username, password, cb) => {
-    // Search the database for the user with the supplied username
     User.findOne({ where: { username } })
       .then((user) => {
-        // The callback function expects two values: Err, User
-        // Case 1: user not found in database, should redirect to /signup
         if (!user) {
           return cb(null, false);
         }
         if (validPassword(password, user.hash, user.salt)) {
-          // Since we have a valid user, we want to return no err and the user object
-          // Case 2: User exists and password is validated. should redirect to /profile?
           return cb(null, user);
         }
-        // Since we have an invalid user, we want to return no err and no user
-        // Case 3: User exists but password is incorrect. should redirect to /login...
         return cb(null, false, { invalidPassword: true });
       })
-      .catch((err) => {
-        // This is an application error, so we need to populate the callback `err` field with it
+      .catch(err => {
         cb(err);
       });
   },
@@ -96,28 +86,3 @@ app.use('/', routes);
 module.exports = {
   app,
 };
-
-// basic "strategy" for user authentication
-// passport.use(new LocalStrategy((username, password, done) => {
-//   User.findOne({ username }, (err, user) => {
-//     if (err) { return done(err); }
-//     if (!user) {
-//       return done(null, false, { message: 'Incorrect username.' });
-//     }
-//     if (!user.validPassword(password)) {
-//       return done(null, false, { message: 'Incorrect password.' });
-//     }
-//     return done(null, user);
-//   })
-//     .catch(err => console.error(err));
-// }));
-
-// these two methods will keep user session alive
-
-// app.post('/login',
-//   passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//   }));
-
-// app.use('/', apiRouter);

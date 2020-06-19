@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import {
   HashRouter as Router,
@@ -6,7 +6,6 @@ import {
   Route,
   NavLink,
   Link,
-  Redirect,
 } from 'react-router-dom';
 
 // import MovementList from './MovementList';
@@ -16,13 +15,14 @@ import Login from './Login.jsx';
 import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
-import { getUserProfileById } from '../services/services';
-import auth from '../services/auth';
+
+import { logout } from '../services/services';
 
 const Navbar = () => {
   // const { id } = currentMovement;
   const [currentMovement, setCurrentMovement] = useState({});
   const [user, setUser] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   function handleClick(movementId) {
     axios.get(`/movement/:${movementId}`)
@@ -35,21 +35,13 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    auth.logout()
-      .then(res => console.log(res))
+    logout()
+      .then(() => {
+        console.log('logging out');
+        setIsAuthenticated(false);
+      })
       .catch(err => console.error(err));
   };
-
-  // useEffect(() => {
-  //   debugger;
-  //   getUserProfileById(user.id)
-  //     .then(res => {
-  //       setUser(res.data);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }, []);
 
   return (
     <Router>
@@ -82,9 +74,8 @@ const Navbar = () => {
         <Switch>
           <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} user={user} />)} />
           <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
-          {/* <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} /> */}
-          <PrivateRoute exact path={`/profile/${user.id}`} component={Profile} user={user} handleClick={handleClick} />
-          <Route exact path="/login" render={() => (<Login setUser={setUser} />)} />
+          <PrivateRoute exact path={`/profile/${user.id}`} component={Profile} user={user} handleClick={handleClick} isAuthenticated={isAuthenticated} />
+          <Route exact path="/login" render={() => (<Login setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
           <Route exact path="/signup" render={() => (<SignUp setUser={setUser} />)} />
         </Switch>
         {/* <Redirect to="/explore" /> */}
@@ -94,3 +85,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// <Route exact path={`/profile/${user.id}`} render={() =>
+// (<Profile user={user} handleClick={handleClick} />)} />

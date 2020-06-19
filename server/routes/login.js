@@ -10,13 +10,11 @@ loginRouter.post('/', (req, res, next) => {
     if (err) {
       return next(err); // will generate a 500 error
     }
-    // Generate a JSON response reflecting authentication status
-    if (!user) {
-      return res.send({ message: 'invalidUser' });
-    }
-
     if (invalidPassword) {
       return res.send({ message: 'invalidPassword' });
+    }
+    if (!user) {
+      return res.send({ message: 'invalidUser' });
     }
     // ***********************************************************************
     // "Note that when using a custom callback, it becomes the application's
@@ -31,7 +29,6 @@ loginRouter.post('/', (req, res, next) => {
       return res.send({ user, message: 'success' });
     });
   })(req, res, next);
-  // res.send(req.user);
 });
 
 module.exports.loginRouter = loginRouter;

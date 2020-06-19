@@ -1,15 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import auth from '../services/auth';
 
-const { isAuthenticated } = auth;
-
-const PrivateRoute = ({ component: Component, ...remainingProps }) => {
+const PrivateRoute = ({ component: Component, isAuthenticated, ...remainingProps }) => {
   return (
     <Route
       render={props => (
-        true ? (
+        isAuthenticated ? (
           <Component {...props} {...remainingProps} />
         ) : (
           <Redirect to="/login" />
