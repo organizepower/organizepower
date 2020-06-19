@@ -21,8 +21,18 @@ const getUserProfileById = (id) => {
   return axios.get(`/profile/:${id}`);
 };
 
+// Authentication
+
+const login = (username, password) => {
+  return axios.post('/login', { username, password });
+};
+
 const logout = () => {
   return axios.get('/logout');
+};
+
+const signup = (user) => {
+  return axios.post('/signup', { user });
 };
 
 export {
@@ -31,4 +41,6 @@ export {
   getMovementsLeading,
   getMovementsFollowing,
   logout,
+  login,
+  signup,
 };

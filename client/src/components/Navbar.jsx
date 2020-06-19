@@ -42,10 +42,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout()
-      .then(() => {
-        console.log('logging out');
-        setIsAuthenticated(false);
-      })
+      .then(() => setIsAuthenticated(false))
       .catch(err => console.error(err));
   };
 
@@ -97,15 +94,24 @@ const Navbar = () => {
               <NavLink to={`/profile/${user.id}`} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 PROFILE
               </NavLink>
-              <NavLink to="/login" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
-                LOGIN
-              </NavLink>
-              <NavLink to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
-                SIGNUP
-              </NavLink>
-              <NavLink to="/login" onClick={handleLogout} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
-                LOGOUT
-              </NavLink>
+              {!isAuthenticated
+              && (
+                <NavLink to="/login" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                  LOGIN
+                </NavLink>
+              )}
+              {!isAuthenticated
+              && (
+                <NavLink to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                  SIGNUP
+                </NavLink>
+              )}
+              {isAuthenticated
+              && (
+                <NavLink to="/login" onClick={handleLogout} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                  LOGOUT
+                </NavLink>
+              )}
             </div>
           </div>
         </nav>
@@ -135,7 +141,7 @@ const Navbar = () => {
             movementsLeading={movementsLeading}
           />
           <Route exact path="/login" render={() => (<Login setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
-          <Route exact path="/signup" render={() => (<SignUp setUser={setUser} />)} />
+          <Route exact path="/signup" render={() => (<SignUp setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
         </Switch>
         {/* <Redirect to="/explore" /> */}
       </div>
