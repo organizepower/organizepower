@@ -1,21 +1,35 @@
-class Auth {
-  constructor() {
-    this.signedIn = false;
-  }
+import axios from 'axios';
 
-  login(cb) {
-    this.signedIn = true;
-    cb();
-  }
+const auth = {
+  isAuthenticated: false,
+  authenticate() {
 
-  logout(cb) {
-    this.signedIn = false;
-    cb();
-  }
+  },
+  logout() {
+    return axios.get('/logout');
+  },
+};
 
-  isSignedIn() {
-    return this.signedIn;
-  }
-}
+export default auth;
 
-export default new Auth();
+// class Auth {
+//   constructor() {
+//     this.signedIn = false;
+//   }
+
+//   login(cb) {
+//     this.signedIn = true;
+//     cb();
+//   }
+
+//   logout(cb) {
+//     this.signedIn = false;
+//     cb();
+//   }
+
+//   isSignedIn() {
+//     return this.signedIn;
+//   }
+// }
+
+// export default new Auth();

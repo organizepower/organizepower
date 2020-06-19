@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 // import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
-import Explore from './Explore.jsx';
 
 import { fakeMovements } from '../services/fakeData';
 

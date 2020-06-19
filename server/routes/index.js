@@ -15,6 +15,11 @@ routes.use('/signup', signupRouter);
 routes.use('/login', loginRouter);
 routes.use('/twilio', twilioRouter);
 
+routes.get('/logout', (req, res) => {
+  req.logout();
+  res.send('logged out');
+});
+
 module.exports = {
   routes,
 };

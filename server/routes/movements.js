@@ -1,19 +1,22 @@
 const { Router } = require('express');
-const { getMovement, addMovement, linkUserMovement, getAllMovements } = require('../db/methods');
+const {
+  getMovement,
+  addMovement,
+  getAllMovements,
+  linkUserMovement,
+} = require('../db/methods');
 
 const movementRouter = Router();
 
+// this route will get the clicked on movement by the id
 movementRouter.get('/', (req, res) => {
-  // this route will get the clicked on movement by the id
-  console.log('movement routes been hit');
   // get all the movements
   getAllMovements()
     .then(movements => {
-      console.log(movements);
       res.send(movements);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
   // save to a variable
@@ -27,7 +30,6 @@ movementRouter.get('/:id', (req, res) => {
   // save to a variable
   getMovement(movementId)
     .then(movement => {
-      console.log(movement);
       res.send(movement);
     })
     .catch(err => {
@@ -41,10 +43,9 @@ movementRouter.post('/followers', (req, res) => {
   const { user, movement } = req.body;
   linkUserMovement(user, movement)
     .then(linked => {
-      console.log(linked);
       res.send(linked).status(200);
     })
-    .catch(err => console.log(err));
+    .catch(err => res.sendStatus(400).send(err));
 });
 
 movementRouter.post('/', (req, res) => {
