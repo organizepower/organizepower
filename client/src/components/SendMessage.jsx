@@ -12,14 +12,12 @@ const SendMessage = ({ currentMovement, user }) => {
   const [to, setTo] = useState('');
   const [body, setBody] = useState('');
   // set a var for automated message
+  const defaultMessage = `Please Join me in supporting ${name}`;
   // name of the movement and a link
 
   const handleSubmit = () => {
-    // create a body with a default text
-    // to display for the user to see and when they click send the message
     // give an option on sending a message
-    // look up text linmit
-    debugger;
+    // look up text limit
     axios.post('/twilio', { to, body })
       .then(message => {
         console.log(message);
@@ -40,7 +38,7 @@ const SendMessage = ({ currentMovement, user }) => {
       </div>
       <div>
         <label htmlFor="Body">Body:</label>
-        <textarea name="body" id="body" onChange={e => setBody(e.target.value)} />
+        <textarea name="body" id="body" defaultValue={defaultMessage} onChange={e => setBody(e.target.value + defaultMessage)} />
       </div>
       <button type="submit" onClick={handleSubmit}>Send message</button>
     </form>
