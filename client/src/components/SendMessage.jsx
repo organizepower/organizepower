@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SendMessage = () => {
+const SendMessage = ({ currentMovement, user }) => {
+  const {
+    id,
+    name,
+    imageUrl,
+    description,
+  } = currentMovement;
+
   const [to, setTo] = useState('');
   const [body, setBody] = useState('');
 
@@ -16,7 +23,7 @@ const SendMessage = () => {
   return (
     <form>
       <div>
-        <label htmlFor="to">To:</label>
+        <label htmlFor="To">To:</label>
         <input
           type="tel"
           name="to"
@@ -25,12 +32,10 @@ const SendMessage = () => {
         />
       </div>
       <div>
-        <label htmlFor="body">Body:</label>
+        <label htmlFor="Body">Body:</label>
         <textarea name="body" id="body" onChange={e => setBody(e.target.value)} />
       </div>
-      <button type="submit" onClick={handleSubmit}>
-        Send message
-      </button>
+      <button type="submit" onClick={handleSubmit}>Send message</button>
     </form>
 
   );

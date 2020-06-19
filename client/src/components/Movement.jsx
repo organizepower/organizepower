@@ -65,7 +65,7 @@ const Movement = ({ currentMovement, user }) => {
       </div>
       {text && (
         <div>
-          <SendMessage />
+          <SendMessage currentMovement={currentMovement} user={user} />
         </div>
       )}
     </div>
