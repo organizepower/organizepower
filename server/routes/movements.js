@@ -40,6 +40,7 @@ movementRouter.get('/:id', (req, res) => {
 });
 
 movementRouter.post('/followers', (req, res) => {
+  console.log('movement route post /followers');
   // use the linkUserMovement method to join the user to a particular movement
   const { user, movement } = req.body;
   linkUserMovement(user, movement)

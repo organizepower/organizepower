@@ -4,7 +4,12 @@ import {
   Link,
 } from 'react-router-dom';
 
-const MovementListItem = ({ movement, handleClick }) => {
+const MovementListItem = ({
+  movement,
+  handleClick,
+  movementsLeading,
+  movementsFollowing,
+}) => {
   const {
     id,
     imageUrl,
@@ -17,9 +22,9 @@ const MovementListItem = ({ movement, handleClick }) => {
     polLastName,
     polEmail,
   } = movement;
-
+  // debugger;
+  const isFollowing = movementsFollowing.includes(movement);
   // convert numbers to readable strings
-
   // shorten the description
   const shortDesc = description.slice(0, 250);
 
@@ -35,6 +40,11 @@ const MovementListItem = ({ movement, handleClick }) => {
               {name}
             </Link>
           </span>
+          {isFollowing && (
+            <p className="text-gray-700 text-base my-2">
+              You are following this movement
+            </p>
+          )}
           <p className="text-gray-700 text-base my-2">
             {location}
           </p>
@@ -48,7 +58,7 @@ const MovementListItem = ({ movement, handleClick }) => {
             </Link>
           </p>
           <div className="flex items-center mt-8">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 fill-current text-gray-600" viewBox="0 0 24 24"><path className="heroicon-ui" d="M20 22H4a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h4V8c0-1.1.9-2 2-2h4V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2zM14 8h-4v12h4V8zm-6 4H4v8h4v-8zm8-8v16h4V4h-4z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 fill-current text-gray-600" viewBox="0 0 24 24"><path className="heroicon-ui" d="M20 22H4a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h4V8c0-1.1.9-2 2-2h4V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2zM14 8h-4v12h4V8zm-6 4H4v8h4v-8zm8-8v16h4V4h-4z" /></svg>
             <div className="text-sm mx-4">
               <p className="text-gray-600 leading-none">FOLLOWERS: {followers}</p>
               <p className="text-gray-600">EMAILS SENT: {emailCount}</p>
