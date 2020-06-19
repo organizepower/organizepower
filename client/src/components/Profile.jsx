@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
+import AddPolitician from './AddPolitician.jsx';
 
 import { getMovementsFollowing, getMovementsLeading } from '../services/services';
 
@@ -16,7 +17,7 @@ const Profile = ({ user, handleClick }) => {
 
   const [movementsLeading, setMovementsLeading] = useState([]);
   const [movementsFollowing, setMovementsFollowing] = useState([]);
-  const [startClicked, setStartClicked] = useState(false);
+  const [startMoveClicked, setStartMoveClicked] = useState(false);
 
   useEffect(() => {
     getMovementsLeading(user.id)
@@ -40,12 +41,12 @@ const Profile = ({ user, handleClick }) => {
       </div>
 
       <div className="mt-4 mb-4">
-        <button onClick={() => setStartClicked(!startClicked)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Start a Movement</button>
+        <button onClick={() => setStartMoveClicked(!startMoveClicked)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Start a Movement</button>
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Join a Movement</button>
       </div>
-      {startClicked && (
+      {startMoveClicked && (
         <div className="">
-          <StartMovement />
+          <StartMovement user={user} />
         </div>
       )}
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
@@ -64,8 +65,12 @@ export default Profile;
 
 /* Tailwind Card Example from Docs
 <div className="max-w-sm w-full lg:max-w-full lg:flex">
-<div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={cardImageStyle} title={name} />
-<div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+<div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover
+rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+style={cardImageStyle} title={name} />
+<div className="border-r border-b border-l border-gray-400
+ lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b
+ lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
   <div className="mb-8">
     <p className="text-sm text-gray-600 flex items-center">{location}</p>
     <div className="text-gray-900 font-bold text-xl mb-2">{name}</div>

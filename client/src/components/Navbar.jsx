@@ -46,7 +46,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    getUserProfileById(1)
+    getUserProfileById(3)
       .then(res => {
         console.log(res);
         setUser(res.data);

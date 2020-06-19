@@ -1,5 +1,10 @@
 /* eslint-disable camelcase */
-const { User, Movement, UserMovement } = require('./index');
+const {
+  User,
+  Movement,
+  UserMovement,
+  Politician,
+} = require('./index');
 
 // MODEL METHODS
 // note: organizer is term for users that create movements
@@ -155,6 +160,15 @@ const getMovementsFollowedByUser = async(idUser) => {
   }
 };
 
+// ADD NEW POLITICIAN
+const addPolitician = async(politicianObj) => {
+  try {
+    await Politician.create(politicianObj);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // const test = async() => {
 //   const result = await getMovementsFollowedByUser(1);
 //   console.log(result);
@@ -165,7 +179,7 @@ module.exports = {
   // addComment,
   // addPrompt,
   addMovement,
-  // addPolitician,
+  addPolitician,
   addUser,
   // linkPoliticianMovement,
   linkUserMovement,
@@ -185,14 +199,6 @@ module.exports = {
 
 /* Features below were trimmed due to time constraints...
 
-// ADD NEW POLITICIAN
-const addPolitician = async(politicianObj) => {
-  try {
-    await Politician.create(politicianObj);
-  } catch (err) {
-    console.error(err);
-  }
-};
 
 // EDIT POLITICIAN BY FIELD
 const editPoliticianField = async(politicianId, prop, newValue) => {
