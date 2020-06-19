@@ -10,6 +10,9 @@ const MovementListItem = ({
   movementsLeading,
   movementsFollowing,
 }) => {
+  const movementIds = movementsFollowing.map(mvmt => mvmt.id);
+
+  const isFollowing = movement ? movementIds.includes(movement.id) : null;
   const {
     id,
     imageUrl,
@@ -22,8 +25,7 @@ const MovementListItem = ({
     polLastName,
     polEmail,
   } = movement;
-  // debugger;
-  const isFollowing = movementsFollowing.includes(movement);
+  
   // convert numbers to readable strings
   // shorten the description
   const shortDesc = description.slice(0, 250);

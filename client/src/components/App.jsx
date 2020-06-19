@@ -15,14 +15,11 @@ const App = () => {
   // const [user, setUser] = useState();
   const currentMovement = fakeMovements[0];
 
-  const setUserState = (u) => {
-    setUser(u);
-  };
-
   return (
     <div>
       <Navbar currentMovement={currentMovement} />
       {/* <Explore /> */}
+      <Redirect to="/#/explore" />
     </div>
   );
 };

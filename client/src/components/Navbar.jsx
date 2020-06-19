@@ -54,11 +54,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    getMovements()
-      .then(results => {
-        setMovements(results.data);
-      })
-      .catch(err => console.error(err));
     getUserProfileById(3)
       .then(res => {
         const navBarUser = res.data;
@@ -73,6 +68,13 @@ const Navbar = () => {
           .then(results => {
             setMovementsFollowing(results.data);
           });
+      })
+      .then(() => {
+        getMovements()
+          .then(results => {
+            setMovements(results.data);
+          })
+          .catch(err => console.error(err));
       })
       .catch(err => {
         console.log(err);
@@ -138,6 +140,7 @@ const Navbar = () => {
         {/* <Redirect to="/explore" /> */}
       </div>
     </Router>
+    
   );
 };
 
