@@ -22,7 +22,7 @@ const MovementListItem = ({
     polLastName,
     polEmail,
   } = movement;
-  debugger;
+  // debugger;
   const isFollowing = movementsFollowing.includes(movement);
   // convert numbers to readable strings
   // shorten the description

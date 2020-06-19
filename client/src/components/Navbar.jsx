@@ -17,6 +17,7 @@ import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
 import {
+  getMovements,
   getUserProfileById,
   getMovementsLeading,
   getMovementsFollowing,
@@ -29,6 +30,7 @@ const Navbar = () => {
   const [user, setUser] = useState({});
   const [movementsLeading, setMovementsLeading] = useState([]);
   const [movementsFollowing, setMovementsFollowing] = useState([]);
+  const [movements, setMovements] = useState([]);
 
   function handleClick(movemementId) {
     console.log(movemementId);
@@ -52,6 +54,11 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    getMovements()
+      .then(results => {
+        setMovements(results.data);
+      })
+      .catch(err => console.error(err));
     getUserProfileById(3)
       .then(res => {
         const navBarUser = res.data;
@@ -107,6 +114,7 @@ const Navbar = () => {
             path="/explore"
             render={() => (
               <Explore
+                movements={movements}
                 user={user}
                 handleClick={handleClick}
                 movementsLeading={movementsLeading}

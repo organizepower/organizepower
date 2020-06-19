@@ -8,7 +8,7 @@ const MovementList = ({
   movementsLeading,
   movementsFollowing,
 }) => {
-  debugger;
+  // debugger;
   return (
     <div className="flex flex-wrap -mb-4">
       {movements.map(movement => (
