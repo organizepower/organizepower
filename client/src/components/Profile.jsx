@@ -6,6 +6,7 @@ import StartMovement from './StartMovement.jsx';
 const Profile = ({
   user,
   handleClick,
+  movements,
   movementsFollowing,
   movementsLeading,
 }) => {
@@ -16,7 +17,6 @@ const Profile = ({
     imageUrl,
     bio,
   } = user;
-
   const [startMoveClicked, setStartMoveClicked] = useState(false);
   return (
     <div className="p-8">
@@ -40,11 +40,11 @@ const Profile = ({
       )}
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
         <p className="text-gray-900 font-bold text-xl mb-2">Leader of These Movements:</p>
-        <MovementList movements={movementsLeading} handleClick={handleClick} />
+        <MovementList movements={movementsLeading} movementsLeading={movementsLeading} movementsFollowing={movementsFollowing} handleClick={handleClick} />
       </div>
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
         <p className="text-gray-900 font-bold text-xl mb-2">Member of These Movements:</p>
-        <MovementList movements={movementsFollowing} handleClick={handleClick} />
+        <MovementList movements={movementsFollowing} movementsLeading={movementsLeading} movementsFollowing={movementsFollowing} handleClick={handleClick} />
       </div>
     </div>
   );

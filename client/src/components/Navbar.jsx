@@ -59,13 +59,11 @@ const Navbar = () => {
         setUser(navBarUser);
         getMovementsLeading(navBarUser.id)
           .then(results => {
-            debugger;
             console.log(results, results.data);
             setMovementsLeading(results.data);
           });
         getMovementsFollowing(navBarUser.id)
           .then(results => {
-            debugger;
             setMovementsFollowing(results.data);
           });
       })
@@ -104,7 +102,18 @@ const Navbar = () => {
         </nav>
         <Switch>
           <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} user={user} />)} />
-          <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
+          <Route
+            exact
+            path="/explore"
+            render={() => (
+              <Explore
+                user={user}
+                handleClick={handleClick}
+                movementsLeading={movementsLeading}
+                movementsFollowing={movementsFollowing}
+              />
+            )}
+          />
           {/* <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} /> */}
           <PrivateRoute
             exact
