@@ -18,7 +18,9 @@ const Movement = ({ currentMovement, user }) => {
   const [buttonText, setButtonText] = useState('follow');
   const [text, setText] = useState(false);
   const [emailClick, setEmailClick] = useState(false);
-
+  const body = `Dear ${polFirstName} ${polLastName}, 
+    I am one of your many constituents. There must be something done about this problem
+  `;
   // create a function to store who follows a movement
   const followMovement = () => {
     // store user id who follows a movements in movements tables
@@ -66,7 +68,7 @@ const Movement = ({ currentMovement, user }) => {
         </div>
       </div>
       <div>
-        <a href={`mailto:someone@yoursite.com?cc=someoneelse@theirsite.com, another@thatsite.com, me@mysite.com&bcc=lastperson@theirsite.com&subject=Big%20News&body=Body-goes-here`} target="_blank" rel="noopener noreferrer">
+        <a href={`mailto:${polEmail}?&subject=${name}&body=${body}`} target="_blank" rel="noopener noreferrer">
 
           <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={email}> Write an Email</button>
 
