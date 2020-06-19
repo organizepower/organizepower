@@ -5,8 +5,9 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import { SettingsContext } from 'twilio/lib/rest/voice/v1/dialingPermissions/settings';
 
-const SendMessage = ({ currentMovement, user }) => {
+const SendMessage = ({ currentMovement, setText }) => {
   const {
     id,
     name,
@@ -24,19 +25,20 @@ const SendMessage = ({ currentMovement, user }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    document.getElementById('send-text').reset();
     setmessageButton('Sending Movement....');
-    setStatus('Sent');
     axios.post('/twilio', { to, body })
-      .then(message => {
-        console.log(message);
-        console.log(status);
+      .then(() => {
+        setStatus('sent');
+        setmessageButton('Sent');
+        setText(false);
       })
       .catch(err => console.log(err));
   };
 
   return (
     <div>
-      <form>
+      <form id="send-text">
         <div>
           <label htmlFor="To">To:</label>
           <input
@@ -49,13 +51,10 @@ const SendMessage = ({ currentMovement, user }) => {
         <div>
           <label htmlFor="Body">Body:</label>
           <textarea className="resize border rounded focus:outline-none focus:shadow-outline" name="body" id="body" defaultValue={defaultMessage} onChange={e => setBody(e.target.value)} />
-          {/* {status === 'sent' && <Redirect to={`/movement/${id}`} />} */}
         </div>
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" type="submit" onClick={handleSubmit}>{messageButton}</button>
       </form>
-      <Route>
-        {status === 'sent' && <Redirect to={`/movement/${id}`} />}
-      </Route>
+      {status === 'sent' && <Redirect to={`/movement/${id}`} />}
     </div>
   );
 };
