@@ -1,39 +1,55 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import auth from '../services/auth';
+import { Redirect } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setUser, setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const handleClick = () => {
-    // send axios post to verify login
-    axios.post('/login', null, { auth: { username, password } })
-      // this should be a message from passport saying the user is verified and may proceed
-      .then(data => {
-        // if login was successful, use auth.login to update user auth status to true
-        // if not successful, leave auth status as false
-        console.log('this is from Login.jsx axios.post.then', data);
+  const [authStatus, setAuthStatus] = useState('');
+  const [userId, setUserId] = useState('');
+  // sending post request to login with username and password
+  // then receive a response with a status message and user object if login is successful
+  // set the userId and authStatus states on Login.jsx
+  // set the user state on Navbar.jsx
+  // the authStatus will determine which page the user is redirected to
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    return axios.post('/login', { username, password })
+      .then(({ data }) => {
+        const { message } = data;
+        if (message === 'success') {
+          const { user } = data;
+          setUserId(user.id);
+          setUser(user);
+          setIsAuthenticated(true);
+        }
+        setAuthStatus(message);
       })
-      .catch(err => console.log('this is from the Login.jsx handleclick.catch', err));
-    // recieve go ahead from server that user is verified
-    // tell react to re-render the explore page? or some other authenticated page
-    // also update user auth status to true, or thumbs up or whatever
+      .catch(err => console.error(err));
   };
 
   return (
-    <form>
-      <div>
-        <p>Username:</p>
-        <input type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
-      </div>
-      <div>
-        <p>Password:</p>
-        <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} />
-      </div>
-      <div>
-        <input type="submit" value="Log In" onClick={handleClick} />
-      </div>
-    </form>
+    <div>
+      <form>
+        <div>
+          <p>Username:</p>
+          <input type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
+        </div>
+        <div>
+          <p>Password:</p>
+          <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} />
+        </div>
+        <div>
+          <input type="submit" value="Log In" onClick={handleClick} />
+        </div>
+      </form>
+
+      {authStatus === 'invalidUser' && <Redirect to="/signup" />}
+      {authStatus === 'invalidPassword' && <Redirect to="/login" />}
+      {authStatus === 'success' && <Redirect to={`/profile/${userId}`} />}
+
+    </div>
   );
 };
 
