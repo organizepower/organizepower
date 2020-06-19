@@ -11,18 +11,18 @@ const Movement = ({ currentMovement, user }) => {
     polFirstName,
     polLastName,
     polEmail,
-
   } = currentMovement;
 
   // const [followers, setFollowers] = useState([]);
   const [buttonText, setButtonText] = useState('follow');
   const [text, setText] = useState(false);
+  const [emailClick, setEmailClick] = useState(false);
 
   // create a function to store who follows a movement
   const followMovement = () => {
     // store user id who follows a movements in movements tables
     // when the movement is clicked add that movement to the users table
-    axios.post('movement/followers', { user: user.id, movement: id })
+    axios.post('/movement/followers', { user: user.id, movement: id })
       .then(follow => {
         setButtonText('following');
         console.log(follow);
@@ -32,6 +32,7 @@ const Movement = ({ currentMovement, user }) => {
   // create a function to send an email
   const email = () => {
     // send a request to google email API
+    setEmailClick(true);
   };
   // create a function to send a request to twilio
   const textMovement = () => {
@@ -64,7 +65,11 @@ const Movement = ({ currentMovement, user }) => {
         </div>
       </div>
       <div>
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={email}>Write an Email</button>
+        <a href={`mailto:someone@yoursite.com?cc=someoneelse@theirsite.com, another@thatsite.com, me@mysite.com&bcc=lastperson@theirsite.com&subject=Big%20News&body=Body-goes-here`} target="_blank" rel="noopener noreferrer">
+
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={email}> Write an Email</button>
+
+        </a>
       </div>
       <div>
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={textMovement}>Text Movement</button>
@@ -72,7 +77,7 @@ const Movement = ({ currentMovement, user }) => {
       {
         text && (
           <div>
-            <SendMessage currentMovement={currentMovement} user={user} />
+            <SendMessage currentMovement={currentMovement} user={user} setText={setText} />
           </div>
         )
       }
