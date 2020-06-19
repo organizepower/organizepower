@@ -21,14 +21,9 @@ const getUserProfileById = (id) => {
   return axios.get(`/profile/:${id}`);
 };
 
-const logout = () => {
-  return axios.get('/logout');
-};
-
 export {
   getUserProfileById,
   getMovements,
   getMovementsLeading,
   getMovementsFollowing,
-  logout,
 };
