@@ -6,10 +6,8 @@ import {
   Route,
   NavLink,
   Link,
-  Redirect,
 } from 'react-router-dom';
 
-// import MovementList from './MovementList';
 import Profile from './Profile.jsx';
 import Explore from './Explore.jsx';
 import Login from './Login.jsx';
@@ -21,20 +19,19 @@ import {
   getUserProfileById,
   getMovementsLeading,
   getMovementsFollowing,
+  logout,
 } from '../services/services';
-import auth from '../services/auth';
 
 const Navbar = () => {
-  // const { id } = currentMovement;
   const [currentMovement, setCurrentMovement] = useState({});
   const [user, setUser] = useState({});
   const [movementsLeading, setMovementsLeading] = useState([]);
   const [movementsFollowing, setMovementsFollowing] = useState([]);
   const [movements, setMovements] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  function handleClick(movemementId) {
-    console.log(movemementId);
-    axios.get(`/movement/:${movemementId}`)
+  function handleClick(movementId) {
+    axios.get(`/movement/:${movementId}`)
       .then(res => {
         setCurrentMovement(res.data);
       })
@@ -44,8 +41,11 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    auth.logout()
-      .then(res => console.log(res))
+    logout()
+      .then(() => {
+        console.log('logging out');
+        setIsAuthenticated(false);
+      })
       .catch(err => console.error(err));
   };
 
@@ -132,10 +132,10 @@ const Navbar = () => {
             movementsFollowing={movementsFollowing}
             movementsLeading={movementsLeading}
           />
-          <Route exact path="/login" render={() => (<Login />)} />
-          <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
+          <Route exact path="/login" render={() => (<Login setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
+          <Route exact path="/signup" render={() => (<SignUp setUser={setUser} />)} />
         </Switch>
-        <Redirect to="/explore" />
+        {/* <Redirect to="/explore" /> */}
       </div>
     </Router>
   );
