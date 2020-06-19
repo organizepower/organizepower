@@ -11,8 +11,15 @@ const SendMessage = ({ currentMovement, user }) => {
 
   const [to, setTo] = useState('');
   const [body, setBody] = useState('');
+  // set a var for automated message
+  // name of the movement and a link
 
   const handleSubmit = () => {
+    // create a body with a default text
+    // to display for the user to see and when they click send the message
+    // give an option on sending a message
+    // look up text linmit
+    debugger;
     axios.post('/twilio', { to, body })
       .then(message => {
         console.log(message);
