@@ -37,7 +37,8 @@ app.use(session({
   saveUninitialized: true,
   store: sessionStore,
   cookie: {
-    // secure: true // requires HTTPS connection
+    sameSite: 'None',
+    secure: true, // requires HTTPS connection
     // maxAge: 1000 * 60 * 60 * 24
     // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
   },
@@ -54,7 +55,6 @@ passport.use(new LocalStrategy(
   // Here is the function that is supplied with the username and password field
   // from the login POST request
   (username, password, cb) => {
-    console.log(username);
     // Search the database for the user with the supplied username
     User.findOne({ where: { username } })
       .then((user) => {
@@ -70,7 +70,7 @@ passport.use(new LocalStrategy(
         }
         // Since we have an invalid user, we want to return no err and no user
         // Case 3: User exists but password is incorrect. should redirect to /login...
-        return cb(null, false);
+        return cb(null, false, { invalidPassword: true });
       })
       .catch((err) => {
         // This is an application error, so we need to populate the callback `err` field with it

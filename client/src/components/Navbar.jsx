@@ -24,9 +24,8 @@ const Navbar = () => {
   const [currentMovement, setCurrentMovement] = useState({});
   const [user, setUser] = useState({});
 
-  function handleClick(movemementId) {
-    console.log(movemementId);
-    axios.get(`/movement/:${movemementId}`)
+  function handleClick(movementId) {
+    axios.get(`/movement/:${movementId}`)
       .then(res => {
         setCurrentMovement(res.data);
       })
@@ -41,20 +40,16 @@ const Navbar = () => {
       .catch(err => console.error(err));
   };
 
-  const setUserState = (u) => {
-    setUser(u);
-  };
-
-  useEffect(() => {
-    getUserProfileById(1)
-      .then(res => {
-        console.log(res);
-        setUser(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   debugger;
+  //   getUserProfileById(user.id)
+  //     .then(res => {
+  //       setUser(res.data);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <Router>
@@ -89,10 +84,10 @@ const Navbar = () => {
           <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
           {/* <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} /> */}
           <PrivateRoute exact path={`/profile/${user.id}`} component={Profile} user={user} handleClick={handleClick} />
-          <Route exact path="/login" render={() => (<Login />)} />
-          <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
+          <Route exact path="/login" render={() => (<Login setUser={setUser} />)} />
+          <Route exact path="/signup" render={() => (<SignUp setUser={setUser} />)} />
         </Switch>
-        <Redirect to="/explore" />
+        {/* <Redirect to="/explore" /> */}
       </div>
     </Router>
   );

@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import auth from '../services/auth';
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const handleClick = () => {
-    // send axios post to verify login
-    axios.post('/login', null, { auth: { username, password } })
-      // this should be a message from passport saying the user is verified and may proceed
-      .then(data => {
-        // if login was successful, use auth.login to update user auth status to true
-        // if not successful, leave auth status as false
-        console.log('this is from Login.jsx axios.post.then', data);
+    axios.post('/login', { username, password })
+      .then(({ data }) => {
+        const { message } = data;
+        debugger;
+        if (message === 'invalidUser') {
+          // redirect to signup
+
+        } else if (message === 'invalidPassword') {
+          // redirect to login
+
+        } else if (message === 'success') {
+          const { user } = data;
+          setUser(user);
+          // redirect to profile page
+        } else {
+          // redirect to login?
+        }
       })
-      .catch(err => console.log('this is from the Login.jsx handleclick.catch', err));
-    // recieve go ahead from server that user is verified
-    // tell react to re-render the explore page? or some other authenticated page
-    // also update user auth status to true, or thumbs up or whatever
+      .catch(err => console.error(err));
   };
 
   return (

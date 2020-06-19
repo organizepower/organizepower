@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import StatesSelect from './StatesSelect.jsx';
 
-const SignUp = ({ setUserState }) => {
+const SignUp = ({ setUser }) => {
   const [username, setUsername] = useState('');
 
   const [password, setPassword] = useState('');
@@ -30,7 +30,7 @@ const SignUp = ({ setUserState }) => {
     debugger;
     axios.post('/signup', { user })
       .then((data) => {
-        console.log(data)
+        console.log(data);
       })
       .catch((err) => console.error(err));
   };
