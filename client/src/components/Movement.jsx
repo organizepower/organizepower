@@ -8,6 +8,10 @@ const Movement = ({ currentMovement, user }) => {
     name,
     imageUrl,
     description,
+    polFirstName,
+    polLastName,
+    polEmail,
+
   } = currentMovement;
 
   // const [followers, setFollowers] = useState([]);
@@ -46,14 +50,16 @@ const Movement = ({ currentMovement, user }) => {
 
   return (
     <div>
-      <div className="movement">
-        <p className="text-gray-900 font-bold text-xl mb-2">Movement Title</p>
-        <p className="movement">{name}</p>
-        <p className="movement">Movement image</p>
-        <img className="flex-col object-contain h-full w-48" src={imageUrl} alt={id} />
-        <p className="text-gray-900 font-bold text-xl mb-2">Movement Description</p>
-        <p className="movement">{description}</p>
-        <div>
+      <div>
+        <div className="movement">
+          <p className="text-gray-900 font-bold text-xl mb-2">Movement Title</p>
+          <p className="movement">{name}</p>
+          <p className="movement">Movement image</p>
+          <img className="flex-col object-contain h-full w-48" src={imageUrl} alt={id} />
+          <p className="text-gray-900 font-bold text-xl mb-2">Movement Description</p>
+          <p className="movement">{description}</p>
+          <p className="text-gray-700 text-base my-2">Important Politician: {polFirstName}, {polLastName}</p>
+          <p className="text-gray-700 text-base my-2">Politician contact: {polEmail}</p>
           <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={followMovement}>{buttonText}</button>
         </div>
       </div>
@@ -63,11 +69,13 @@ const Movement = ({ currentMovement, user }) => {
       <div>
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={textMovement}>Text Movement</button>
       </div>
-      {text && (
-        <div>
-          <SendMessage currentMovement={currentMovement} user={user} />
-        </div>
-      )}
+      {
+        text && (
+          <div>
+            <SendMessage currentMovement={currentMovement} user={user} />
+          </div>
+        )
+      }
     </div>
   );
 };

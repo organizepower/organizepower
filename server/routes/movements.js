@@ -4,6 +4,7 @@ const {
   addMovement,
   getAllMovements,
   linkUserMovement,
+  addPolitician,
 } = require('../db/methods');
 
 const movementRouter = Router();
@@ -50,8 +51,8 @@ movementRouter.post('/followers', (req, res) => {
 
 movementRouter.post('/', (req, res) => {
   // add a movement to db
-  const { newMovement, id } = req.body;
-  addMovement(newMovement, id)
+  const { movementObj, id } = req.body;
+  addMovement(movementObj, id)
     .then(movement => {
       console.log(movement);
       res.send(movement);
@@ -61,6 +62,18 @@ movementRouter.post('/', (req, res) => {
     });
 });
 
+// movementRouter.post('/politician', (req, res) => {
+//   // add politician and associate with movement
+//   const { politicianObj } = req.body;
+//   addPolitician(politicianObj)
+//     .then(politician => {
+//       console.log(politician);
+//       res.send(politician);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// });
 // need a route to movementList
 
 module.exports = {

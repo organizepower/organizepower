@@ -13,6 +13,9 @@ const MovementListItem = ({ movement, handleClick }) => {
     description,
     followers,
     emailCount,
+    polFirstName,
+    polLastName,
+    polEmail,
   } = movement;
 
   // convert numbers to readable strings
@@ -34,6 +37,9 @@ const MovementListItem = ({ movement, handleClick }) => {
           </span>
           <p className="text-gray-700 text-base my-2">
             {location}
+          </p>
+          <p className="text-gray-700 text-base my-2">
+            Important Politician: {polFirstName}, {polLastName}
           </p>
           <p className="text-gray-700 text-base my-2">
             {shortDesc} . . . &nbsp;

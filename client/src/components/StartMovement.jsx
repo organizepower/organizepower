@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import axios from 'axios';
-import StatesSelect from './StatesSelect.jsx';
+import AddPolitician from './AddPolitician.jsx';
+// import StatesSelect from './StatesSelect.jsx';
 
 const StartMovement = ({ user }) => {
   const [name, setName] = useState('');
@@ -10,17 +11,20 @@ const StartMovement = ({ user }) => {
   const [zip, setZip] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [mvmtState, setMvmtState] = useState('');
+  const [mvmtState, setMvmtState] = useState('CA');
+  const [addPolClicked, setAddPolClicked] = useState(false);
+
 
   const handleSubmit = () => {
     debugger;
     const { id } = user;
-    const newMovement = {
+    const movementObj = {
       name,
       description: desc,
       location: `${city}, ${mvmtState}`,
+      createdBy: `${firstName}, ${lastName}`,
     };
-    axios.post('/movement', { newMovement, id })
+    axios.post('/movement', { movementObj, id })
       .then((movement) => console.log(movement))
       .catch((err) => console.log(err));
   };
@@ -34,7 +38,6 @@ const StartMovement = ({ user }) => {
               Name Your Movement
             </label>
             <input onChange={(e) => setName(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Am Important Cause" />
-            {/* <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p> */}
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
@@ -43,7 +46,6 @@ const StartMovement = ({ user }) => {
               Description
             </label>
             <textarea onChange={(e) => setDesc(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Goals? Demands?" />
-            {/* <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p> */}
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
@@ -58,7 +60,7 @@ const StartMovement = ({ user }) => {
               State
             </label>
             <div className="relative">
-              <select onChange={(e) => setMvmtState(e.option.value)} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+              <select value={mvmtState} onChange={e => setMvmtState(e.target.value)} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -123,16 +125,6 @@ const StartMovement = ({ user }) => {
             <input onChange={(e) => setZip(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
           </div>
         </div>
-        {/* This section is for adding a public figure with the following info:
-          first_name: { type: DataTypes.STRING, allowNull: false },
-          last_name: { type: DataTypes.STRING, allowNull: false },
-          email: { type: DataTypes.STRING, allowNull: false },
-          phone_number: { type: DataTypes.STRING },
-          mailing_address: { type: DataTypes.STRING, allowNull: false },
-          organization: { type: DataTypes.STRING, allowNull: false },
-          position_type: { type: DataTypes.STRING, allowNull: false },
-          image_url: { type: DataTypes.STRING },
-        */}
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
@@ -149,8 +141,25 @@ const StartMovement = ({ user }) => {
           </div>
         </div>
       </form>
+      <button onClick={() => setAddPolClicked(!addPolClicked)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Add a Politician to Your Movement</button>
       <div className="mt-4 mb-4">
-        <button onClick={handleSubmit} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Create!</button>
+        {addPolClicked && (
+          <div className="">
+            <AddPolitician
+              user={user}
+              handleSubmit={handleSubmit}
+              name={name}
+              description={desc}
+              city={city}
+              state={mvmtState}
+              firstName={firstName}
+              lastName={lastName}
+            />
+          </div>
+        )}
+        {!addPolClicked && (
+          <button onClick={handleSubmit} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Create!</button>
+        )}
       </div>
     </div>
   );
