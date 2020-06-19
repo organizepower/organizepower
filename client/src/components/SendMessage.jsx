@@ -11,7 +11,10 @@ const SendMessage = ({ currentMovement, user }) => {
 
   const [to, setTo] = useState('');
   const [body, setBody] = useState('');
-  // set a var for automated message
+  // got to make it to where a link to the movement can be sent
+  const urlLink = `/movement/${currentMovement.id}`;
+  urlLink.link('localhost:8080');
+  // set a variable for automated message
   const defaultMessage = `Please Join me in supporting ${name}`;
   // name of the movement and a link
 
@@ -38,9 +41,9 @@ const SendMessage = ({ currentMovement, user }) => {
       </div>
       <div>
         <label htmlFor="Body">Body:</label>
-        <textarea name="body" id="body" defaultValue={defaultMessage} onChange={e => setBody(e.target.value + defaultMessage)} />
+        <textarea className="resize border rounded focus:outline-none focus:shadow-outline" name="body" id="body" defaultValue={defaultMessage} onChange={e => setBody(e.target.value)} />
       </div>
-      <button type="submit" onClick={handleSubmit}>Send message</button>
+      <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" type="submit" onClick={handleSubmit}>Send message</button>
     </form>
 
   );
