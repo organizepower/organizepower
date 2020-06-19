@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
-import AddPolitician from './AddPolitician.jsx';
 
-import { getMovementsFollowing, getMovementsLeading } from '../services/services';
-
-const Profile = ({ user, handleClick }) => {
+const Profile = ({
+  user,
+  handleClick,
+  movementsFollowing,
+  movementsLeading,
+}) => {
   const {
     username,
     firstName,
@@ -15,20 +17,7 @@ const Profile = ({ user, handleClick }) => {
     bio,
   } = user;
 
-  const [movementsLeading, setMovementsLeading] = useState([]);
-  const [movementsFollowing, setMovementsFollowing] = useState([]);
   const [startMoveClicked, setStartMoveClicked] = useState(false);
-
-  useEffect(() => {
-    getMovementsLeading(user.id)
-      .then(results => {
-        console.log(results, results.data);
-        setMovementsLeading(results.data);
-      });
-    getMovementsFollowing(user.id)
-      .then(results => setMovementsFollowing(results.data));
-  }, []);
-
   return (
     <div className="p-8">
       <div className="lg:flex bg-gray-200 justify-between">

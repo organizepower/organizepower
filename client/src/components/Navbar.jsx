@@ -16,13 +16,19 @@ import Login from './Login.jsx';
 import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
-import { getUserProfileById } from '../services/services';
+import {
+  getUserProfileById,
+  getMovementsLeading,
+  getMovementsFollowing,
+} from '../services/services';
 import auth from '../services/auth';
 
 const Navbar = () => {
   // const { id } = currentMovement;
   const [currentMovement, setCurrentMovement] = useState({});
   const [user, setUser] = useState({});
+  const [movementsLeading, setMovementsLeading] = useState([]);
+  const [movementsFollowing, setMovementsFollowing] = useState([]);
 
   function handleClick(movemementId) {
     console.log(movemementId);
@@ -48,8 +54,20 @@ const Navbar = () => {
   useEffect(() => {
     getUserProfileById(3)
       .then(res => {
+        const navBarUser = res.data;
         console.log(res);
-        setUser(res.data);
+        setUser(navBarUser);
+        getMovementsLeading(navBarUser.id)
+          .then(results => {
+            debugger;
+            console.log(results, results.data);
+            setMovementsLeading(results.data);
+          });
+        getMovementsFollowing(navBarUser.id)
+          .then(results => {
+            debugger;
+            setMovementsFollowing(results.data);
+          });
       })
       .catch(err => {
         console.log(err);
@@ -88,7 +106,15 @@ const Navbar = () => {
           <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} user={user} />)} />
           <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
           {/* <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} /> */}
-          <PrivateRoute exact path={`/profile/${user.id}`} component={Profile} user={user} handleClick={handleClick} />
+          <PrivateRoute
+            exact
+            path={`/profile/${user.id}`}
+            component={Profile}
+            user={user}
+            handleClick={handleClick}
+            movementsFollowing={movementsFollowing}
+            movementsLeading={movementsLeading}
+          />
           <Route exact path="/login" render={() => (<Login />)} />
           <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
         </Switch>
