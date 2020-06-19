@@ -18,7 +18,7 @@ import { getUserProfileById } from '../services/services';
 
 import { logout } from '../services/services';
 
-const Navbar = ({ user, setUserState }) => {
+//const Navbar = ({ user, setUserState }) => {
 
 const Navbar = () => {
   // const { id } = currentMovement;
@@ -103,6 +103,7 @@ const Navbar = () => {
   );
 };
 
+
 // these commented out functions makes it so that the nav bar items are on every page
 
 // function MovementList() {
@@ -175,5 +176,5 @@ const Navbar = () => {
 //   </Switch>
 // </div>
 // </Router> */}
-
+//};
 export default Navbar;
