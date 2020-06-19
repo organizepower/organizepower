@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import {
   HashRouter as Router,
@@ -6,27 +6,24 @@ import {
   Route,
   NavLink,
   Link,
-  Redirect,
 } from 'react-router-dom';
 
-// import MovementList from './MovementList';
 import Profile from './Profile.jsx';
 import Explore from './Explore.jsx';
 import Login from './Login.jsx';
 import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
-import { getUserProfileById } from '../services/services';
-import auth from '../services/auth';
+
+import { logout } from '../services/services';
 
 const Navbar = () => {
-  // const { id } = currentMovement;
   const [currentMovement, setCurrentMovement] = useState({});
   const [user, setUser] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  function handleClick(movemementId) {
-    console.log(movemementId);
-    axios.get(`/movement/:${movemementId}`)
+  function handleClick(movementId) {
+    axios.get(`/movement/:${movementId}`)
       .then(res => {
         setCurrentMovement(res.data);
       })
@@ -36,25 +33,13 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    auth.logout()
-      .then(res => console.log(res))
+    logout()
+      .then(() => {
+        console.log('logging out');
+        setIsAuthenticated(false);
+      })
       .catch(err => console.error(err));
   };
-
-  const setUserState = (u) => {
-    setUser(u);
-  };
-
-  useEffect(() => {
-    getUserProfileById(3)
-      .then(res => {
-        console.log(res);
-        setUser(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
 
   return (
     <Router>
@@ -87,12 +72,11 @@ const Navbar = () => {
         <Switch>
           <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} user={user} />)} />
           <Route exact path="/explore" render={() => (<Explore user={user} handleClick={handleClick} />)} />
-          {/* <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} /> */}
-          <PrivateRoute exact path={`/profile/${user.id}`} component={Profile} user={user} handleClick={handleClick} />
-          <Route exact path="/login" render={() => (<Login />)} />
-          <Route exact path="/signup" render={() => (<SignUp setUserState={setUserState} />)} />
+          <PrivateRoute exact path={`/profile/${user.id}`} component={Profile} user={user} handleClick={handleClick} isAuthenticated={isAuthenticated} />
+          <Route exact path="/login" render={() => (<Login setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
+          <Route exact path="/signup" render={() => (<SignUp setUser={setUser} />)} />
         </Switch>
-        <Redirect to="/explore" />
+        {/* <Redirect to="/explore" /> */}
       </div>
     </Router>
   );
