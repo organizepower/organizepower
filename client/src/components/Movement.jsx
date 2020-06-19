@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import SendMessage from './SendMessage.jsx';
 
 const Movement = ({ currentMovement, user }) => {
   const {
@@ -7,18 +8,23 @@ const Movement = ({ currentMovement, user }) => {
     name,
     imageUrl,
     description,
+    polFirstName,
+    polLastName,
+    polEmail,
+
   } = currentMovement;
 
   // const [followers, setFollowers] = useState([]);
   const [buttonText, setButtonText] = useState('follow');
+  const [text, setText] = useState(false);
 
   // create a function to store who follows a movement
   const followMovement = () => {
     // store user id who follows a movements in movements tables
     // when the movement is clicked add that movement to the users table
     axios.post('movement/followers', { user: user.id, movement: id })
-    .then(follow => {
-      setButtonText('following');
+      .then(follow => {
+        setButtonText('following');
         console.log(follow);
       })
       .catch(err => console.log(err));
@@ -29,8 +35,7 @@ const Movement = ({ currentMovement, user }) => {
   };
   // create a function to send a request to twilio
   const textMovement = () => {
-    // axios request to twilio api
-    // axios.post()
+    setText(true);
   };
 
   useEffect(() => {
@@ -45,15 +50,17 @@ const Movement = ({ currentMovement, user }) => {
 
   return (
     <div>
-      <div className="movement">
-        <p className="text-gray-900 font-bold text-xl mb-2">Movement Title</p>
-        <p className="movement">{name}</p>
-        <p className="movement">Movement image</p>
-        <img className="flex-col object-contain h-full w-48" src={imageUrl} alt={id} />
-        <p className="text-gray-900 font-bold text-xl mb-2">Movement Description</p>
-        <p className="movement">{description}</p>
-        <div>
-  <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={followMovement}>{buttonText}</button>
+      <div>
+        <div className="movement">
+          <p className="text-gray-900 font-bold text-xl mb-2">Movement Title</p>
+          <p className="movement">{name}</p>
+          <p className="movement">Movement image</p>
+          <img className="flex-col object-contain h-full w-48" src={imageUrl} alt={id} />
+          <p className="text-gray-900 font-bold text-xl mb-2">Movement Description</p>
+          <p className="movement">{description}</p>
+          <p className="text-gray-700 text-base my-2">Important Politician: {polFirstName}, {polLastName}</p>
+          <p className="text-gray-700 text-base my-2">Politician contact: {polEmail}</p>
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={followMovement}>{buttonText}</button>
         </div>
       </div>
       <div>
@@ -62,6 +69,13 @@ const Movement = ({ currentMovement, user }) => {
       <div>
         <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={textMovement}>Text Movement</button>
       </div>
+      {
+        text && (
+          <div>
+            <SendMessage currentMovement={currentMovement} user={user} />
+          </div>
+        )
+      }
     </div>
   );
 };

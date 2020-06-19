@@ -8,7 +8,6 @@ import {
   Link,
 } from 'react-router-dom';
 
-// import MovementList from './MovementList';
 import Profile from './Profile.jsx';
 import Explore from './Explore.jsx';
 import Login from './Login.jsx';
@@ -19,7 +18,6 @@ import PrivateRoute from './PrivateRoute.jsx';
 import { logout } from '../services/services';
 
 const Navbar = () => {
-  // const { id } = currentMovement;
   const [currentMovement, setCurrentMovement] = useState({});
   const [user, setUser] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -85,6 +83,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// <Route exact path={`/profile/${user.id}`} render={() =>
-// (<Profile user={user} handleClick={handleClick} />)} />
