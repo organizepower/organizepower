@@ -45,7 +45,7 @@ const Profile = ({ user, handleClick }) => {
       </div>
       {startClicked && (
         <div className="">
-          <StartMovement />
+          <StartMovement user={user} />
         </div>
       )}
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
