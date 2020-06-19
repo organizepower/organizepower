@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
-import AddPolitician from './AddPolitician.jsx';
 
-import { getMovementsFollowing, getMovementsLeading } from '../services/services';
-
-const Profile = ({ user, handleClick }) => {
+const Profile = ({
+  user,
+  handleClick,
+  movements,
+  movementsFollowing,
+  movementsLeading,
+}) => {
   const {
     username,
     firstName,
@@ -14,21 +17,7 @@ const Profile = ({ user, handleClick }) => {
     imageUrl,
     bio,
   } = user;
-
-  const [movementsLeading, setMovementsLeading] = useState([]);
-  const [movementsFollowing, setMovementsFollowing] = useState([]);
   const [startMoveClicked, setStartMoveClicked] = useState(false);
-
-  useEffect(() => {
-    getMovementsLeading(user.id)
-      .then(results => {
-        console.log(results, results.data);
-        setMovementsLeading(results.data);
-      });
-    getMovementsFollowing(user.id)
-      .then(results => setMovementsFollowing(results.data));
-  }, []);
-
   return (
     <div className="p-8">
       <div className="lg:flex bg-gray-200 justify-between">
@@ -51,11 +40,11 @@ const Profile = ({ user, handleClick }) => {
       )}
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
         <p className="text-gray-900 font-bold text-xl mb-2">Leader of These Movements:</p>
-        <MovementList movements={movementsLeading} handleClick={handleClick} />
+        <MovementList movements={movementsLeading} movementsLeading={movementsLeading} movementsFollowing={movementsFollowing} handleClick={handleClick} />
       </div>
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
         <p className="text-gray-900 font-bold text-xl mb-2">Member of These Movements:</p>
-        <MovementList movements={movementsFollowing} handleClick={handleClick} />
+        <MovementList movements={movementsFollowing} movementsLeading={movementsLeading} movementsFollowing={movementsFollowing} handleClick={handleClick} />
       </div>
     </div>
   );
