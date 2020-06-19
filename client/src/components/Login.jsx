@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
+import { login } from '../services/services';
+
 const Login = ({ setUser, setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,11 +17,10 @@ const Login = ({ setUser, setIsAuthenticated }) => {
 
   const handleClick = (event) => {
     event.preventDefault();
-    return axios.post('/login', { username, password })
+    login(username, password)
       .then(({ data }) => {
-        const { message } = data;
+        const { message, user } = data;
         if (message === 'success') {
-          const { user } = data;
           setUserId(user.id);
           setUser(user);
           setIsAuthenticated(true);
@@ -44,11 +45,9 @@ const Login = ({ setUser, setIsAuthenticated }) => {
           <input type="submit" value="Log In" onClick={handleClick} />
         </div>
       </form>
-
       {authStatus === 'invalidUser' && <Redirect to="/signup" />}
       {authStatus === 'invalidPassword' && <Redirect to="/login" />}
       {authStatus === 'success' && <Redirect to={`/profile/${userId}`} />}
-
     </div>
   );
 };
