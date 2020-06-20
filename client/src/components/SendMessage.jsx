@@ -17,18 +17,20 @@ const SendMessage = ({ currentMovement, setText }) => {
 
   const [to, setTo] = useState('');
   const [body, setBody] = useState('');
-  const [messageButton, setmessageButton] = useState('Send Movement');
+  const [messageButton, setmessageButton] = useState('Send Text');
   const [status, setStatus] = useState('pending');
- 
+
   // got to make it to where a link to the movement can be sent
   // link to the specific movement to text to friends
   const urlLink = `https://op-version-3.uc.r.appspot.com/movement/${currentMovement.id}`;
-  const defaultMessage = `Please Join me in supporting ${name} ${imageUrl} please click this link to checkout the movement ${urlLink}`;
+  const defaultMessage = `[YOUR CUSTOM MESSAGE]
+Please Join me in supporting ${name}! 
+${urlLink}`;
 
   const handleSubmit = (event) => {
     event.preventDefault();
     document.getElementById('send-text').reset();
-    setmessageButton('Sending Movement....');
+    setmessageButton('Sending Text...');
     axios.post('/twilio', { to, body })
       .then(() => {
         setStatus('sent');
@@ -39,22 +41,33 @@ const SendMessage = ({ currentMovement, setText }) => {
   };
 
   return (
-    <div>
-      <form id="send-text">
-        <div>
-          <label htmlFor="To">To:</label>
+    <div className="w-full max-w-xs m-4">
+      <form id="send-text" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="To">
+            Cell Phone
+          </label>
           <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="include area code"
             type="tel"
             name="to"
             id="to"
             onChange={e => setTo(e.target.value)}
           />
         </div>
-        <div>
-          <label htmlFor="Body">Body:</label>
-          <textarea className="resize border rounded focus:outline-none focus:shadow-outline" name="body" id="body" defaultValue={defaultMessage} onChange={e => setBody(e.target.value)} />
+        <div className="mb-6">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Body">
+            Message
+          </label>
+          <textarea className="shadow appearance-none border border-red-500 rounded w-full h-40 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="body" id="body" defaultValue={defaultMessage} onChange={e => setBody(e.target.value)} />
+          <p className="text-red-500 text-xs italic">Please add custom message.</p>
         </div>
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" type="submit" onClick={handleSubmit}>{messageButton}</button>
+        <div className="flex items-center justify-between">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" onClick={handleSubmit}>
+            {messageButton}
+          </button>
+        </div>
       </form>
       {status === 'sent' && <Redirect to={`/movement/${id}`} />}
     </div>
