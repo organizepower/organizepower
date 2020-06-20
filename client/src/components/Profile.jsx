@@ -3,13 +3,7 @@ import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
 import { getMovementsLeading, getMovementsFollowing } from '../services/services';
 
-const Profile = ({
-  user,
-  handleMovementTitleClick,
-  // movements,
-  // movementsFollowing,
-  // movementsLeading,
-}) => {
+const Profile = ({ user, handleMovementTitleClick }) => {
   const {
     username,
     firstName,
