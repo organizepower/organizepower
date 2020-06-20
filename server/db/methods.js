@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const {
+  sequelize,
   User,
   Movement,
   UserMovement,
@@ -121,6 +122,26 @@ const getAllMovements = async() => {
   }
 };
 
+// ADD TO EMAIL COUNT
+const addEmailCount = async(movementId) => {
+  try {
+    await Movement.update({ emailCount: sequelize.literal('email_count + 1') },
+      { where: { id: movementId } });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// ADD FOLLOWER
+const addFollower = async(movementId) => {
+  try {
+    await Movement.update({ followers: sequelize.literal('followers + 1') },
+      { where: { id: movementId } });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // USER JOINS MOVEMENT
 const linkUserMovement = async(userId, movementId) => {
   try {
@@ -195,6 +216,8 @@ module.exports = {
   getAllMovements,
   getMovementsLedByUser,
   getMovementsFollowedByUser,
+  addEmailCount,
+  addFollower,
 };
 
 /* Features below were trimmed due to time constraints...

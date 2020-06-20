@@ -56,6 +56,7 @@ const Navbar = () => {
         setMovements(results.data);
       })
       .catch(err => console.error(err));
+
     getUserProfileById(3)
       .then(res => {
         const navBarUser = res.data;
@@ -93,28 +94,40 @@ const Navbar = () => {
                 PROFILE
               </NavLink>
               {!isAuthenticated
-              && (
-                <NavLink to="/login" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
-                  LOGIN
-                </NavLink>
-              )}
+                && (
+                  <NavLink to="/login" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                    LOGIN
+                  </NavLink>
+                )}
               {!isAuthenticated
-              && (
-                <NavLink to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
-                  SIGNUP
-                </NavLink>
-              )}
+                && (
+                  <NavLink to="/signup" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                    SIGNUP
+                  </NavLink>
+                )}
               {isAuthenticated
-              && (
-                <NavLink to="/login" onClick={handleLogout} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
-                  LOGOUT
-                </NavLink>
-              )}
+                && (
+                  <NavLink to="/login" onClick={handleLogout} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+                    LOGOUT
+                  </NavLink>
+                )}
             </div>
           </div>
         </nav>
         <Switch>
-          <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} user={user} />)} />
+          <Route
+            exact
+            path={`/movement/${currentMovement.id}`}
+            render={() => (
+              <Movement
+                currentMovement={currentMovement}
+                user={user}
+                movementsLeading={movementsLeading}
+                movementsFollowing={movementsFollowing}
+                setCurrentMovement={setCurrentMovement}
+              />
+            )}
+          />
           <Route
             exact
             path="/explore"
@@ -144,6 +157,7 @@ const Navbar = () => {
         {/* <Redirect to="/explore" /> */}
       </div>
     </Router>
+
   );
 };
 
