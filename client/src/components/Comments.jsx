@@ -1,7 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Comments = () => {
+const CommentList = ({ data }) => {
+  // console.log(data)
+  // const commentNodes = data.map((comment) => {
+  //   console.log(data);
+  //   return (
+  //     <div>
+  //     <Comment author={comment.author} key={comment.id}>
+  //       {comment.text}
+  //     </Comment>
+  //     </div>
+  //   );
+  // });
+  return (
+    <div>
+      <Comment data={data} />
+    </div>
+  );
+};
+
+const Comment = ({ data }) => {
+  console.log(data);
+  return (
+    <div className="comment">
+      <h2 className="commentAuthor">
+        {data[0].author}
+
+      </h2>
+      {data[0].text}
+    </div>
+  );
+};
+
+// const CommentList = ({ data }) => {
+//   // comment box component
+//   return (
+//     <div className="commentBox">
+//       <h1>WOO My Comment Box</h1>
+//       <CommentList data={data} />
+//       <CommentForm />
+//     </div>
+//   );
+// };
+
+const Comments = ({data}) => {
   const [author, setAuthor] = useState('');
   const [text, setText] = useState('');
 
@@ -11,6 +54,7 @@ const Comments = () => {
   };
 
   return (
+    <div>
     <form className="commentForm" onSubmit={handleSubmit}>
       <input
         type="text"
@@ -26,6 +70,11 @@ const Comments = () => {
       />
       <input type="submit" value="Post" />
     </form>
+     <div className="commentBox">
+      <h1>WOO My Comment Box</h1>
+      <CommentList data={data} />
+    </div>
+    </div>
   );
 };
 
