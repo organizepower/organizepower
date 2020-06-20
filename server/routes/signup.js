@@ -2,42 +2,30 @@
 /* eslint-disable camelcase */
 const { Router } = require('express');
 const { genPassword } = require('../auth/passwordUtils');
-const { addUser } = require('../db/methods');
+const { addUser, getUserByUsername } = require('../db/methods');
 
 const signupRouter = Router();
 
 signupRouter.post('/', (req, res, next) => {
-  const {
-    username,
-    password,
-    firstName,
-    lastName,
-    location,
-    email,
-    phoneNumber,
-    imageUrl,
-    bio,
-  } = req.body.user;
+  const newUser = req.body.user;
+  const { username, password } = newUser;
 
-  // using user password, generate salted pw
-  const saltHash = genPassword(password);
-  const { salt, hash } = saltHash;
+  getUserByUsername(username)
+    .then(user => {
+      if (user !== null) {
+        res.send({ message: 'invalidUser' });
+      } else {
+        const saltHash = genPassword(password);
+        const { salt, hash } = saltHash;
+        delete newUser.password;
+        newUser.salt = salt;
+        newUser.hash = hash;
 
-  const newUser = {
-    username,
-    hash,
-    salt,
-    firstName,
-    lastName,
-    location,
-    email,
-    phoneNumber,
-    imageUrl,
-    bio,
-  };
-
-  // add user to database
-  addUser(newUser);
+        addUser(newUser)
+          .then(() => res.send({ message: 'newUser' }));
+      }
+    })
+    .catch(err => console.error(err));
 });
 
 module.exports = {
