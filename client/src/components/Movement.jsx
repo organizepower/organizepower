@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SendMessage from './SendMessage.jsx';
 
-const Movement = ({ currentMovement, setCurrentMovement, user }) => {
+const Movement = ({
+  currentMovement,
+  user,
+  movementsFollowing,
+  movementsLeading,
+  setCurrentMovement,
+}) => {
   const {
     id,
     name,
@@ -70,8 +76,19 @@ const Movement = ({ currentMovement, setCurrentMovement, user }) => {
       .catch(err => {
         console.log(err);
       });
-  });
 
+    const movementIds = movementsFollowing.length
+      ? movementsFollowing.map(mvmt => mvmt.id)
+      : null;
+    const isFollowing = currentMovement
+      && movementIds
+      ? movementIds.includes(currentMovement.id)
+      : null;
+
+    if (isFollowing) {
+      setButtonText('following');
+    }
+  }, []);
   return (
     <div className="container mx-auto px-4 m-8 grid grid-cols-2 gap-4">
       <div>
@@ -100,6 +117,7 @@ const Movement = ({ currentMovement, setCurrentMovement, user }) => {
               <p className="text-gray-600">EMAILS SENT: {emailCountString}</p>
             </div>
           </div>
+        </div>
       </div>
     </div>
   );

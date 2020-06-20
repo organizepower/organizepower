@@ -10,6 +10,22 @@ const MovementListItem = ({
   movementsLeading,
   movementsFollowing,
 }) => {
+  const followedMovementIds = movementsFollowing.length
+    ? movementsFollowing.map(mvmt => mvmt.id)
+    : null;
+
+  const isFollowing = movement && followedMovementIds
+    ? followedMovementIds.includes(movement.id)
+    : null;
+
+  const ledMovementIds = movementsLeading.length
+    ? movementsLeading.map(mvmt => mvmt.id)
+    : null;
+
+  const isLeading = movement && followedMovementIds
+    ? ledMovementIds.includes(movement.id)
+    : null;
+
   const {
     id,
     imageUrl,
@@ -22,8 +38,7 @@ const MovementListItem = ({
     polLastName,
     polEmail,
   } = movement;
-  // debugger;
-  const isFollowing = movementsFollowing.includes(movement);
+
   // convert numbers to readable strings
   // shorten the description
   const shortDesc = description.slice(0, 250);
@@ -47,11 +62,16 @@ const MovementListItem = ({
               You are following this movement
             </p>
           )}
+          {isLeading && (
+            <p className="text-gray-700 text-base my-2">
+              You created this movement
+            </p>
+          )}
           <p className="text-gray-700 text-base my-2">
             {location}
           </p>
           <p className="text-gray-700 text-base my-2">
-            Important Politician: {polFirstName}, {polLastName}
+            Important Politician: {polFirstName} {polLastName}
           </p>
           <p className="text-gray-700 text-base my-2">
             {shortDesc} . . . &nbsp;
