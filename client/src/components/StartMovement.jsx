@@ -8,10 +8,8 @@ const StartMovement = ({ user }) => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [city, setCity] = useState('');
-  const [zip, setZip] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [mvmtState, setMvmtState] = useState('CA');
+  const [mvmtImage, setMvmtImage] = useState('CA');
   const [addPolClicked, setAddPolClicked] = useState(false);
 
   const handleSubmit = () => {
@@ -20,7 +18,9 @@ const StartMovement = ({ user }) => {
       name,
       description: desc,
       location: `${city}, ${mvmtState}`,
-      createdBy: `${firstName}, ${lastName}`,
+      emailCount: 0,
+      textCount: 0,
+      mvmtImage,
     };
     axios.post('/movement', { movementObj, id })
       .then((movement) => console.log(movement))
@@ -44,6 +44,14 @@ const StartMovement = ({ user }) => {
               Description
             </label>
             <textarea onChange={(e) => setDesc(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Goals? Demands?" />
+          </div>
+        </div>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
+              Add an Image of this Politician
+            </label>
+            <input onChange={(e) => setMvmtImage(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Image URL" />
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
@@ -116,27 +124,6 @@ const StartMovement = ({ user }) => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
-              Zip
-            </label>
-            <input onChange={(e) => setZip(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
-          </div>
-        </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
-              First Name
-            </label>
-            <input onChange={(e) => setFirstName(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
-            <p className="text-red-500 text-xs italic">Please fill out this field.</p>
-          </div>
-          <div className="w-full md:w-1/2 px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
-              Last Name
-            </label>
-            <input onChange={(e) => setLastName(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" />
-          </div>
         </div>
       </form>
       <button onClick={() => setAddPolClicked(!addPolClicked)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Add a Politician to Your Movement</button>
@@ -150,8 +137,7 @@ const StartMovement = ({ user }) => {
               description={desc}
               city={city}
               state={mvmtState}
-              firstName={firstName}
-              lastName={lastName}
+              mvmtImage={mvmtImage}
             />
           </div>
         )}

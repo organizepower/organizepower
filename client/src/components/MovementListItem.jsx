@@ -33,6 +33,7 @@ const MovementListItem = ({
     description,
     followers,
     emailCount,
+    createdBy,
     polFirstName,
     polLastName,
     polEmail,
@@ -54,6 +55,9 @@ const MovementListItem = ({
               {name}
             </Link>
           </span>
+          <p className="text-gray-500 text-sm my-2">
+            <i>{createdBy}</i>
+          </p>
           {isFollowing && (
             <p className="text-gray-500 text-sm my-2">
               <i>You are following this movement.</i>
