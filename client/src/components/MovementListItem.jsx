@@ -39,8 +39,8 @@ const MovementListItem = ({
   } = movement;
 
   const shortDesc = description.slice(0, 250);
-  const followersString = followers.toLocaleString();
-  const emailCountString = emailCount.toLocaleString();
+  const followersString = followers ? followers.toLocaleString() : 0;
+  const emailCountString = emailCount ? emailCount.toLocaleString() : 0;
 
   return (
     <div className="max-w-sm h-full rounded overflow-hidden shadow-lg m-8 float-left">
