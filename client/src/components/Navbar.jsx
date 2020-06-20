@@ -6,6 +6,7 @@ import {
   Route,
   NavLink,
   Link,
+  Redirect,
 } from 'react-router-dom';
 import Profile from './Profile.jsx';
 import Explore from './Explore.jsx';
@@ -125,7 +126,7 @@ const Navbar = () => {
           />
           <Route exact path="/signup" render={() => (<SignUp setIsNewUser={setIsNewUser} />)} />
         </Switch>
-        {/* <Redirect to="/explore" /> */}
+        <Redirect to="/explore" />
       </div>
     </Router>
 

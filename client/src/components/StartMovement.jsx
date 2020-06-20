@@ -14,9 +14,7 @@ const StartMovement = ({ user }) => {
   const [mvmtState, setMvmtState] = useState('CA');
   const [addPolClicked, setAddPolClicked] = useState(false);
 
-
   const handleSubmit = () => {
-    debugger;
     const { id } = user;
     const movementObj = {
       name,
