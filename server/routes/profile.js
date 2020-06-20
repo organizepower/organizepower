@@ -8,7 +8,6 @@ const {
 const profileRouter = Router();
 
 profileRouter.get('/:id', (req, res) => {
-  console.log('get user by id route by id been hit');
   const { id } = req.params || {};
   const userId = parseFloat(id.slice(1));
   // get user information by ID form db
@@ -36,12 +35,10 @@ profileRouter.get('/following/:id', (req, res) => {
       console.log(err);
       res.sendStatus(500);
     });
-  console.log('this is from profile.js get /following');
 });
 
 // a route to get the movements a user started
 profileRouter.get('/leading/:id', (req, res) => {
-  console.log('this is from profile.js get /leading');
   const { id } = req.params || {};
   const userId = parseFloat(id.slice(1));
   getMovementsLedByUser(userId)
