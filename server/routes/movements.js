@@ -22,12 +22,10 @@ movementRouter.get('/', (req, res) => {
       console.error(err);
       res.sendStatus(500);
     });
-  // save to a variable
 });
 
 movementRouter.get('/:id', (req, res) => {
   // this route will get the clicked on movement by the id
-  console.log('movement route by id been hit');
   const { id } = req.params || {};
   const movementId = parseFloat(id.slice(1));
   // save to a variable
@@ -42,7 +40,6 @@ movementRouter.get('/:id', (req, res) => {
 });
 
 movementRouter.post('/followers', (req, res) => {
-  console.log('movement route post /followers');
   // use the linkUserMovement method to join the user to a particular movement
   const { userId, movementId } = req.body;
   linkUserMovement(userId, movementId)
