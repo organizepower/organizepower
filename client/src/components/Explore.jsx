@@ -21,14 +21,14 @@ const Explore = ({
   return (
     <div className="m-4">
       <span className="font-semibold text-2xl text-gray-500 tracking-tight m-8">EXPLORE MOVEMENTS</span>
-      ({movements.length
+      {movements.length
       && (
         <MovementList
           user={user}
           movements={movements}
           handleMovementTitleClick={handleMovementTitleClick}
         />
-      )})
+      )}
     </div>
   );
 };
