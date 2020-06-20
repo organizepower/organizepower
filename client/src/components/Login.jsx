@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 import { login } from '../services/services';
 
-const Login = ({ setUser, setIsAuthenticated }) => {
+const Login = ({
+  setUser,
+  setIsAuthenticated,
+  setIsNewUser,
+  isNewUser,
+}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authStatus, setAuthStatus] = useState('');
@@ -27,6 +31,7 @@ const Login = ({ setUser, setIsAuthenticated }) => {
           setUserId(user.id);
           setUser(user);
           setIsAuthenticated(true);
+          setIsNewUser(false);
         }
         setAuthStatus(message);
       })
@@ -35,6 +40,7 @@ const Login = ({ setUser, setIsAuthenticated }) => {
 
   return (
     <div className="m-8">
+      {isNewUser && <p>Thank you for signing up! Please log in.</p>}
       <form id="login">
         <div>
           <p>Username:</p>
