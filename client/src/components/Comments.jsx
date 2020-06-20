@@ -78,7 +78,6 @@ const Comments = ({data}) => {
   );
 };
 
-
 // const CommentList = ({ data }) => {
 //   // console.log(data)
 //   // const commentNodes = data.map((comment) => {

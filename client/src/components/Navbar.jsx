@@ -7,7 +7,6 @@ import {
   NavLink,
   Link,
 } from 'react-router-dom';
-
 import Profile from './Profile.jsx';
 import Explore from './Explore.jsx';
 import Login from './Login.jsx';
@@ -15,22 +14,36 @@ import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
 import {
-  getMovements,
-  getUserProfileById,
   getMovementsLeading,
   getMovementsFollowing,
   logout,
 } from '../services/services';
 
 const Navbar = () => {
+  const [user, setUser] = useState(null);
   const [currentMovement, setCurrentMovement] = useState({});
-  const [user, setUser] = useState({});
   const [movementsLeading, setMovementsLeading] = useState([]);
   const [movementsFollowing, setMovementsFollowing] = useState([]);
-  const [movements, setMovements] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  function handleClick(movementId) {
+  // prevents issues with user id when no user is logged in
+  const userId = user ? user.id : null;
+
+  // get movements leading & following by user to pass to movements page
+  useEffect(() => {
+    if (user) {
+      getMovementsLeading(user.id)
+        .then(results => {
+          setMovementsLeading(results.data);
+        });
+      getMovementsFollowing(user.id)
+        .then(results => {
+          setMovementsFollowing(results.data);
+        });
+    }
+  }, []);
+
+  function handleMovementTitleClick(movementId) {
     axios.get(`/movement/:${movementId}`)
       .then(res => {
         setCurrentMovement(res.data);
@@ -46,37 +59,6 @@ const Navbar = () => {
       .catch(err => console.error(err));
   };
 
-  const setUserState = (u) => {
-    setUser(u);
-  };
-
-  useEffect(() => {
-    getMovements()
-      .then(results => {
-        setMovements(results.data);
-      })
-      .catch(err => console.error(err));
-
-    getUserProfileById(3)
-      .then(res => {
-        const navBarUser = res.data;
-        console.log(res);
-        setUser(navBarUser);
-        getMovementsLeading(navBarUser.id)
-          .then(results => {
-            console.log(results, results.data);
-            setMovementsLeading(results.data);
-          });
-        getMovementsFollowing(navBarUser.id)
-          .then(results => {
-            setMovementsFollowing(results.data);
-          });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
-
   return (
     <Router>
       <div>
@@ -90,7 +72,7 @@ const Navbar = () => {
               <NavLink to="/explore" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 EXPLORE
               </NavLink>
-              <NavLink to={`/profile/${user.id}`} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+              <NavLink to={`/profile/${userId}`} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 PROFILE
               </NavLink>
               {!isAuthenticated
@@ -120,11 +102,11 @@ const Navbar = () => {
             path={`/movement/${currentMovement.id}`}
             render={() => (
               <Movement
-                currentMovement={currentMovement}
                 user={user}
+                currentMovement={currentMovement}
+                setCurrentMovement={setCurrentMovement}
                 movementsLeading={movementsLeading}
                 movementsFollowing={movementsFollowing}
-                setCurrentMovement={setCurrentMovement}
               />
             )}
           />
@@ -133,23 +115,18 @@ const Navbar = () => {
             path="/explore"
             render={() => (
               <Explore
-                movements={movements}
                 user={user}
-                handleClick={handleClick}
-                movementsLeading={movementsLeading}
-                movementsFollowing={movementsFollowing}
+                handleMovementTitleClick={handleMovementTitleClick}
               />
             )}
           />
-          {/* <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} /> */}
           <PrivateRoute
             exact
-            path={`/profile/${user.id}`}
+            path={`/profile/${userId}`}
             component={Profile}
             user={user}
-            handleClick={handleClick}
-            movementsFollowing={movementsFollowing}
-            movementsLeading={movementsLeading}
+            handleMovementTitleClick={handleMovementTitleClick}
+            isAuthenticated={isAuthenticated}
           />
           <Route exact path="/login" render={() => (<Login setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
           <Route exact path="/signup" render={() => (<SignUp setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
