@@ -97,6 +97,12 @@ const UserMovement = sequelize.define('userMovement', {
   },
 }, { underscored: true });
 
+// comments added to a movement page by user
+const Comment = sequelize.define('comment', {
+  commentText: { type: DataTypes.STRING, allowNull: false },
+  username: { type: DataTypes.STRING, allowNull: false },
+}, { underscored: true });
+
 // sync sequelize to create tables in db before adding associations
 // force: true will overwrite the tables, good for dev:
 // sequelize.sync({ force: true });
@@ -109,6 +115,10 @@ User.hasMany(Movement, { foreignKey: 'id_organizer' });
 // makes a join table between the users and movements
 User.belongsToMany(Movement, { through: UserMovement, foreignKey: 'id_user' });
 Movement.belongsToMany(User, { through: UserMovement, foreignKey: 'id_movement' });
+
+// adds movement and user foreign keys on comments table
+Comment.belongsTo(Movement, { foreignKey: 'id_movement' });
+Comment.belongsTo(User, { foreignKey: 'id_user' });
 
 // hasOne & belongsTo methods:
 // .get() & .set()
@@ -124,7 +134,7 @@ module.exports = {
   Movement,
   // Politician,
   // Prompt,
-  // Comment,
+  Comment,
   // MovementPolitician,
   UserMovement,
 };
@@ -147,11 +157,6 @@ const Prompt = sequelize.define('prompt', {
   promptText: { type: DataTypes.STRING, allowNull: false },
 }, { underscored: true });
 
-// comments added to a movement page by user
-const Comment = sequelize.define('comment', {
-  commentText: { type: DataTypes.STRING, allowNull: false },
-}, { underscored: true });
-
 // track which movements and politician have associations
 const MovementPolitician = sequelize.define('movementPolitician', {
   id: {
@@ -166,10 +171,6 @@ const MovementPolitician = sequelize.define('movementPolitician', {
 // politician and movement id foreign keys
 Prompt.belongsTo(Movement, { foreignKey: 'id_movement' });
 Prompt.belongsTo(Politician, { foreignKey: 'id_politician' });
-
-// movement and user foreign keys
-Comment.belongsTo(Movement, { foreignKey: 'id_politician' });
-Comment.belongsTo(User, { foreignKey: 'id_user' });
 
 // makes a join table between politicians and movements
 Politician.belongsToMany(Movement, { through: MovementPolitician, foreignKey: 'id_politician' });
