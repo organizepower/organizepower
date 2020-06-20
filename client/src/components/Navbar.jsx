@@ -114,7 +114,7 @@ const Navbar = () => {
           </div>
         </nav>
         <Switch>
-          <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} user={user} />)} />
+          <Route exact path={`/movement/${currentMovement.id}`} render={() => (<Movement currentMovement={currentMovement} user={user} setCurrentMovement={setCurrentMovement} />)} />
           <Route
             exact
             path="/explore"

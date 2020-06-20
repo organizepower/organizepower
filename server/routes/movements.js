@@ -5,6 +5,8 @@ const {
   getAllMovements,
   linkUserMovement,
   addPolitician,
+  addEmailCount,
+  addFollower,
 } = require('../db/methods');
 
 const movementRouter = Router();
@@ -42,9 +44,10 @@ movementRouter.get('/:id', (req, res) => {
 movementRouter.post('/followers', (req, res) => {
   console.log('movement route post /followers');
   // use the linkUserMovement method to join the user to a particular movement
-  const { user, movement } = req.body;
-  linkUserMovement(user, movement)
+  const { userId, movementId } = req.body;
+  linkUserMovement(userId, movementId)
     .then(linked => {
+      addFollower(movementId);
       res.send(linked).status(200);
     })
     .catch(err => res.sendStatus(400).send(err));
@@ -55,8 +58,20 @@ movementRouter.post('/', (req, res) => {
   const { movementObj, id } = req.body;
   addMovement(movementObj, id)
     .then(movement => {
-      console.log(movement);
       res.send(movement);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+movementRouter.post('/emailCount/', (req, res) => {
+  const { id } = req.body;
+  const movementId = parseFloat(id);
+
+  addEmailCount(movementId)
+    .then(() => {
+      res.sendStatus(200);
     })
     .catch(err => {
       console.log(err);
