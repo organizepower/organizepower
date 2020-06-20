@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SendMessage from './SendMessage.jsx';
+import Comments from './Comments.jsx';
 
 const Movement = ({ currentMovement, user }) => {
   const {
@@ -16,6 +17,11 @@ const Movement = ({ currentMovement, user }) => {
     followers,
     emailCount,
   } = currentMovement;
+
+  const data = [
+    { id: 1, author: 'Pete Hunt', text: 'This is one comment' },
+    { id: 2, author: 'Jordan Walke', text: 'This is *another* comment' },
+  ];
 
   // const [followers, setFollowers] = useState([]);
   const [buttonText, setButtonText] = useState('Follow this Movement');
@@ -65,7 +71,7 @@ const Movement = ({ currentMovement, user }) => {
           <p className="text-gray-700 text-lg my-2">Important Politician: {polFirstName} {polLastName}, {polPosition}</p>
           <p className="text-gray-900 text-base my-2">{description}</p>
         </div>
-        {/* <Comments /> */}
+        <Comments data={data} />
       </div>
       <div className="m-8">
         <div>

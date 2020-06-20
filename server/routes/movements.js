@@ -63,6 +63,7 @@ movementRouter.post('/', (req, res) => {
     });
 });
 
+
 // movementRouter.post('/politician', (req, res) => {
 //   // add politician and associate with movement
 //   const { politicianObj } = req.body;
