@@ -31,7 +31,6 @@ ${urlLink}`;
     event.preventDefault();
     document.getElementById('send-text').reset();
     setmessageButton('Sending Text...');
-    console.log(event)
     axios.post('/twilio', { to, body })
       .then(() => {
         setStatus('sent');
