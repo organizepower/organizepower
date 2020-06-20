@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SendMessage from './SendMessage.jsx';
 
-const Movement = ({ currentMovement, user }) => {
+const Movement = ({
+  currentMovement,
+  user,
+  movementsFollowing,
+  movementsLeading,
+}) => {
   const {
     id,
     name,
@@ -17,7 +22,8 @@ const Movement = ({ currentMovement, user }) => {
   const [buttonText, setButtonText] = useState('follow');
   const [text, setText] = useState(false);
   const [emailClick, setEmailClick] = useState(false);
-  const body = `Dear ${polFirstName} ${polLastName}, 
+
+  const body = `Dear ${polFirstName} ${polLastName},
     I am one of your many constituents. There must be something done about this problem
   `;
   // create a function to store who follows a movement
@@ -49,8 +55,19 @@ const Movement = ({ currentMovement, user }) => {
       .catch(err => {
         console.log(err);
       });
-  });
 
+    const movementIds = movementsFollowing.length
+      ? movementsFollowing.map(mvmt => mvmt.id)
+      : null;
+    const isFollowing = currentMovement
+      && movementIds
+      ? movementIds.includes(currentMovement.id)
+      : null;
+
+    if (isFollowing) {
+      setButtonText('following');
+    }
+  }, []);
   return (
     <div>
       <div>
