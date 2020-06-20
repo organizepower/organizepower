@@ -209,9 +209,10 @@ const getMovementsFollowedByUser = async(idUser) => {
       where: { id_user: idUser },
       raw: true,
     });
-    return await Promise.all(
+    const movements = await Promise.all(
       movementIds.map(({ id_movement }) => getMovement(id_movement)),
     );
+    return movements.filter(movement => movement.id_organizer !== idUser);
   } catch (err) {
     console.error(err);
   }

@@ -24,6 +24,7 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [currentMovement, setCurrentMovement] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   // prevents issues with user id when no user is logged in
   const userId = user ? user.id : null;
@@ -111,8 +112,19 @@ const Navbar = () => {
             handleMovementTitleClick={handleMovementTitleClick}
             isAuthenticated={isAuthenticated}
           />
-          <Route exact path="/login" render={() => (<Login setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
-          <Route exact path="/signup" render={() => (<SignUp setUser={setUser} setIsAuthenticated={setIsAuthenticated} />)} />
+          <Route
+            exact
+            path="/login"
+            render={() => (
+              <Login
+                setUser={setUser}
+                setIsAuthenticated={setIsAuthenticated}
+                setIsNewUser={setIsNewUser}
+                isNewUser={isNewUser}
+              />
+            )}
+          />
+          <Route exact path="/signup" render={() => (<SignUp setIsNewUser={setIsNewUser} />)} />
         </Switch>
         <Redirect to="/explore" />
       </div>
