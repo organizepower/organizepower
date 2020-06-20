@@ -24,11 +24,13 @@ import {
 
 const Navbar = () => {
   const [currentMovement, setCurrentMovement] = useState({});
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [movementsLeading, setMovementsLeading] = useState([]);
   const [movementsFollowing, setMovementsFollowing] = useState([]);
   const [movements, setMovements] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const userId = user ? user.id : null;
 
   function handleClick(movementId) {
     axios.get(`/movement/:${movementId}`)
@@ -46,35 +48,32 @@ const Navbar = () => {
       .catch(err => console.error(err));
   };
 
-  const setUserState = (u) => {
-    setUser(u);
-  };
-
   useEffect(() => {
     getMovements()
       .then(results => {
         setMovements(results.data);
       })
       .catch(err => console.error(err));
-
-    getUserProfileById(3)
-      .then(res => {
-        const navBarUser = res.data;
-        console.log(res);
-        setUser(navBarUser);
-        getMovementsLeading(navBarUser.id)
-          .then(results => {
-            console.log(results, results.data);
-            setMovementsLeading(results.data);
-          });
-        getMovementsFollowing(navBarUser.id)
-          .then(results => {
-            setMovementsFollowing(results.data);
-          });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (user) {
+      getUserProfileById(user.id)
+        .then(res => {
+          const navBarUser = res.data;
+          console.log(res);
+          setUser(navBarUser);
+          getMovementsLeading(navBarUser.id)
+            .then(results => {
+              console.log(results, results.data);
+              setMovementsLeading(results.data);
+            });
+          getMovementsFollowing(navBarUser.id)
+            .then(results => {
+              setMovementsFollowing(results.data);
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }, []);
 
   return (
@@ -90,7 +89,7 @@ const Navbar = () => {
               <NavLink to="/explore" className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 EXPLORE
               </NavLink>
-              <NavLink to={`/profile/${user.id}`} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
+              <NavLink to={`/profile/${userId}`} className="block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white mr-4">
                 PROFILE
               </NavLink>
               {!isAuthenticated
@@ -144,10 +143,11 @@ const Navbar = () => {
           {/* <Route exact path={`/profile/${user.id}`} render={() => (<Profile user={user} handleClick={handleClick} />)} /> */}
           <PrivateRoute
             exact
-            path={`/profile/${user.id}`}
+            path={`/profile/${userId}`}
             component={Profile}
             user={user}
             handleClick={handleClick}
+            isAuthenticated={isAuthenticated}
             movementsFollowing={movementsFollowing}
             movementsLeading={movementsLeading}
           />

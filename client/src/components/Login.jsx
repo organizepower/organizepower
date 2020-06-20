@@ -20,6 +20,9 @@ const Login = ({ setUser, setIsAuthenticated }) => {
     login(username, password)
       .then(({ data }) => {
         const { message, user } = data;
+        if (message === 'invalidPassword') {
+          document.getElementById('login').reset();
+        }
         if (message === 'success') {
           setUserId(user.id);
           setUser(user);
@@ -31,8 +34,8 @@ const Login = ({ setUser, setIsAuthenticated }) => {
   };
 
   return (
-    <div>
-      <form>
+    <div className="m-8">
+      <form id="login">
         <div>
           <p>Username:</p>
           <input type="text" name="username" onChange={(e) => setUsername(e.target.value)} />
@@ -40,6 +43,7 @@ const Login = ({ setUser, setIsAuthenticated }) => {
         <div>
           <p>Password:</p>
           <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} />
+          {authStatus === 'invalidPassword' && <p className="italic text-xs text-red-500">Invalid password - try again!</p>}
         </div>
         <div>
           <input type="submit" value="Log In" onClick={handleClick} />
