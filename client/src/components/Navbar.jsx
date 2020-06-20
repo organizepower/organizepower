@@ -14,34 +14,18 @@ import Movement from './Movement.jsx';
 import SignUp from './SignUp.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
 import {
-  getMovementsLeading,
-  getMovementsFollowing,
+  // getMovementsLeading,
+  // getMovementsFollowing,
   logout,
 } from '../services/services';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [currentMovement, setCurrentMovement] = useState({});
-  const [movementsLeading, setMovementsLeading] = useState([]);
-  const [movementsFollowing, setMovementsFollowing] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // prevents issues with user id when no user is logged in
   const userId = user ? user.id : null;
-
-  // get movements leading & following by user to pass to movements page
-  useEffect(() => {
-    if (user) {
-      getMovementsLeading(user.id)
-        .then(results => {
-          setMovementsLeading(results.data);
-        });
-      getMovementsFollowing(user.id)
-        .then(results => {
-          setMovementsFollowing(results.data);
-        });
-    }
-  }, []);
 
   function handleMovementTitleClick(movementId) {
     axios.get(`/movement/:${movementId}`)
@@ -105,8 +89,6 @@ const Navbar = () => {
                 user={user}
                 currentMovement={currentMovement}
                 setCurrentMovement={setCurrentMovement}
-                movementsLeading={movementsLeading}
-                movementsFollowing={movementsFollowing}
               />
             )}
           />

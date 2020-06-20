@@ -21,7 +21,7 @@ const MovementListItem = ({
     ? movementsLeading.map(mvmt => mvmt.id)
     : null;
 
-  const isLeading = movement && followedMovementIds
+  const isLeading = movement && ledMovementIds
     ? ledMovementIds.includes(movement.id)
     : null;
 
