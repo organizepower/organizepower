@@ -58,13 +58,13 @@ const MovementListItem = ({
             </Link>
           </span>
           {isFollowing && (
-            <p className="text-gray-700 text-base my-2">
-              You are following this movement
+            <p className="text-gray-500 text-sm my-2">
+              <i>You are following this movement.</i>
             </p>
           )}
           {isLeading && (
-            <p className="text-gray-700 text-base my-2">
-              You created this movement
+            <p className="text-gray-500 text-sm my-2">
+              <i>You created this movement.</i>
             </p>
           )}
           <p className="text-gray-700 text-base my-2">

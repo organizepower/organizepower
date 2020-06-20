@@ -86,7 +86,7 @@ const Movement = ({
       : null;
 
     if (isFollowing) {
-      setButtonText('following');
+      setButtonText('Following ✓');
     }
   }, []);
   return (
@@ -116,7 +116,6 @@ const Movement = ({
               <p className="text-gray-600 leading-none">FOLLOWERS: {followersString}</p>
               <p className="text-gray-600">EMAILS SENT: {emailCountString}</p>
             </div>
-          </div>
         </div>
       </div>
     </div>
