@@ -75,6 +75,15 @@ movementRouter.post('/emailCount/', (req, res) => {
     });
 });
 
+movementRouter.post('/comments', (req, res) => {
+  console.log(req);
+// post the comments to the database
+});
+
+movementRouter.get('/comments', (req, res) => {
+  console.log(req);
+});
+
 // movementRouter.post('/politician', (req, res) => {
 //   // add politician and associate with movement
 //   const { politicianObj } = req.body;

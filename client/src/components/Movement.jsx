@@ -124,7 +124,7 @@ const Movement = ({
           )}
           <p className="text-gray-900 text-base my-2">{description}</p>
         </div>
-        <Comments data={data} />
+        <Comments movement={currentMovement} user={user} />
       </div>
       <div className="m-8">
         <div>
