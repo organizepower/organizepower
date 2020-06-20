@@ -124,6 +124,7 @@ const Navbar = () => {
                 user={user}
                 movementsLeading={movementsLeading}
                 movementsFollowing={movementsFollowing}
+                setCurrentMovement={setCurrentMovement}
               />
             )}
           />
