@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SendMessage from './SendMessage.jsx';
 
@@ -118,6 +119,7 @@ const Movement = ({
             </div>
         </div>
       </div>
+      <Link to="/explore" className="text-gray-500 text-sm my-2 italic">← Return to Explore Page</Link>
     </div>
   );
 };
