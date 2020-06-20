@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import StatesSelect from './StatesSelect.jsx';
 
+import { signup } from '../services/services';
+
 const SignUp = ({ setUser }) => {
   const [username, setUsername] = useState('');
 
@@ -14,7 +16,8 @@ const SignUp = ({ setUser }) => {
   const [imageUrl, setImage] = useState('');
   const [bio, setBio] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = event => {
+    event.preventDefault();
     const user = {
       username,
       password,
@@ -26,13 +29,11 @@ const SignUp = ({ setUser }) => {
       imageUrl,
       bio,
     };
-    console.log(user);
-    debugger;
-    axios.post('/signup', { user })
+    signup(user)
       .then((data) => {
         console.log(data);
       })
-      .catch((err) => console.error(err));
+      .catch(err => console.error(err));
   };
 
   return (
