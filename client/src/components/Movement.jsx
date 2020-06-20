@@ -31,10 +31,6 @@ const Movement = ({
     { id: 2, author: 'Jordan Walke', text: 'This is *another* comment' },
   ];
 
-  // const [movementsLeading, setMovementsLeading] = useState([]);
-  // const [movementsFollowing, setMovementsFollowing] = useState([]);
-
-  // const [followers, setFollowers] = useState([]);
   const [buttonText, setButtonText] = useState('Follow this Movement');
   const [text, setText] = useState(false);
   const [emailClick, setEmailClick] = useState(false);
@@ -44,42 +40,6 @@ const Movement = ({
   const body = `Dear ${polFirstName} ${polLastName}, 
     I am [INSERT YOUR NAME}, one of your many constituents. There must be something done about this problem...[INSERT YOUR PERSONAL MESSAGE HERE]
   `;
-
-  // useEffect(() => {
-  //   debugger;
-  //   if (user) {
-  //     getMovementsLeading(user.id)
-  //       .then(results => {
-  //         // console.log(results, results.data);
-  //         setMovementsLeading(results.data);
-  //       });
-  //     getMovementsFollowing(user.id)
-  //       .then(results => {
-  //         setMovementsFollowing(results.data);
-  //       });
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   axios.get(`/movement/:${id}`)
-  //     .then(res => {
-  //       console.log(res);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-
-  //   const movementIds = movementsFollowing.length
-  //     ? movementsFollowing.map(mvmt => mvmt.id)
-  //     : null;
-  //   const isFollowing = currentMovement && movementIds
-  //     ? movementIds.includes(currentMovement.id)
-  //     : null;
-
-  //   if (isFollowing) {
-  //     setButtonText('Following ✓');
-  //   }
-  // }, []);
 
   const getMovementById = (movementId) => {
     axios.get(`/movement/:${movementId}`)
