@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SendMessage from './SendMessage.jsx';
 
-const Movement = ({ currentMovement, user }) => {
+const Movement = ({
+  currentMovement,
+  user,
+  movementsFollowing,
+  movementsLeading,
+}) => {
   const {
     id,
     name,
@@ -53,8 +58,19 @@ const Movement = ({ currentMovement, user }) => {
       .catch(err => {
         console.log(err);
       });
-  });
 
+    const movementIds = movementsFollowing.length
+      ? movementsFollowing.map(mvmt => mvmt.id)
+      : null;
+    const isFollowing = currentMovement
+      && movementIds
+      ? movementIds.includes(currentMovement.id)
+      : null;
+
+    if (isFollowing) {
+      setButtonText('following');
+    }
+  }, []);
   return (
     <div className="container mx-auto px-4 m-8 grid grid-cols-2 gap-4">
       <div>
@@ -77,12 +93,12 @@ const Movement = ({ currentMovement, user }) => {
         </div>
         {text && <SendMessage currentMovement={currentMovement} user={user} setText={setText} />}
         <div className="flex items-center mt-8 m-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 fill-current text-gray-600" viewBox="0 0 24 24"><path className="heroicon-ui" d="M20 22H4a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h4V8c0-1.1.9-2 2-2h4V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2zM14 8h-4v12h4V8zm-6 4H4v8h4v-8zm8-8v16h4V4h-4z" /></svg>
-            <div className="text-sm mx-4">
-              <p className="text-gray-600 leading-none">FOLLOWERS: {followers}</p>
-              <p className="text-gray-600">EMAILS SENT: {emailCount}</p>
-            </div>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 fill-current text-gray-600" viewBox="0 0 24 24"><path className="heroicon-ui" d="M20 22H4a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h4V8c0-1.1.9-2 2-2h4V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2zM14 8h-4v12h4V8zm-6 4H4v8h4v-8zm8-8v16h4V4h-4z" /></svg>
+          <div className="text-sm mx-4">
+            <p className="text-gray-600 leading-none">FOLLOWERS: {followers}</p>
+            <p className="text-gray-600">EMAILS SENT: {emailCount}</p>
           </div>
+        </div>
       </div>
     </div>
   );
