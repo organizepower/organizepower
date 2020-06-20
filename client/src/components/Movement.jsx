@@ -9,8 +9,6 @@ const Movement = ({
   user,
   currentMovement,
   setCurrentMovement,
-  movementsFollowing,
-  movementsLeading,
 }) => {
   const {
     id,
@@ -34,12 +32,43 @@ const Movement = ({
   const [buttonText, setButtonText] = useState('Follow this Movement');
   const [text, setText] = useState(false);
   const [emailClick, setEmailClick] = useState(false);
-
+  const [leading, setLeading] = useState(false);
   const followersString = followers.toLocaleString();
   const emailCountString = emailCount.toLocaleString();
   const body = `Dear ${polFirstName} ${polLastName}, 
     I am [INSERT YOUR NAME}, one of your many constituents. There must be something done about this problem...[INSERT YOUR PERSONAL MESSAGE HERE]
   `;
+
+  let isFollowing;
+
+  useEffect(() => {
+    if (user) {
+      getMovementsLeading(user.id)
+        .then(results => {
+          const ledMovementIds = results.data.length
+            ? results.data.map(mvmt => mvmt.id)
+            : null;
+          const isLeading = currentMovement && ledMovementIds
+            ? ledMovementIds.includes(id)
+            : null;
+          if (isLeading) {
+            setLeading(true);
+          }
+        });
+      getMovementsFollowing(user.id)
+        .then(results => {
+          const followedMovementIds = results.data.length
+            ? results.data.map(mvmt => mvmt.id)
+            : null;
+          isFollowing = currentMovement && followedMovementIds
+            ? followedMovementIds.includes(id)
+            : null;
+          if (isFollowing) {
+            setButtonText('Following ✓');
+          }
+        });
+    }
+  }, []);
 
   const getMovementById = (movementId) => {
     axios.get(`/movement/:${movementId}`)
@@ -50,33 +79,6 @@ const Movement = ({
         console.log(err);
       });
   };
-
-  // const movementIds = movementsFollowing.length
-  //   ? movementsFollowing.map(mvmt => mvmt.id)
-  //   : null;
-  // const isFollowing = currentMovement && movementIds
-  //   ? movementIds.includes(currentMovement.id)
-  //   : null;
-
-  const followedMovementIds = movementsFollowing.length
-    ? movementsFollowing.map(mvmt => mvmt.id)
-    : null;
-
-  const isFollowing = currentMovement && followedMovementIds
-    ? followedMovementIds.includes(id)
-    : null;
-
-  const ledMovementIds = movementsLeading.length
-    ? movementsLeading.map(mvmt => mvmt.id)
-    : null;
-
-  const isLeading = currentMovement && followedMovementIds
-    ? ledMovementIds.includes(id)
-    : null;
-
-  if (isFollowing) {
-    setButtonText('Following ✓');
-  }
 
   // create a function to store who follows a movement
   const followMovement = () => {
@@ -115,7 +117,7 @@ const Movement = ({
           <p className="text-gray-900 font-bold text-3xl mb-2">{name}</p>
           <p className="text-gray-700 text-xl my-2">{location}</p>
           <p className="text-gray-700 text-lg my-2">Important Politician: {polFirstName} {polLastName}, {polPosition}</p>
-          {isLeading && (
+          {leading && (
             <p className="text-gray-500 text-sm my-2">
               <i>You created this movement.</i>
             </p>
