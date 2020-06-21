@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getUserProfileById } from '../services/services';
 
 const MovementListItem = ({
   user,
@@ -25,6 +26,8 @@ const MovementListItem = ({
     ? ledMovementIds.includes(movement.id)
     : null;
 
+  const [startedBy, setStartedBy] = useState('');
+
   const {
     id,
     imageUrl,
@@ -33,11 +36,19 @@ const MovementListItem = ({
     description,
     followers,
     emailCount,
-    createdBy,
     polFirstName,
     polLastName,
-    polEmail,
+    id_organizer,
   } = movement;
+
+  useEffect(() => {
+    getUserProfileById(id_organizer)
+      .then(res => {
+        const { firstName, lastName } = res.data;
+        setStartedBy(`${firstName} ${lastName}`);
+        console.log(res);
+      });
+  }, []);
 
   const shortDesc = description.slice(0, 250);
   const followersString = followers ? followers.toLocaleString() : 0;
@@ -55,9 +66,6 @@ const MovementListItem = ({
               {name}
             </Link>
           </span>
-          <p className="text-gray-500 text-sm my-2">
-            <i>{createdBy}</i>
-          </p>
           {isFollowing && (
             <p className="text-gray-500 text-sm my-2">
               <i>You are following this movement.</i>
@@ -73,6 +81,9 @@ const MovementListItem = ({
           </p>
           <p className="text-gray-700 text-base my-2">
             Important Politician: {polFirstName} {polLastName}
+          </p>
+          <p className="text-gray-500 text-sm my-2">
+            <i>{startedBy} started this movement</i>
           </p>
           <p className="text-gray-700 text-base my-2">
             {shortDesc} . . . &nbsp;

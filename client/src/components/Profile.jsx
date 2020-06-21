@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Redirect from 'react-router-dom';
 import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
 import { getMovementsLeading, getMovementsFollowing } from '../services/services';
@@ -15,6 +16,7 @@ const Profile = ({ user, handleMovementTitleClick }) => {
   const [startMovementClicked, setStartMovementClicked] = useState(false);
   const [movementsLeading, setMovementsLeading] = useState([]);
   const [movementsFollowing, setMovementsFollowing] = useState([]);
+  const [toExplore, setToExplore] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -42,7 +44,7 @@ const Profile = ({ user, handleMovementTitleClick }) => {
 
       <div className="mt-4 mb-4">
         <button onClick={() => setStartMovementClicked(!startMovementClicked)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Start a Movement</button>
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Join a Movement</button>
+        {/* <button onClick={() => setToExplore(!toExplore)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Join a Movement</button> */}
       </div>
       {startMovementClicked && (
         <div className="">
