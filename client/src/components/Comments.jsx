@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CommentList from './CommentList.jsx';
 
-// lead component
+// lead component for comment box 
+// recives props from Movement.jsx
 const Comments = ({ movement, user }) => {
   const { id } = movement;
-  // const [author, setAuthor] = useState('');
+  // create wo state values of text and comments
   const [text, setText] = useState('');
   const [comments, setComments] = useState([]);
 
+  // grab all the comments that are already stored in the database
   useEffect(() => {
     axios.get('/comment', { params: { movementId: id } })
       .then((response) => {
@@ -17,10 +19,15 @@ const Comments = ({ movement, user }) => {
       .catch((err) => console.error(err));
   }, []);
 
+  /*  when the comment button is clicked save the comment to the
+  database and also grab it from the dataabse
+  */
   const handleSubmit = (e) => {
     e.preventDefault();
+    // we ill send a body with a movementId, comment and user
     axios.post('/comment', { movementId: id, comment: text, authorId: user.id })
       .then(() => {
+        // then we will get that data back from the db
         axios.get('/comment', { params: { movementId: id } })
           .then((response) => {
             setComments(response.data);
@@ -34,6 +41,7 @@ const Comments = ({ movement, user }) => {
 
   return (
     <div>
+      {/* conditionally render the text box if a user is logged in */}
       {user && (
         <form className="commentForm" onSubmit={handleSubmit}>
           <input
@@ -45,6 +53,7 @@ const Comments = ({ movement, user }) => {
         </form>
       )}
       <div className="commentBox">
+        {/* if there are comments render the comment list component and pass down the comments */}
         {areThereComments && (<CommentList comments={comments} />)}
       </div>
     </div>
