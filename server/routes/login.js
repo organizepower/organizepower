@@ -36,6 +36,7 @@ loginRouter.post('/', (req, res, next) => {
         phoneNumber,
         imageUrl,
         bio,
+        createdAt,
       } = user;
       const clientUser = {
         id,
@@ -47,6 +48,7 @@ loginRouter.post('/', (req, res, next) => {
         phoneNumber,
         imageUrl,
         bio,
+        createdAt,
       };
       return res.send({ user: clientUser, message: 'success' });
     });
