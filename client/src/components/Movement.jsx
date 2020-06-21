@@ -108,7 +108,6 @@ const Movement = ({
   const textMovement = () => {
     setText(true);
   };
-
   return (
     <div className="container mx-auto px-4 m-8 grid grid-cols-2 gap-4">
       <div>
