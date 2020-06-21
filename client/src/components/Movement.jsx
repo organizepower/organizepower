@@ -113,7 +113,7 @@ const Movement = ({
   };
 
   return (
-    <div className="container mx-auto px-4 m-8 grid grid-cols-2 gap-4">
+    <div className="container mx-auto px-4 m-8 grid grid-cols-2 gap-4 rounded overflow-hidden shadow-lg">
       <div>
         <div>
           <img className="object-cover h-48 w-full float-left" src={imageUrl} alt={`${name}`} />

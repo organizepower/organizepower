@@ -123,7 +123,7 @@ const SignUp = ({ setIsNewUser }) => {
             <textarea onChange={(e) => setBio(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-bio" type="text" placeholder="Say a little about yourself..." />
           </div>
         </div>
-        <input type="submit" value="Sign Up!" onClick={handleSubmit} />
+        <input className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2 float-right" type="submit" value="Sign Up!" onClick={handleSubmit} />
       </form>
       {authStatus === 'invalidUser' && <Redirect to="/signup" />}
       {authStatus === 'newUser' && <Redirect to="/login" />}

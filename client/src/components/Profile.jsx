@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
@@ -11,6 +12,8 @@ const Profile = ({ user, handleMovementTitleClick }) => {
     lastName,
     imageUrl,
     bio,
+    createdAt,
+    location,
   } = user;
 
   const [startMovementClicked, setStartMovementClicked] = useState(false);
@@ -39,7 +42,9 @@ const Profile = ({ user, handleMovementTitleClick }) => {
             <img className="flex-col object-contain h-auto w-auto" src={imageUrl} alt={username} />
             <div className="m-8">
               <p className="text-gray-900 font-bold text-xl mb-2">{firstName} {lastName}</p>
-              <p className="">{bio}</p>
+              <p className="text-gray-900 text-lg mb-2">{location}</p>
+              <p className="text-gray-900 text-base my-2">{bio}</p>
+              <p className="text-gray-900 text-sm italic my-4">Member of Organize Power for {moment(createdAt).fromNow(true)}.</p>
             </div>
           </div>
         </div>

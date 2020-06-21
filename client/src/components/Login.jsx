@@ -39,8 +39,8 @@ const Login = ({
   };
 
   return (
-    <div className="w-full max-w-xs m-4">
-      {isNewUser && <p>Thank you for signing up! Please log in.</p>}
+    <div className="w-full max-w-xs m-10">
+      {isNewUser && <p className="italic text-xs text-gray-500 m-4">Thank you for signing up! Please log in.</p>}
       <form id="login" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -56,7 +56,7 @@ const Login = ({
           {authStatus === 'invalidPassword' && <p className="italic text-xs text-red-500">Invalid password - try again!</p>}
         </div>
         <div className="flex items-center justify-between">
-          <input className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="Log In" onClick={handleClick} />
+          <input className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2 float-right" type="submit" value="Log In" onClick={handleClick} />
         </div>
       </form>
       {authStatus === 'invalidUser' && <Redirect to="/signup" />}
