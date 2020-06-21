@@ -25,6 +25,7 @@ profileRouter.get('/:id', (req, res) => {
 profileRouter.get('/following/:id', (req, res) => {
   const { id } = req.params || {};
   const userId = parseFloat(id.slice(1));
+  // database method that get the movements that a user follows
   getMovementsFollowedByUser(userId)
     .then((movements) => {
       res.send(movements);
@@ -39,6 +40,7 @@ profileRouter.get('/following/:id', (req, res) => {
 profileRouter.get('/leading/:id', (req, res) => {
   const { id } = req.params || {};
   const userId = parseFloat(id.slice(1));
+  // db method that get the movements led by a user
   getMovementsLedByUser(userId)
     .then((movements) => {
       res.send(movements);
