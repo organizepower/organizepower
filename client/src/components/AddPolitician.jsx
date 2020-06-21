@@ -7,7 +7,8 @@ const AddPolitician = ({
   description,
   city,
   state,
-  mvmtImage,
+  imageUrl,
+  setStartMovementClicked,
 }) => {
   const [polFirstName, setPolFirstName] = useState('');
   const [polLastName, setPolLastName] = useState('');
@@ -17,29 +18,37 @@ const AddPolitician = ({
   const [polPosition, setPolPosition] = useState('');
   const [polImageUrl, setPolImageUrl] = useState('');
 
-  const handlePolSubmit = () => {
+  const handlePolSubmit = (event) => {
+    event.preventDefault();
     const { id } = user;
     const movementObj = {
       name,
       description,
       location: `${city}, ${state}`,
-      mvmtImage,
+      imageUrl,
+      emailCount: 0,
+      textCount: 0,
+      followers: 0,
       polFirstName,
       polLastName,
       polPhoneNumber,
       polOrg,
-      positionType: polPosition,
+      polPosition,
       polImageUrl,
-      email: polEmail,
+      polEmail,
     };
     axios.post('/movement', { movementObj, id })
-      .then(movement => console.log(movement))
+      .then((movement) => {
+        document.getElementById('start-movement').reset();
+        document.getElementById('add-politician').reset();
+        setStartMovementClicked(false);
+      })
       .catch((err) => console.log(err));
   };
 
   return (
     <div>
-      <form className="w-full max-w-lg">
+      <form id="add-politician" className="w-full max-w-lg">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">

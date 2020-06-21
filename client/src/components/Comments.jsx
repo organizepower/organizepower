@@ -33,7 +33,7 @@ const Comments = ({ movement, user }) => {
       .catch((err) => console.log(err));
   };
 
-  const areThereComments = comments.length > 0 ? true : false;
+  const areThereComments = comments.length > 0;
 
   return (
     <div>
