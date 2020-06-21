@@ -46,7 +46,6 @@ const MovementListItem = ({
       .then(res => {
         const { firstName, lastName } = res.data;
         setStartedBy(`${firstName} ${lastName}`);
-        console.log(res);
       });
   }, []);
 
