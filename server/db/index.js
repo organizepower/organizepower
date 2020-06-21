@@ -1,6 +1,22 @@
-// start mysql server in directory: sudo service mysql start
-// open mysql shell: mysql -u root
-// create database locally: create database op;
+/*
+ * DATABASE NOTES:
+ * start mysql server in directory: sudo service mysql start
+ * open mysql shell: mysql -u root
+ * create database locally: create database op;
+ *                          ^^^^^^^^^^^^^^^^^^
+ * Note that this file will not create the database automatically,
+ * but it will create all the tables and assign the foreign keys.
+ *
+ * DEPLOYMENT:
+ * For Google Cloud deployment via App Engine, the environmental variables
+ * are stored in an app.yaml rather than the .env:
+ * https://cloud.google.com/appengine/docs/standard/nodejs/config/appref
+ * However, they are stil accessed using process.env in this file.
+ *
+ * Google's Cloud SQL will have an instance name that is used to
+ * connect to MySQL via socket path rather than the host IP.
+ *
+ */
 
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
@@ -42,8 +58,20 @@ sequelize.authenticate()
 
 /*
   MODELS
-  notes:
-  sequelize defaults a primary key 'id' for every model/table
+
+  Sequelize defaults a primary key 'id' for every model/table.
+  Also adds a createdAt and updatedAt column.
+
+  { underscored: true } will convert camelCase in the models to
+  snake_case in the database. Can be set for each table.
+
+  Sequelize also will automatically pluralize the table names
+  based of the singular model name. User model becomes users table.
+
+  For join tables (see lines 143-146), it will pluralize the last
+  word in the join table.
+  For example UserMovement will be user_movements in the db.
+
 */
 
 const User = sequelize.define('user', {
@@ -56,17 +84,13 @@ const User = sequelize.define('user', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    // unique: true,
-    // validate: {
-    //   isEmail: true,
-    // },
   },
   phoneNumber: { type: DataTypes.STRING },
   imageUrl: { type: DataTypes.STRING },
   bio: { type: DataTypes.TEXT },
   lastLogin: { type: DataTypes.DATE },
   status: { type: Sequelize.ENUM('active', 'inactive'), defaultValue: 'active' },
-}, { underscored: true });
+}, { underscored: true }); // convert camelCase column names to snake_case in db
 
 const Movement = sequelize.define('movement', {
   // movement info
@@ -102,15 +126,22 @@ const Comment = sequelize.define('comment', {
 }, { underscored: true });
 
 // sync sequelize to create tables in db before adding associations
-// force: true will overwrite the tables, good for dev:
+// { force: true } will drop and recreate the tables,
+// can be handy for dev but also dangerous:
+
 // sequelize.sync({ force: true });
 sequelize.sync(); // will not drop tables every time
+
+// ASSOCIATIONS: these need to be set after all the models have been
+// made and synced with the database. Cannot make an association if
+// the table doesn't exist yet.
 
 // add user id foreign key to all movements
 Movement.belongsTo(User, { foreignKey: 'id_organizer' });
 User.hasMany(Movement, { foreignKey: 'id_organizer' });
 
 // makes a join table between the users and movements
+// 'through' key sets the name of the table: user_movements
 User.belongsToMany(Movement, { through: UserMovement, foreignKey: 'id_user' });
 Movement.belongsToMany(User, { through: UserMovement, foreignKey: 'id_movement' });
 
@@ -118,59 +149,10 @@ Movement.belongsToMany(User, { through: UserMovement, foreignKey: 'id_movement' 
 Comment.belongsTo(Movement, { foreignKey: 'id_movement' });
 Comment.belongsTo(User, { foreignKey: 'id_user' });
 
-// hasOne & belongsTo methods:
-// .get() & .set()
-// example: comment.getUser() or comment.setMovement()
-
-// belongsToMany methods:
-// .get(), .set(), .add()
-// example: politician.setMovement(associatedMovement)
-
 module.exports = {
   sequelize,
   User,
   Movement,
-  // Politician,
-  // Prompt,
   Comment,
-  // MovementPolitician,
   UserMovement,
 };
-
-/*
-const Politician = sequelize.define('politician', {
-  firstName: { type: DataTypes.STRING, allowNull: false },
-  lastName: { type: DataTypes.STRING, allowNull: false },
-  location: { type: DataTypes.STRING, allowNull: false },
-  email: { type: DataTypes.STRING, allowNull: false },
-  phoneNumber: { type: DataTypes.STRING },
-  mailingAddress: { type: DataTypes.STRING, allowNull: false },
-  organization: { type: DataTypes.STRING, allowNull: false },
-  positionType: { type: DataTypes.STRING, allowNull: false },
-  imageUrl: { type: DataTypes.STRING },
-}, { underscored: true });
-
-// prompts added for movements by politician
-const Prompt = sequelize.define('prompt', {
-  promptText: { type: DataTypes.STRING, allowNull: false },
-}, { underscored: true });
-
-// track which movements and politician have associations
-const MovementPolitician = sequelize.define('movementPolitician', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-}, { underscored: true });
-*/
-
-/*
-// politician and movement id foreign keys
-Prompt.belongsTo(Movement, { foreignKey: 'id_movement' });
-Prompt.belongsTo(Politician, { foreignKey: 'id_politician' });
-
-// makes a join table between politicians and movements
-Politician.belongsToMany(Movement, { through: MovementPolitician, foreignKey: 'id_politician' });
-Movement.belongsToMany(Politician, { through: MovementPolitician, foreignKey: 'id_movement' });
-*/
