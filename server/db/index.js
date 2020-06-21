@@ -81,8 +81,6 @@ const Movement = sequelize.define('movement', {
   polFirstName: { type: DataTypes.STRING },
   polLastName: { type: DataTypes.STRING },
   polPosition: { type: DataTypes.STRING },
-  polLoc: { type: DataTypes.STRING },
-  polOrg: { type: DataTypes.STRING },
   polEmail: { type: DataTypes.STRING },
   polPhoneNumber: { type: DataTypes.STRING },
   polImageUrl: { type: DataTypes.STRING },
