@@ -36,6 +36,7 @@ const MovementListItem = ({
     description,
     followers,
     emailCount,
+    textCount,
     polFirstName,
     polLastName,
     id_organizer,
@@ -52,6 +53,7 @@ const MovementListItem = ({
   const shortDesc = description.slice(0, 250);
   const followersString = followers ? followers.toLocaleString() : 0;
   const emailCountString = emailCount ? emailCount.toLocaleString() : 0;
+  const textCountString = textCount ? textCount.toLocaleString() : 0;
 
   return (
     <div className="max-w-sm h-full rounded overflow-hidden shadow-lg m-8 float-left">
@@ -92,9 +94,10 @@ const MovementListItem = ({
           </p>
           <div className="flex items-center mt-8">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 fill-current text-gray-600" viewBox="0 0 24 24"><path className="heroicon-ui" d="M20 22H4a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h4V8c0-1.1.9-2 2-2h4V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2zM14 8h-4v12h4V8zm-6 4H4v8h4v-8zm8-8v16h4V4h-4z" /></svg>
-            <div className="text-sm mx-4">
-              <p className="text-gray-600 leading-none">FOLLOWERS: {followersString}</p>
+            <div className="text-xs mx-4">
+              <p className="text-gray-600">FOLLOWERS: {followersString}</p>
               <p className="text-gray-600">EMAILS SENT: {emailCountString}</p>
+              <p className="text-gray-600">TEXTS SENT: {textCountString}</p>
             </div>
           </div>
         </div>
