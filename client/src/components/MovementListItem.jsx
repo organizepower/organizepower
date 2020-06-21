@@ -58,7 +58,7 @@ const MovementListItem = ({
   return (
     <div className="max-w-sm h-full rounded overflow-hidden shadow-lg m-8 float-left">
       <Link to={`/movement/${id}`} onClick={() => handleMovementTitleClick(id)}>
-        <img className="w-full" src={imageUrl} alt="Sunset in the mountains" />
+        <img className="w-full" src={imageUrl} alt={`${name}`} />
       </Link>
       <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div className="mb-8">
