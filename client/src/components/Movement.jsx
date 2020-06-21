@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SendMessage from './SendMessage.jsx';
 import Comments from './Comments.jsx';
+import { getMovementsLeading, getMovementsFollowing } from '../services/services';
 
 const Movement = ({
-  currentMovement,
   user,
-  movementsFollowing,
-  movementsLeading,
+  currentMovement,
+  setCurrentMovement,
 }) => {
   const {
     id,
@@ -23,7 +24,11 @@ const Movement = ({
     emailCount,
   } = currentMovement;
 
-  // const [followers, setFollowers] = useState([]);
+  const data = [
+    { id: 1, author: 'Pete Hunt', text: 'This is one comment' },
+    { id: 2, author: 'Jordan Walke', text: 'This is *another* comment' },
+  ];
+
   const [buttonText, setButtonText] = useState('Follow this Movement');
   const [text, setText] = useState(false);
   const [emailClick, setEmailClick] = useState(false);
@@ -33,49 +38,76 @@ const Movement = ({
   const body = `Dear ${polFirstName} ${polLastName}, 
     I am [INSERT YOUR NAME}, one of your many constituents. There must be something done about this problem...[INSERT YOUR PERSONAL MESSAGE HERE]
   `;
-  // create a function to store who follows a movement
-  const followMovement = () => {
-    // store user id who follows a movements in movements tables
-    // when the movement is clicked add that movement to the users table
-    axios.post('/movement/followers', { user: user.id, movement: id })
-      .then(follow => {
-        setButtonText('Following ✓');
-        console.log(follow);
-      })
-      .catch(err => console.log(err));
-  };
-  // create a function to send an email
-  const email = () => {
-    // send a request to google email API
-    setEmailClick(true);
-  };
-  // create a function to send a request to twilio
-  const textMovement = () => {
-    setText(true);
-  };
+
+  let isFollowing;
 
   useEffect(() => {
-    axios.get(`/movement/:${id}`)
+    if (user) {
+      getMovementsLeading(user.id)
+        .then(results => {
+          const ledMovementIds = results.data.length
+            ? results.data.map(mvmt => mvmt.id)
+            : null;
+          const isLeading = currentMovement && ledMovementIds
+            ? ledMovementIds.includes(id)
+            : null;
+          if (isLeading) {
+            setLeading(true);
+          }
+        });
+      getMovementsFollowing(user.id)
+        .then(results => {
+          const followedMovementIds = results.data.length
+            ? results.data.map(mvmt => mvmt.id)
+            : null;
+          isFollowing = currentMovement && followedMovementIds
+            ? followedMovementIds.includes(id)
+            : null;
+          if (isFollowing) {
+            setButtonText('Following ✓');
+          }
+        });
+    }
+  }, []);
+
+  const getMovementById = (movementId) => {
+    axios.get(`/movement/:${movementId}`)
       .then(res => {
-        console.log(res);
+        setCurrentMovement(res.data);
       })
       .catch(err => {
         console.log(err);
       });
+  };
 
-    const movementIds = movementsFollowing.length
-      ? movementsFollowing.map(mvmt => mvmt.id)
-      : null;
-    const isFollowing = currentMovement
-      && movementIds
-      ? movementIds.includes(currentMovement.id)
-      : null;
-
-    if (isFollowing) {
-      setButtonText('following');
+  // create a function to store who follows a movement
+  const followMovement = () => {
+    // store user id who follows a movements in movements tables
+    // when the movement is clicked add that movement to the users table
+    if (!isFollowing) {
+      axios.post('/movement/followers', { userId: user.id, movementId: id })
+        .then(follow => {
+          setButtonText('Following ✓');
+          getMovementById(id);
+          console.log(follow);
+        })
+        .catch(err => console.log(err));
     }
-  }, []);
+  };
 
+  // create a function to send an email
+  const email = () => {
+    // send a request to google email API
+    setEmailClick(true);
+    axios.post('/movement/emailCount/', { id })
+      .then(() => getMovementById(id))
+      .catch((err) => console.error(err));
+  };
+
+  // create a function to send a request to twilio
+  const textMovement = () => {
+    setText(true);
+  };
   return (
     <div className="container mx-auto px-4 m-8 grid grid-cols-2 gap-4">
       <div>
@@ -84,13 +116,26 @@ const Movement = ({
           <p className="text-gray-900 font-bold text-3xl mb-2">{name}</p>
           <p className="text-gray-700 text-xl my-2">{location}</p>
           <p className="text-gray-700 text-lg my-2">Important Politician: {polFirstName} {polLastName}, {polPosition}</p>
+          {leading && (
+            <p className="text-gray-500 text-sm my-2">
+              <i>You created this movement.</i>
+            </p>
+          )}
           <p className="text-gray-900 text-base my-2">{description}</p>
         </div>
         <Comments movement={currentMovement} user={user} />
       </div>
       <div className="m-8">
         <div>
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={followMovement}>{buttonText}</button><br />
+          {/* conditionally render follow button if user is logged in */}
+          {user && (
+            <div>
+              <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={followMovement}>
+                {buttonText}
+              </button>
+              <br />
+            </div>
+          )}
           <a href={`mailto:${polEmail}?&subject=${name}&body=${body}`} target="_blank" rel="noopener noreferrer">
             <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={email}>Email {polFirstName} {polLastName}</button>
           </a><br />
@@ -105,27 +150,8 @@ const Movement = ({
           </div>
         </div>
       </div>
+      <Link to="/explore" className="text-gray-500 text-sm my-2 italic">← Return to Explore Page</Link>
     </div>
   );
 };
 export default Movement;
-
-/* Tailwind Card Example from Docs
-<div className="max-w-sm w-full lg:max-w-full lg:flex">
-<div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={cardImageStyle} title={name} />
-<div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-  <div className="mb-8">
-    <p className="text-sm text-gray-600 flex items-center">{location}</p>
-    <div className="text-gray-900 font-bold text-xl mb-2">{name}</div>
-    <p className="text-gray-700 text-base">{description}</p>
-  </div>
-  <div className="flex items-center">
-    <img className="w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar" />
-    <div className="text-sm">
-      <p className="text-gray-900 leading-none">Jonathan</p>
-      <p className="text-gray-600">Aug 18</p>
-    </div>
-  </div>
-</div>
-</div>
-*/
