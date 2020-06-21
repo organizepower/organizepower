@@ -5,9 +5,9 @@ const commentRouter = Router();
 
 commentRouter.get('/', (req, res) => {
   const { movementId } = req.query || {};
+  // the id comes in as a string, so we need to make it to a number
   const id = parseFloat(movementId);
-
-  // get all comments for an individual movement
+  // the method that get all the comments for an individual movement
   getComments(id)
     .then((comments) => {
       res.send(comments);
@@ -19,7 +19,7 @@ commentRouter.get('/', (req, res) => {
 
 commentRouter.post('/', (req, res) => {
   const { movementId, comment, authorId } = req.body;
-  // post the comments to the database
+  // the method that adds the comments to the database
   addComment(movementId, comment, authorId)
     .then(() => {
       res.sendStatus(200);

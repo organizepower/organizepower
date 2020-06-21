@@ -11,9 +11,9 @@ const {
 
 const movementRouter = Router();
 
-// this route will get the clicked on movement by the id
+// this route will get all the movements for the movementLists
 movementRouter.get('/', (req, res) => {
-  // get all the movements
+  // get all the movements from the database
   getAllMovements()
     .then(movements => {
       res.send(movements);
@@ -27,8 +27,9 @@ movementRouter.get('/', (req, res) => {
 movementRouter.get('/:id', (req, res) => {
   // this route will get the clicked on movement by the id
   const { id } = req.params || {};
+  // unstring the id to a number and remove the colon
   const movementId = parseFloat(id.slice(1));
-  // save to a variable
+  // method that get the movement by a particular id from the db
   getMovement(movementId)
     .then(movement => {
       res.send(movement);
@@ -44,6 +45,7 @@ movementRouter.post('/followers', (req, res) => {
   const { userId, movementId } = req.body;
   linkUserMovement(userId, movementId)
     .then(linked => {
+      // add the follower of this movement to the join table
       addFollower(movementId);
       res.send(linked).status(200);
     })
@@ -51,8 +53,8 @@ movementRouter.post('/followers', (req, res) => {
 });
 
 movementRouter.post('/', (req, res) => {
-  // add a movement to db
   const { movementObj, id } = req.body;
+  // add a movement to db
   addMovement(movementObj, id)
     .then(movement => {
       res.send(movement);
