@@ -16,10 +16,8 @@ twilioRouter.post('/', (req, res) => {
       to,
     })
     .then(message => {
-      console.log(message.sid);
       res.send(message);
-    }).catch(err => console.log(err));
-  console.log(req);
+    }).catch(err => console.error(err));
 });
 
 module.exports = {

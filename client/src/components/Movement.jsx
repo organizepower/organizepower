@@ -80,7 +80,7 @@ const Movement = ({
         setCurrentMovement(res.data);
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -93,9 +93,8 @@ const Movement = ({
         .then(follow => {
           setButtonText('Following ✓');
           getMovementById(id);
-          console.log(follow);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
     }
   };
 

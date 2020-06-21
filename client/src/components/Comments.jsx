@@ -12,25 +12,22 @@ const Comments = ({ movement, user }) => {
   useEffect(() => {
     axios.get('/comment', { params: { movementId: id } })
       .then((response) => {
-        console.log(response.data);
         setComments(response.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('/comment', { movementId: id, comment: text, authorId: user.id })
-      .then((response) => console.log(response))
       .then(() => {
         axios.get('/comment', { params: { movementId: id } })
           .then((response) => {
-            console.log(response.data);
             setComments(response.data);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.error(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   const areThereComments = comments.length > 0;

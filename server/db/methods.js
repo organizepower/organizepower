@@ -178,9 +178,6 @@ const addComment = async(movementId, commentText, userId) => {
   }
 };
 
-// addComment(1, 1, 'This must stop!!!');
-// addComment(4, 1, 'I am sending texts to all my friends.');
-
 // GET COMMENTS BY MOVEMENT
 const getComments = async(movementId) => {
   try {
@@ -196,8 +193,6 @@ const getComments = async(movementId) => {
     console.error(err);
   }
 };
-
-// console.log(getComments(1));
 
 // GET MOVEMENTS LED BY USER
 const getMovementsLedByUser = async(idUser) => {
@@ -236,12 +231,6 @@ const addPolitician = async(politicianObj) => {
     console.error(err);
   }
 };
-
-// const test = async() => {
-//   const result = await getMovementsFollowedByUser(1);
-//   console.log(result);
-// };
-// test();
 
 module.exports = {
   // addComment,
