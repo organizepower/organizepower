@@ -48,7 +48,7 @@ const Profile = ({ user, handleMovementTitleClick }) => {
       </div>
       {startMovementClicked && (
         <div className="">
-          <StartMovement user={user} setStartMovementClicked={setStartMovementClicked} />
+          <StartMovement user={user} setMovementsLeading={setMovementsLeading} setStartMovementClicked={setStartMovementClicked} />
         </div>
       )}
       <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">

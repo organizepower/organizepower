@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getMovementsLeading, getMovementsFollowing } from '../services/services';
 
 const AddPolitician = ({
   user,
@@ -9,6 +10,7 @@ const AddPolitician = ({
   state,
   imageUrl,
   setStartMovementClicked,
+  setMovementsLeading,
 }) => {
   const [polFirstName, setPolFirstName] = useState('');
   const [polLastName, setPolLastName] = useState('');
@@ -42,6 +44,11 @@ const AddPolitician = ({
         document.getElementById('start-movement').reset();
         document.getElementById('add-politician').reset();
         setStartMovementClicked(false);
+        getMovementsLeading(user.id)
+          .then(results => {
+            setMovementsLeading(results.data);
+          })
+          .catch(err => console.error(err));
       })
       .catch((err) => console.log(err));
   };
