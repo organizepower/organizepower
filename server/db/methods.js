@@ -5,6 +5,7 @@ const {
   Movement,
   UserMovement,
   Politician,
+  Comment,
 } = require('./index');
 
 // MODEL METHODS
@@ -153,6 +154,41 @@ const linkUserMovement = async(userId, movementId) => {
   }
 };
 
+// ADD COMMENTS
+const addComment = async(movementId, commentText, userId) => {
+  try {
+    const user = await User.findOne({ where: { id: userId } });
+    const movement = await Movement.findOne({ where: { id: movementId } });
+    const commentObj = { commentText, username: user.username };
+    const comment = await Comment.create(commentObj);
+    comment.setUser(user);
+    comment.setMovement(movement);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// addComment(1, 1, 'This must stop!!!');
+// addComment(4, 1, 'I am sending texts to all my friends.');
+
+// GET COMMENTS BY MOVEMENT
+const getComments = async(movementId) => {
+  try {
+    const comments = await Comment.findAll({
+      where: { id_movement: movementId },
+      raw: true,
+    });
+    if (!comments.length) {
+      return [];
+    }
+    return comments;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// console.log(getComments(1));
+
 // GET MOVEMENTS LED BY USER
 const getMovementsLedByUser = async(idUser) => {
   try {
@@ -219,10 +255,11 @@ module.exports = {
   getMovementsFollowedByUser,
   addEmailCount,
   addFollower,
+  addComment,
+  getComments,
 };
 
 /* Features below were trimmed due to time constraints...
-
 
 // EDIT POLITICIAN BY FIELD
 const editPoliticianField = async(politicianId, prop, newValue) => {

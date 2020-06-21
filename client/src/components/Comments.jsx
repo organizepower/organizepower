@@ -1,27 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-// sub component
-const CommentList = ({ author, text }) => {
-  return (
-    <div>
-      <CommentListItem author={author} text={text} />
-    </div>
-  );
-};
-// sub component
-const CommentListItem = ({ author, text }) => {
-  return (
-    <div className="comment">
-      <h2 className="commentAuthor">
-        {author}
-      </h2>
-      <h2 className="commentText">
-        {text}
-      </h2>
-    </div>
-  );
-};
+import CommentList from './CommentList.jsx';
 
 // lead component
 const Comments = ({ movement, user }) => {
@@ -30,12 +9,21 @@ const Comments = ({ movement, user }) => {
   const [text, setText] = useState('');
   const [comments, setComments] = useState([]);
 
+  useEffect(() => {
+    axios.get('/comment', { params: { movementId: id } })
+      .then((response) => {
+        console.log(response.data);
+        setComments(response.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('movement/comments', { movement: id, comment: text, author: user.id })
+    axios.post('/comment', { movementId: id, comment: text, authorId: user.id })
       .then((response) => console.log(response))
       .then(() => {
-        axios.get('movement/comments')
+        axios.get('/comment', { params: { movementId: id } })
           .then((response) => {
             console.log(response.data);
             setComments(response.data);
@@ -43,8 +31,9 @@ const Comments = ({ movement, user }) => {
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
-    // setText(e.target.value);
   };
+
+  const areThereComments = comments.length > 0 ? true : false;
 
   return (
     <div>
@@ -59,54 +48,10 @@ const Comments = ({ movement, user }) => {
         </form>
       )}
       <div className="commentBox">
-        <strong>Comments</strong>
-        <CommentList comments={comments} />
+        {areThereComments && (<CommentList comments={comments} />)}
       </div>
     </div>
   );
 };
-
-// const CommentList = ({ data }) => {
-//   // console.log(data)
-//   // const commentNodes = data.map((comment) => {
-//   //   console.log(data);
-//   //   return (
-//   //     <div>
-//   //     <Comment author={comment.author} key={comment.id}>
-//   //       {comment.text}
-//   //     </Comment>
-//   //     </div>
-//   //   );
-//   // });
-//   return (
-//     <div>
-//       <Comment data={data} />
-//     </div>
-//   );
-// };
-
-// const Comment = ({ data }) => {
-//   console.log(data);
-//   return (
-//     <div className="comment">
-//       <h2 className="commentAuthor">
-//         {data[0].author}
-
-//       </h2>
-//       {data[0].text}
-//     </div>
-//   );
-// };
-
-// const Comments = ({ data }) => {
-//   // comment box component
-//   return (
-//     <div className="commentBox">
-//       <h1>WOO My Comment Box</h1>
-//       <CommentList data={data} />
-//       <CommentForm />
-//     </div>
-//   );
-// };
 
 export default Comments;
