@@ -26,7 +26,29 @@ loginRouter.post('/', (req, res, next) => {
       if (loginErr) {
         return next(loginErr);
       }
-      return res.send({ user, message: 'success' });
+      const {
+        id,
+        username,
+        firstName,
+        lastName,
+        location,
+        email,
+        phoneNumber,
+        imageUrl,
+        bio,
+      } = user;
+      const clientUser = {
+        id,
+        username,
+        firstName,
+        lastName,
+        location,
+        email,
+        phoneNumber,
+        imageUrl,
+        bio,
+      };
+      return res.send({ user: clientUser, message: 'success' });
     });
   })(req, res, next);
 });
