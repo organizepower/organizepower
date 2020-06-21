@@ -22,6 +22,7 @@ const Movement = ({
     location,
     followers,
     emailCount,
+    textCount,
   } = currentMovement;
 
   const data = [
@@ -35,11 +36,13 @@ const Movement = ({
   const [leading, setLeading] = useState(false);
   const followersString = followers ? followers.toLocaleString() : 0;
   const emailCountString = emailCount ? emailCount.toLocaleString() : 0;
+  const textCountString = textCount ? textCount.toLocaleString() : 0;
   const body = `Dear ${polFirstName} ${polLastName}, 
     I am [INSERT YOUR NAME}, one of your many constituents. There must be something done about this problem...[INSERT YOUR PERSONAL MESSAGE HERE]
   `;
 
   let isFollowing;
+  let isLeading;
 
   useEffect(() => {
     if (user) {
@@ -48,10 +51,11 @@ const Movement = ({
           const ledMovementIds = results.data.length
             ? results.data.map(mvmt => mvmt.id)
             : null;
-          const isLeading = currentMovement && ledMovementIds
+          isLeading = currentMovement && ledMovementIds
             ? ledMovementIds.includes(id)
             : null;
           if (isLeading) {
+            setButtonText('Following ✓');
             setLeading(true);
           }
         });
@@ -84,7 +88,7 @@ const Movement = ({
   const followMovement = () => {
     // store user id who follows a movements in movements tables
     // when the movement is clicked add that movement to the users table
-    if (!isFollowing) {
+    if (!isFollowing || !isLeading) {
       axios.post('/movement/followers', { userId: user.id, movementId: id })
         .then(follow => {
           setButtonText('Following ✓');
@@ -108,6 +112,7 @@ const Movement = ({
   const textMovement = () => {
     setText(true);
   };
+
   return (
     <div className="container mx-auto px-4 m-8 grid grid-cols-2 gap-4">
       <div>
@@ -141,12 +146,20 @@ const Movement = ({
           </a><br />
           <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-blue-400 rounded shadow m-4" onClick={textMovement}>Text a Friend</button><br />
         </div>
-        {text && <SendMessage currentMovement={currentMovement} user={user} setText={setText} />}
+        {text && (
+          <SendMessage
+            currentMovement={currentMovement}
+            getMovementById={getMovementById}
+            user={user}
+            setText={setText}
+          />
+        )}
         <div className="flex items-center mt-8 m-4">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 fill-current text-gray-600" viewBox="0 0 24 24"><path className="heroicon-ui" d="M20 22H4a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h4V8c0-1.1.9-2 2-2h4V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2zM14 8h-4v12h4V8zm-6 4H4v8h4v-8zm8-8v16h4V4h-4z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 fill-current text-gray-600" viewBox="0 0 24 24"><path className="heroicon-ui" d="M20 22H4a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h4V8c0-1.1.9-2 2-2h4V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2zM14 8h-4v12h4V8zm-6 4H4v8h4v-8zm8-8v16h4V4h-4z" /></svg>
           <div className="text-sm mx-4">
-            <p className="text-gray-600 leading-none">FOLLOWERS: {followersString}</p>
+            <p className="text-gray-600">FOLLOWERS: {followersString}</p>
             <p className="text-gray-600">EMAILS SENT: {emailCountString}</p>
+            <p className="text-gray-600">TEXTS SENT: {textCountString}</p>
           </div>
         </div>
       </div>

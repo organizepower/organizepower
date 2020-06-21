@@ -5,15 +5,16 @@ import AddPolitician from './AddPolitician.jsx';
 import StatesSelect from './StatesSelect.jsx';
 // import StatesSelect from './StatesSelect.jsx';
 
-const StartMovement = ({ user }) => {
+const StartMovement = ({ user, setStartMovementClicked }) => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('NM');
-  const [mvmtImage, setMvmtImage] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [addPolClicked, setAddPolClicked] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const { id } = user;
     const movementObj = {
       name,
@@ -21,16 +22,20 @@ const StartMovement = ({ user }) => {
       location: `${city}, ${state}`,
       emailCount: 0,
       textCount: 0,
-      mvmtImage,
+      followers: 0,
+      imageUrl,
     };
     axios.post('/movement', { movementObj, id })
-      .then((movement) => console.log(movement))
+      .then((movement) => {
+        document.getElementById('start-movement').reset();
+        setStartMovementClicked(false);
+      })
       .catch((err) => console.log(err));
   };
 
   return (
     <div>
-      <form className="w-full max-w-lg">
+      <form id="start-movement" className="w-full max-w-lg">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
@@ -52,7 +57,7 @@ const StartMovement = ({ user }) => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
               Add an image for this Movement
             </label>
-            <input onChange={(e) => setMvmtImage(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Image URL" />
+            <input onChange={(e) => setImageUrl(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Image URL" />
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
@@ -86,7 +91,8 @@ const StartMovement = ({ user }) => {
               description={desc}
               city={city}
               state={state}
-              mvmtImage={mvmtImage}
+              imageUrl={imageUrl}
+              setStartMovementClicked={setStartMovementClicked}
             />
           </div>
         )}

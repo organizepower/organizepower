@@ -133,6 +133,16 @@ const addEmailCount = async(movementId) => {
   }
 };
 
+// ADD TO TEXT COUNT
+const addTextCount = async(movementId) => {
+  try {
+    await Movement.update({ textCount: sequelize.literal('text_count + 1') },
+      { where: { id: movementId } });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // ADD FOLLOWER
 const addFollower = async(movementId) => {
   try {
@@ -254,6 +264,7 @@ module.exports = {
   getMovementsLedByUser,
   getMovementsFollowedByUser,
   addEmailCount,
+  addTextCount,
   addFollower,
   addComment,
   getComments,
