@@ -133,6 +133,16 @@ const addEmailCount = async(movementId) => {
   }
 };
 
+// ADD TO TEXT COUNT
+const addTextCount = async(movementId) => {
+  try {
+    await Movement.update({ textCount: sequelize.literal('text_count + 1') },
+      { where: { id: movementId } });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // ADD FOLLOWER
 const addFollower = async(movementId) => {
   try {
@@ -168,9 +178,6 @@ const addComment = async(movementId, commentText, userId) => {
   }
 };
 
-// addComment(1, 1, 'This must stop!!!');
-// addComment(4, 1, 'I am sending texts to all my friends.');
-
 // GET COMMENTS BY MOVEMENT
 const getComments = async(movementId) => {
   try {
@@ -186,8 +193,6 @@ const getComments = async(movementId) => {
     console.error(err);
   }
 };
-
-// console.log(getComments(1));
 
 // GET MOVEMENTS LED BY USER
 const getMovementsLedByUser = async(idUser) => {
@@ -227,12 +232,6 @@ const addPolitician = async(politicianObj) => {
   }
 };
 
-// const test = async() => {
-//   const result = await getMovementsFollowedByUser(1);
-//   console.log(result);
-// };
-// test();
-
 module.exports = {
   // addComment,
   // addPrompt,
@@ -254,6 +253,7 @@ module.exports = {
   getMovementsLedByUser,
   getMovementsFollowedByUser,
   addEmailCount,
+  addTextCount,
   addFollower,
   addComment,
   getComments,

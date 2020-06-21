@@ -7,7 +7,12 @@ import {
 } from 'react-router-dom';
 import { SettingsContext } from 'twilio/lib/rest/voice/v1/dialingPermissions/settings';
 
-const SendMessage = ({ currentMovement, setText }) => {
+const SendMessage = ({
+  currentMovement,
+  getMovementById,
+  user,
+  setText,
+}) => {
   const {
     id,
     name,
@@ -36,8 +41,13 @@ ${urlLink}`;
         setStatus('sent');
         setmessageButton('Sent');
         setText(false);
+        axios.post('/movement/textCount/', { id })
+          .then(() => {
+            getMovementById(id);
+          })
+          .catch((err) => console.error(err));
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   };
 
   return (

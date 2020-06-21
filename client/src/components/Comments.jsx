@@ -14,10 +14,9 @@ const Comments = ({ movement, user }) => {
   useEffect(() => {
     axios.get('/comment', { params: { movementId: id } })
       .then((response) => {
-        console.log(response.data);
         setComments(response.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, []);
 
   /*  when the comment button is clicked save the comment to the
@@ -27,21 +26,18 @@ const Comments = ({ movement, user }) => {
     e.preventDefault();
     // we ill send a body with a movementId, comment and user
     axios.post('/comment', { movementId: id, comment: text, authorId: user.id })
-      .then((response) => console.log(response))
       .then(() => {
         // then we will get that data back from the db
         axios.get('/comment', { params: { movementId: id } })
           .then((response) => {
-            console.log(response.data);
-            // reassign the comments state to be the result
             setComments(response.data);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.error(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
-  const areThereComments = comments.length > 0 ? true : false;
+  const areThereComments = comments.length > 0;
 
   return (
     <div>

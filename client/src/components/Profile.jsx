@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Redirect from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
 import { getMovementsLeading, getMovementsFollowing } from '../services/services';
@@ -33,39 +33,48 @@ const Profile = ({ user, handleMovementTitleClick }) => {
 
   return (
     <div className="p-8">
-      <div className="lg:flex bg-gray-200 justify-between">
-        <img className="flex-col object-contain h-full w-48" src={imageUrl} alt={username} />
-        <div className="m-8">
-          <p className="text-gray-900 font-bold text-xl mb-2">{firstName} {lastName}</p>
-          <p className="text-gray-900 font-bold text-lg mb-2">User bio:</p>
-          <p className="">{bio}</p>
+      <div className="container mx-auto px-4 m-8 grid grid-flowgrid-cols-2 gap-4">
+        <div>
+          <div className="lg:flex bg-gray-200 w-4/6 sm:w-full md:w-full lg:w-4/6 xl:w-4/6 rounded overflow-hidden shadow-lg">
+            <img className="flex-col object-contain h-auto w-auto" src={imageUrl} alt={username} />
+            <div className="m-8">
+              <p className="text-gray-900 font-bold text-xl mb-2">{firstName} {lastName}</p>
+              <p className="">{bio}</p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-4 mb-4">
-        <button onClick={() => setStartMovementClicked(!startMovementClicked)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mr-4">Start a Movement</button>
-        {/* <button onClick={() => setToExplore(!toExplore)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Join a Movement</button> */}
-      </div>
-      {startMovementClicked && (
-        <div className="">
-          <StartMovement user={user} />
+        <div className="m-4">
+          <button onClick={() => setStartMovementClicked(!startMovementClicked)} className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mb-8 border border-gray-400 rounded shadow mr-4">Start a Movement</button>
+          <Link to="/explore"><button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mb-8 border border-gray-400 rounded shadow mr-4">Join a Movement</button></Link>
+          {startMovementClicked && (
+            <div className="">
+              <StartMovement
+                user={user}
+                setMovementsLeading={setMovementsLeading}
+                setStartMovementClicked={setStartMovementClicked}
+              />
+            </div>
+          )}
         </div>
-      )}
-      <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
-        <p className="text-gray-900 font-bold text-xl mb-2">Leader of These Movements:</p>
-        <MovementList
-          user={user}
-          movements={movementsLeading}
-          handleMovementTitleClick={handleMovementTitleClick}
-        />
       </div>
-      <div className="float-left max-w-sm rounded overflow-hidden shadow-lg p-8 m-8">
-        <p className="text-gray-900 font-bold text-xl mb-2">Member of These Movements:</p>
-        <MovementList
-          user={user}
-          movements={movementsFollowing}
-          handleMovementTitleClick={handleMovementTitleClick}
-        />
+      <div className="container mx-auto">
+        <div className="float-left max-w-lg rounded overflow-hidden shadow-lg p-8 m-8">
+          <p className="text-gray-900 font-bold text-xl mb-2">Leader of These Movements:</p>
+          <MovementList
+            user={user}
+            movements={movementsLeading}
+            handleMovementTitleClick={handleMovementTitleClick}
+          />
+        </div>
+        <div className="float-left max-w-lg rounded overflow-hidden shadow-lg p-8 m-8">
+          <p className="text-gray-900 font-bold text-xl mb-2">Member of These Movements:</p>
+          <MovementList
+            user={user}
+            movements={movementsFollowing}
+            handleMovementTitleClick={handleMovementTitleClick}
+          />
+        </div>
       </div>
     </div>
   );

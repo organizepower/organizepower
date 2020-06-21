@@ -4,11 +4,9 @@ const {
   addMovement,
   getAllMovements,
   linkUserMovement,
-  addPolitician,
   addEmailCount,
+  addTextCount,
   addFollower,
-  addComment,
-  getComments,
 } = require('../db/methods');
 
 const movementRouter = Router();
@@ -36,7 +34,7 @@ movementRouter.get('/:id', (req, res) => {
       res.send(movement);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 });
@@ -60,7 +58,7 @@ movementRouter.post('/', (req, res) => {
       res.send(movement);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
     });
 });
 
@@ -73,7 +71,20 @@ movementRouter.post('/emailCount/', (req, res) => {
       res.sendStatus(200);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
+    });
+});
+
+movementRouter.post('/textCount/', (req, res) => {
+  const { id } = req.body;
+  const movementId = parseFloat(id);
+
+  addTextCount(movementId)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      console.error(err);
     });
 });
 
