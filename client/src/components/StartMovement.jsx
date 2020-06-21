@@ -10,7 +10,7 @@ const StartMovement = ({ user, setStartMovementClicked, setMovementsLeading }) =
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState('NM');
+  const [state, setState] = useState('AL');
   const [imageUrl, setImageUrl] = useState('');
   const [addPolClicked, setAddPolClicked] = useState(false);
 
@@ -47,7 +47,7 @@ const StartMovement = ({ user, setStartMovementClicked, setMovementsLeading }) =
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
               Name Your Movement
             </label>
-            <input onChange={(e) => setName(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Am Important Cause" />
+            <input onChange={(e) => setName(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="An Important Cause" />
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
