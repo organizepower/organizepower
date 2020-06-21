@@ -27,6 +27,7 @@ const Comments = ({ movement, user }) => {
     // we ill send a body with a movementId, comment and user
     axios.post('/comment', { movementId: id, comment: text, authorId: user.id })
       .then(() => {
+        setText('');
         // then we will get that data back from the db
         axios.get('/comment', { params: { movementId: id } })
           .then((response) => {
@@ -46,6 +47,7 @@ const Comments = ({ movement, user }) => {
         <form className="commentForm" onSubmit={handleSubmit}>
           <textarea
             className="shadow appearance-none border border-gray-200 rounded w-full h-20 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline m-2"
+            value={text}
             type="text"
             placeholder="Say something..."
             onChange={e => setText(e.target.value)}

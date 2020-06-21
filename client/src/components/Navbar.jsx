@@ -41,7 +41,10 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout()
-      .then(() => setIsAuthenticated(false))
+      .then(() => {
+        setUser(null);
+        setIsAuthenticated(false);
+      })
       .catch(err => console.error(err));
   };
 
@@ -129,7 +132,6 @@ const Navbar = () => {
         <Redirect to="/explore" />
       </div>
     </Router>
-
   );
 };
 
