@@ -7,6 +7,8 @@ const {
   addPolitician,
   addEmailCount,
   addFollower,
+  addComment,
+  getComments,
 } = require('../db/methods');
 
 const movementRouter = Router();
@@ -74,29 +76,6 @@ movementRouter.post('/emailCount/', (req, res) => {
       console.log(err);
     });
 });
-
-movementRouter.post('/comments', (req, res) => {
-  console.log(req);
-// post the comments to the database
-});
-
-movementRouter.get('/comments', (req, res) => {
-  console.log(req);
-});
-
-// movementRouter.post('/politician', (req, res) => {
-//   // add politician and associate with movement
-//   const { politicianObj } = req.body;
-//   addPolitician(politicianObj)
-//     .then(politician => {
-//       console.log(politician);
-//       res.send(politician);
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// });
-// need a route to movementList
 
 module.exports = {
   movementRouter,

@@ -33,8 +33,8 @@ const Movement = ({
   const [text, setText] = useState(false);
   const [emailClick, setEmailClick] = useState(false);
   const [leading, setLeading] = useState(false);
-  const followersString = followers.toLocaleString();
-  const emailCountString = emailCount.toLocaleString();
+  const followersString = followers ? followers.toLocaleString() : 0;
+  const emailCountString = emailCount ? emailCount.toLocaleString() : 0;
   const body = `Dear ${polFirstName} ${polLastName}, 
     I am [INSERT YOUR NAME}, one of your many constituents. There must be something done about this problem...[INSERT YOUR PERSONAL MESSAGE HERE]
   `;

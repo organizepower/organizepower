@@ -155,7 +155,7 @@ const linkUserMovement = async(userId, movementId) => {
 };
 
 // ADD COMMENTS
-const addComment = async(userId, movementId, commentText) => {
+const addComment = async(movementId, commentText, userId) => {
   try {
     const user = await User.findOne({ where: { id: userId } });
     const movement = await Movement.findOne({ where: { id: movementId } });
@@ -179,7 +179,7 @@ const getComments = async(movementId) => {
       raw: true,
     });
     if (!comments.length) {
-      return 'No comments for this movememnt.';
+      return [];
     }
     return comments;
   } catch (err) {
@@ -260,7 +260,6 @@ module.exports = {
 };
 
 /* Features below were trimmed due to time constraints...
-
 
 // EDIT POLITICIAN BY FIELD
 const editPoliticianField = async(politicianId, prop, newValue) => {
