@@ -35,5 +35,5 @@ npm run start:client
 npm run start
 Open localhost: whatever port
 Technologies Used:
-React, Node.js, Express, Axios, Google Maps, Twilio, Gmail API.
+React, Node.js, Express, Axios, Twilio, mysql & sequalize, taliwind
 
