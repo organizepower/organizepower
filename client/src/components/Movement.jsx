@@ -80,7 +80,7 @@ const Movement = ({
         setCurrentMovement(res.data);
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -93,9 +93,8 @@ const Movement = ({
         .then(follow => {
           setButtonText('Following ✓');
           getMovementById(id);
-          console.log(follow);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
     }
   };
 
@@ -117,7 +116,7 @@ const Movement = ({
     <div className="container mx-auto px-4 m-8 grid grid-cols-2 gap-4">
       <div>
         <div>
-          <img className="object-cover h-48 w-full float-left" src={imageUrl} alt={id} />
+          <img className="object-cover h-48 w-full float-left" src={imageUrl} alt={`${name}`} />
           <p className="text-gray-900 font-bold text-3xl mb-2">{name}</p>
           <p className="text-gray-700 text-xl my-2">{location}</p>
           <p className="text-gray-700 text-lg my-2">Important Politician: {polFirstName} {polLastName}, {polPosition}</p>

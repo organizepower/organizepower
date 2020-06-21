@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import AddPolitician from './AddPolitician.jsx';
 import StatesSelect from './StatesSelect.jsx';
+import { getMovementsLeading, getMovementsFollowing } from '../services/services';
 // import StatesSelect from './StatesSelect.jsx';
 
-const StartMovement = ({ user, setStartMovementClicked }) => {
+const StartMovement = ({ user, setStartMovementClicked, setMovementsLeading }) => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [city, setCity] = useState('');
@@ -29,8 +30,13 @@ const StartMovement = ({ user, setStartMovementClicked }) => {
       .then((movement) => {
         document.getElementById('start-movement').reset();
         setStartMovementClicked(false);
+        getMovementsLeading(user.id)
+          .then(results => {
+            setMovementsLeading(results.data);
+          })
+          .catch(err => console.error(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -93,6 +99,7 @@ const StartMovement = ({ user, setStartMovementClicked }) => {
               state={state}
               imageUrl={imageUrl}
               setStartMovementClicked={setStartMovementClicked}
+              setMovementsLeading={setMovementsLeading}
             />
           </div>
         )}

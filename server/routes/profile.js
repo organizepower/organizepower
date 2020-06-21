@@ -13,11 +13,10 @@ profileRouter.get('/:id', (req, res) => {
   // get user information by ID form db
   getUserById(userId)
     .then((user) => {
-      console.log(user);
       res.send(user);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 });
@@ -28,11 +27,10 @@ profileRouter.get('/following/:id', (req, res) => {
   const userId = parseFloat(id.slice(1));
   getMovementsFollowedByUser(userId)
     .then((movements) => {
-      console.log(movements);
       res.send(movements);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 });
@@ -43,11 +41,10 @@ profileRouter.get('/leading/:id', (req, res) => {
   const userId = parseFloat(id.slice(1));
   getMovementsLedByUser(userId)
     .then((movements) => {
-      console.log(movements);
       res.send(movements);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     });
 });

@@ -4,7 +4,6 @@ const { addComment, getComments } = require('../db/methods');
 const commentRouter = Router();
 
 commentRouter.get('/', (req, res) => {
-  console.log(req);
   const { movementId } = req.query || {};
   const id = parseFloat(movementId);
 
@@ -14,12 +13,11 @@ commentRouter.get('/', (req, res) => {
       res.send(comments);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
     });
 });
 
 commentRouter.post('/', (req, res) => {
-  console.log(req);
   const { movementId, comment, authorId } = req.body;
   // post the comments to the database
   addComment(movementId, comment, authorId)
@@ -27,7 +25,7 @@ commentRouter.post('/', (req, res) => {
       res.sendStatus(200);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
     });
 });
 
