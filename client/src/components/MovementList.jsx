@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MovementListItem from './MovementListItem.jsx';
-import { getMovementsLeading, getMovementsFollowing } from '../services/services';
+import {
+  getMovementsLeading,
+  getMovementsFollowing,
+} from '../services/services';
 
 const MovementList = ({
   user,
@@ -9,7 +12,6 @@ const MovementList = ({
 }) => {
   const [movementsLeading, setMovementsLeading] = useState([]);
   const [movementsFollowing, setMovementsFollowing] = useState([]);
-
   // get movements leading & following by user to pass to movement list item
   useEffect(() => {
     if (user) {
