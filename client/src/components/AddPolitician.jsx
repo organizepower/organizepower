@@ -7,31 +7,25 @@ const AddPolitician = ({
   description,
   city,
   state,
-  firstName,
-  lastName,
+  mvmtImage,
 }) => {
   const [polFirstName, setPolFirstName] = useState('');
   const [polLastName, setPolLastName] = useState('');
-  const [polLoc, setPolLoc] = useState('');
   const [polPhoneNumber, setPolPhoneNumber] = useState('');
   const [polEmail, setPolEmail] = useState('');
-  const [polMailingAddress, setPolMailingAddress] = useState('');
   const [polOrg, setPolOrg] = useState('');
   const [polPosition, setPolPosition] = useState('');
   const [polImageUrl, setPolImageUrl] = useState('');
 
   const handlePolSubmit = () => {
-    debugger;
     const { id } = user;
     const movementObj = {
       name,
       description,
       location: `${city}, ${state}`,
-      firstName,
-      lastName,
+      mvmtImage,
       polFirstName,
       polLastName,
-      polLoc,
       polPhoneNumber,
       polOrg,
       positionType: polPosition,
@@ -63,12 +57,6 @@ const AddPolitician = ({
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
-              Where is this Politician active?
-            </label>
-            <input onChange={(e) => setPolLoc(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="state or city or zip" />
-          </div>
           <div className="w-full md:w-1/2 px-3">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
               Phone number for this Politician, or their party
@@ -81,13 +69,7 @@ const AddPolitician = ({
             </label>
             <input onChange={(e) => setPolEmail(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Email" />
           </div>
-          <div className="w-full md:w-1/2 px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
-              Mailing Address for this Politician, or their party
-            </label>
-            <input onChange={(e) => setPolMailingAddress(e.target.value)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Mailing Address" />
-          </div>
-          <div className="w-full md:w-1/2 px-3">
+          <div className="w-full px-3">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
               Who is this Politician affiliated with?
             </label>
