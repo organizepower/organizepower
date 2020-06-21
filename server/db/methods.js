@@ -4,14 +4,25 @@ const {
   User,
   Movement,
   UserMovement,
-  Politician,
   Comment,
 } = require('./index');
 
-// MODEL METHODS
-// note: organizer is term for users that create movements
-// only one table for all users - organizers & participants
-// all users are participants, some users are organizers
+/* MODEL METHODS
+ * Note: organizer is term for users that create movements.
+ * There is only one table for all users, organizers & participants:
+ * all users are participants, some users are organizers
+ *
+ * Sequelize automatically makes custom methods for getting/setting
+ * foreign keys in your tables.
+ *
+ * For many-to-one associations, hasOne & belongsTo methods:
+ * .get() & .set()
+ * example: comment.getUser() or comment.setMovement()
+ *
+ * For join tables, belongsToMany methods:
+ * .get(), .set(), .add()
+ * example: movement.addUser(user);
+ */
 
 // ADD NEW USER
 const addUser = async(userObj) => {
@@ -103,7 +114,7 @@ const getMovement = async(movementId) => {
   try {
     const movement = await Movement.findOne({
       where: { id: movementId },
-      raw: true,
+      raw: true, // returns just the object from the db
     });
     return movement;
   } catch (err) {
@@ -158,6 +169,7 @@ const linkUserMovement = async(userId, movementId) => {
   try {
     const user = await User.findOne({ where: { id: userId } });
     const movement = await Movement.findOne({ where: { id: movementId } });
+    // add movement and user to the join table with the custom method:
     movement.addUser(user);
   } catch (err) {
     console.error(err);
@@ -171,6 +183,7 @@ const addComment = async(movementId, commentText, userId) => {
     const movement = await Movement.findOne({ where: { id: movementId } });
     const commentObj = { commentText, username: user.username };
     const comment = await Comment.create(commentObj);
+    // set the user and movement foreign keys with the custom methods:
     comment.setUser(user);
     comment.setMovement(movement);
   } catch (err) {
@@ -233,17 +246,13 @@ const addPolitician = async(politicianObj) => {
 };
 
 module.exports = {
-  // addComment,
-  // addPrompt,
+
   addMovement,
   addPolitician,
   addUser,
-  // linkPoliticianMovement,
   linkUserMovement,
   editMovement,
   editMovementField,
-  // editPolitician,
-  // editPoliticianField,
   editUser,
   editUserField,
   getUserById,
@@ -258,66 +267,3 @@ module.exports = {
   addComment,
   getComments,
 };
-
-/* Features below were trimmed due to time constraints...
-
-// EDIT POLITICIAN BY FIELD
-const editPoliticianField = async(politicianId, prop, newValue) => {
-  try {
-    await Politician.update({ [prop]: newValue },
-      { returning: true, where: { id: politicianId } });
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-// UPDATE ENTIRE POLITICIAN'S RECORD
-const editPolitician = async(politicianObj) => {
-  try {
-    await Politician.update(politicianObj,
-      { returning: true, where: { id: politicianObj.id } });
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-// LINK POLITICIAN TO MOVEMENT
-// pass in politician and movement ids
-const linkPoliticianMovement = async(politicianId, movementId) => {
-  try {
-    const politician = await Politician.findOne({ where: { id: politicianId } });
-    const movement = await Movement.findOne({ where: { id: movementId } });
-    politician.addMovement(movement);
-  } catch (err) {
-    console.error(err);
-  }
-};
-*/
-
-/*
-// USER COMMENTS ON MOVEMENT
-const addComment = async(userId, movementId, message) => {
-  try {
-    const comment = await Comment.create({ comment_text: message });
-    const user = await User.findOne({ where: { id: userId } });
-    const movement = await Movement.findOne({ where: { id: movementId } });
-    comment.setUser(user);
-    comment.setMovement(movement);
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-// ORGANIZER ADDS PROMPT
-const addPrompt = async(politicianId, movementId, message) => {
-  try {
-    const prompt = await Prompt.create({ prompt_text: message });
-    const politician = await Politician.findOne({ where: { id: politicianId } });
-    const movement = await Movement.findOne({ where: { id: movementId } });
-    prompt.setPolitician(politician);
-    prompt.setMovement(movement);
-  } catch (err) {
-    console.error(err);
-  }
-};
-*/
