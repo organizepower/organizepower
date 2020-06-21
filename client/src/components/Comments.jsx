@@ -44,12 +44,13 @@ const Comments = ({ movement, user }) => {
       {/* conditionally render the text box if a user is logged in */}
       {user && (
         <form className="commentForm" onSubmit={handleSubmit}>
-          <input
+          <textarea
+            className="shadow appearance-none border border-gray-200 rounded w-full h-20 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline m-2"
             type="text"
             placeholder="Say something..."
             onChange={e => setText(e.target.value)}
           />
-          <input type="submit" value="Post" />
+          <input className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-2 float-right" type="submit" value="Submit" />
         </form>
       )}
       <div className="commentBox">

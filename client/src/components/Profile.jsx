@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import MovementList from './MovementList.jsx';
 import StartMovement from './StartMovement.jsx';
@@ -11,6 +12,8 @@ const Profile = ({ user, handleMovementTitleClick }) => {
     lastName,
     imageUrl,
     bio,
+    createdAt,
+    location,
   } = user;
 
   const [startMovementClicked, setStartMovementClicked] = useState(false);
@@ -35,11 +38,13 @@ const Profile = ({ user, handleMovementTitleClick }) => {
     <div className="p-8">
       <div className="container mx-auto px-4 m-8 grid grid-flowgrid-cols-2 gap-4">
         <div>
-          <div className="lg:flex bg-gray-200 w-4/6 sm:w-full md:w-full lg:w-4/6 xl:w-4/6 rounded overflow-hidden shadow-lg">
-            <img className="flex-col object-contain h-auto w-auto" src={imageUrl} alt={username} />
+          <div className="lg:flex bg-gray-200 w-full sm:w-full md:w-4/6 lg:w-4/6 xl:w-4/6 rounded overflow-hidden shadow-lg">
+            <img className="flex-col object-cover w-full h-64 sm:w-full sm:h-64 md:w-full md:h-64 lg:w-2/5 lg:h-auto xl:w-2/5 xl:h-auto" src={imageUrl} alt={username} />
             <div className="m-8">
               <p className="text-gray-900 font-bold text-xl mb-2">{firstName} {lastName}</p>
-              <p className="">{bio}</p>
+              <p className="text-gray-900 text-lg mb-2">{location}</p>
+              <p className="text-gray-900 text-base my-2">{bio}</p>
+              <p className="text-gray-900 text-sm italic my-4">Member of Organize Power for {moment(createdAt).fromNow(true)}.</p>
             </div>
           </div>
         </div>
